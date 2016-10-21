@@ -1,15 +1,15 @@
 #include "message.h"
 
 
-Message::Message(string body, int sender) {
+Message::Message(string body, int receiver) {
 	this->body = body;
-	this->sender = sender;
+	this->receiver = receiver;
 }
 
 string Message::getBody() {
 	return this->body;
 }
 
-int Message::getSender() {
-	return this->sender;
+int Message::getReceiver() {
+	return this->receiver;
 }
