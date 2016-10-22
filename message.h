@@ -1,37 +1,39 @@
+#ifndef MESSAGE_H_
+#define MESSAGE_H_
+
 #include <string>
-
-using namespace std;
-
 
 class Message {
 
-	private:
-		string body;
-		int receiver;
+private:
+	std::string body;
+	unsigned int receiver;
 
-	public:
+public:
 
-		// Constructor
-		// pre: El identificador del remitente pasado como parametro
-		//      (sender) es valido
-		// post: Se creo un mensaje, con los atributos cuerpo (body)
-		//       y el celular que lo recibe (receiver)
-		Message(string body, int receiver);
+	/*
+	 * Pre: El identificador del remitente pasado como parametro (sender) es valido.
+	 * Post: Se creo un mensaje, con los atributos cuerpo (body) y remitente (sender).
+	 */
+	Message(std::string body, int receiver);
 
-		// pre: -
-		// post: Devuelve el cuerpo del mensaje
-		string getBody();
+	/*
+	 * Pre: ---
+	 * Post: Crea un mensaje vacio.
+	 */
+	Message();
 
-		// pre: -
-		// post: Devuelve el identificador del celular que recibe el
-		//       mensaje
-		int getReceiver();
+	/*
+	 *Pre: ---
+	 *Post: Devuelve el cuerpo del mensaje.
+	 */
+	std::string getBody();
 
-		// Destructor
-		// pre: -
-		// post: El mensaje fue destruido
-		~Message();
+	/*
+	 *Pre: ---
+	 *Post: Devuelve el identificador del remitente del mensaje.
+	 */
+	unsigned int getReceiver();
 };
 
-
-
+#endif /* MESSAGE_H_ */
