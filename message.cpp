@@ -1,5 +1,11 @@
-#include "message.h"
+#include "Message.h"
 
+using namespace std;
+
+Message::Message() {
+	this->body = "\0";
+	this->receiver = 0;
+}
 
 Message::Message(string body, int receiver) {
 	this->body = body;
@@ -10,6 +16,6 @@ string Message::getBody() {
 	return this->body;
 }
 
-int Message::getReceiver() {
+unsigned int Message::getReceiver() {
 	return this->receiver;
 }
