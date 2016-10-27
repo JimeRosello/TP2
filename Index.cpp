@@ -58,7 +58,7 @@ void Index::setMenues() {
 
 void Index::changeMode() {
 	this->mode == SYSTEM? this->mode = CELLPHONE:
-						  this->mode = SYSTEM;
+			      this->mode = SYSTEM;
 	std::cout << "Se ha cambiado el modo del programa. "
 		  << std::endl
 		  << "El modo actual es "
@@ -100,10 +100,10 @@ int Index::chooseOption() {
 	int option;
 	do {
 		std::cout << std::endl
-				  << "Elija un numero de opcion (entre 1 y "
-				  << maxOption
-				  << ")"
-				  << std::endl;
+			  << "Elija un numero de opcion (entre 1 y "
+			  << maxOption
+			  << ")"
+			  << std::endl;
 		std::cin >> option;
 	} while ((option <= 0) || (option > maxOption));
 
