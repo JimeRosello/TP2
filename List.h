@@ -38,20 +38,20 @@ public:
 	 * Pre: ---
 	 * Post: Devuelve el puntero "cursor".
 	 */
-	Node<L>* getCursor();
+	L getCursor();
 
 	/*
 	 * Pre: ---
 	 * Post: Devuelve el puntero "firstNode".
 	 */
-	Node<L>* getFirst();
+	L getFirst();
 
 	/*
 	 * Pre: "newElement" es un elemento valido.
 	 * Post: Inserta el elemento "newElement" al principio de la lista y aumenta la
 	 *       cantidad de elementos de la lista ("amounOfElements") en 1.
 	 */
-	void addNewElement(L* newElement);
+	void addNewElement(L newElement);
 
 	/*
 	 * Pre: La lista "List" no esta vacia.
@@ -107,19 +107,18 @@ template<class L> bool List<L>::advanceCursor() {
 	return (this->cursor != NULL);
 }
 
-template<class L> Node<L>* List<L>::getCursor() {
-	return this->cursor;
+template<class L> L List<L>::getCursor() {
+	return this->cursor->getElement();
 }
 
-template<class L> Node<L>* List<L>::getFirst() {
-	return this->firstNode;
+template<class L> L List<L>::getFirst() {
+	return this->firstNode->getElement();
 }
 
-template<class L> void List<L>::addNewElement(L* newElement) {
+template<class L> void List<L>::addNewElement(L newElement) {
 	Node<L>* newNode = new Node<L>(newElement);
 	newNode->changeNextNode(firstNode);
 	firstNode = newNode;
-	this->initiateCursor();							//Para reiniciar el cursor
 	this->amountOfElements++;
 }
 
@@ -132,16 +131,16 @@ template<class L> void List<L>::removeNextElement(Node<L>* previousNode) {
 		deletedNode = previousNode->getNextNode();
 		previousNode->changeNextNode(deletedNode->getNextNode());
 	}
-	this->initiateCursor();							//Para reiniciar el cursor
 	this->amountOfElements--;
 	delete deletedNode;
 }
 
 template<class L> L List<L>::getElement(Node<L>* readingNode) {
-	if (readingNode == NULL) {
+	/*if (readingNode == NULL) {
 		readingNode = this->cursor;
 	}
-	return (readingNode->getElement());
+	return (readingNode->getElement());*/
+	return readingNode->getElement();
 }
 
 template<class L> unsigned int List<L>::getAmountOfElements() {
