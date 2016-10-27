@@ -62,7 +62,12 @@ class Index {
 		 * Post: Devuelve la opcion elegida
 		 */
 		int chooseOption();
-
+	
+		/* 
+		 * Pre: optionNumber es una opcion valida (mayor que 0 y menor que el maximo 
+		 *      de opciones correspondiente al comportamiento del programa
+		 * Post: Ejecuta la opcion del menu correspondiente a optionNumber 
+		 */
 		void executeAction(int optionNumber);
 };
 
