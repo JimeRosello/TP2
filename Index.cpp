@@ -19,7 +19,7 @@ void Index::setMode() {
 	char mode;
 	do {
 		std::cout << "Ingrese el modo de ejecucion (S: sistema, C: celular)"
-				  << std::endl;
+			  << std::endl;
 		std::cin >> mode;
 		mode = toupper(mode);
 	} while ((mode != 'S') && (mode != 'C'));
@@ -60,26 +60,26 @@ void Index::changeMode() {
 	this->mode == SYSTEM? this->mode = CELLPHONE:
 						  this->mode = SYSTEM;
 	std::cout << "Se ha cambiado el modo del programa. "
-		      << std::endl
-			  << "El modo actual es "
-			  << (this->mode == SYSTEM? "sistema.":"celular.")
-			  << std::endl;
+		  << std::endl
+		  << "El modo actual es "
+		  << (this->mode == SYSTEM? "sistema.":"celular.")
+		  << std::endl;
 }
 
 void Index::printMenu() {
 	if (this->mode == SYSTEM) {
 		for (int i = 0; i < MAX_OPTIONS_SYSTEM; i++) {
 			std::cout << i+1
-					  << ". "
-					  << systemMenu[i]
-					  << std::endl;
+				  << ". "
+				  << systemMenu[i]
+				  << std::endl;
 		}
 	} else {
 		for (int i = 0; i < MAX_OPTIONS_CELLPHONE; i++) {
 			std::cout << i+1
-					  << ". "
-					  << cellphoneMenu[i]
-					  << std::endl;
+				  << ". "
+				  << cellphoneMenu[i]
+				  << std::endl;
 		}
 	}
 }
@@ -95,7 +95,7 @@ int Index::chooseOption() {
 	// sistema, si el modo es sistema, o la de la lista de opciones del
 	// modo celular, si el modo es celular.
 	int maxOption = this->getMode() == SYSTEM ? MAX_OPTIONS_SYSTEM:
-												MAX_OPTIONS_CELLPHONE;
+		  				    MAX_OPTIONS_CELLPHONE;
 
 	int option;
 	do {
@@ -130,7 +130,7 @@ void Index::executeAction(int optionNumber) {
 			case 15: break;
 			case 17: break;
 			case 18: this->changeMode();
-					 break;
+				 break;
 		}
 	} else {
 		switch (optionNumber) {
@@ -140,6 +140,7 @@ void Index::executeAction(int optionNumber) {
 			case 4: break;
 			case 5: break;
 			case 6: this->changeMode();
+				break; 
 		}
 	}
 
