@@ -1,9 +1,3 @@
-#include <iostream>
-
-#include "List.h"
-#include "Node.h"
-#include "Cellphone.h"
-#include "Message.h"
 #include "Antena.h"
 
 using namespace std;
@@ -26,17 +20,17 @@ unsigned int Antena::getIdentification() {
 	return this->identification;
 }
 
-bool Antena::conectCellphone(unsigned int cellphoneID) {
+bool Antena::conectCellphone(Cellphone* newCellphone) {
 	bool cellphoneConnected = false;
 	if (!checkIfFull()) {
-		Cellphone* newCellphone = new Cellphone(cellphoneID);
+		newCellphone->assignAntena(this->getIdentification());
 		cellphones->addNewElement(newCellphone);
 		cellphoneConnected = true;
 	}
 	return cellphoneConnected;
 }
 
-void Antena::disconnectCellphone(unsigned int cellphoneID) {
+Cellphone* Antena::disconnectCellphone(unsigned int cellphoneID) {
 	bool cellphoneFound = false;
 	Node<Cellphone>* cellphonePointer = NULL;
 	cellphones->initiateCursor();
@@ -49,10 +43,9 @@ void Antena::disconnectCellphone(unsigned int cellphoneID) {
 		}
 	}
 	if (!cellphoneFound) {
-		throw string("El Celular a eliminar no se encuentra en esta Lsta");
-	} else {
-		cellphones->removeNextElement(cellphonePointer);
+		throw string("El Celular a eliminar no se encuentra en esta Lista");
 	}
+	return (cellphones->getPointerNextElement(cellphonePointer));
 }
 
 bool Antena::checkIfConnected(unsigned int cellphoneID) {
@@ -74,11 +67,9 @@ bool Antena::checkIfFull() {
 	return (getActiveConnections() == this->maxConnections);
 }
 
-void Antena::saveMessage(unsigned int transmitterID, unsigned int receiverID,
-		string message) {
+void Antena::saveMessage(unsigned int receiverID, string message) {
 	Message* newMessage = new Message(message, receiverID);
 	messages->addNewElement(newMessage);
-	//agregar mensaje al final del archivo de mensajes enviados del celular transmitterID
 }
 
 Antena::~Antena() {
