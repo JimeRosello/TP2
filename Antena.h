@@ -1,10 +1,7 @@
 #ifndef ANTENA_H_
 #define ANTENA_H_
 
-#include "List.h"
-#include "Node.h"
 #include "Cellphone.h"
-#include "Message.h"
 
 class Antena {
 
@@ -36,22 +33,23 @@ public:
 
 	/*
 	 * Pre: ---
-	 * Post: Conecta un celular con identificador "cellphoneID" a la Antena, en caso de haber
-	 *       conexiones libres devuelve TRUE y guarda dicho identificador en la lista de celulares conectados
-	 *       "connectedCellphones", o devuelve FALSE en caso de que no se haya lugar disponible.
+	 * Post: Conecta al celular "newCellphone" a la Antena, en caso de haber conexiones
+	 *       libres devuelve TRUE y guarda dicho identificador en la lista de celulares conectados
+	 *       "cellphones", o devuelve FALSE en caso de que no se haya lugar disponible.
 	 */
-	bool conectCellphone(unsigned int cellphoneID);
+	bool conectCellphone(Cellphone* newCellphone);
 
 	/*
-	 * Pre: El celular con identificador "cellphoneID" se encuentra actualmente en la lista "connectedCellphones".
-	 * Post: Desconecta el celular de la Antena, borrando su identificador de la lista "connectedCellphones".
+	 * Pre: El celular con identificador "cellphoneID" se encuentra actualmente en la lista "cellphones".
+	 * Post: Desconecta el celular de la Antena, borrando su identificador de la lista "cellphones".
+	 *       Devuelve un puntero al celular desconectado.
 	 */
-	void disconnectCellphone(unsigned int cellphoneID);
+	Cellphone* disconnectCellphone(unsigned int cellphoneID);
 
 	/*
 	 * Pre: ---
 	 * Post: Devuelve TRUE si el celular con identificador "cellphoneID" se encuentra actualmente en la lista
-	 *       "connectedCellphones", o FALSE si no lo est�. En caso de encontrarlo dejara al puntero "cursor"
+	 *       "cellphones", o FALSE si no lo est�. En caso de encontrarlo dejara al puntero "cursor"
 	 *       de la lista "cellphones" apuntando al celular buscado, de otra forma este sera NULL.
 	 */
 	bool checkIfConnected(unsigned int cellphoneID);
@@ -72,8 +70,7 @@ public:
 	 * Pre: El celular con identificador "transmitterID" se encuentra conectado a la Antena.
 	 * Post: Guarda un Mensaje para posteriormente tener la opcion de mandarlo a su remitente.
 	 */
-	void saveMessage(unsigned int transmitterID, unsigned int recieverID,
-			std::string message);
+	void saveMessage(unsigned int recieverID, std::string message);
 
 	/*
 	 * Pre: ---
