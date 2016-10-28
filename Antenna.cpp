@@ -102,6 +102,10 @@ Cellphone* Antenna::getCellphoneThatWasBusyTheMost() {
 	return this->wasBusyTheMost;
 }
 
+unsigned int Antenna::getMaxConcurrentConnections() {
+	return this->maxConcurrentConnections;
+}
+
 Antenna::~Antenna() {
 	delete this->cellphones;
 	delete this->messages;

@@ -16,6 +16,7 @@ private:
 	Cellphone* mostCalled;          // al que mas llamaron
 	Cellphone* receivedBusyTheMost; // el que mas recibio ocupado
 	Cellphone* wasBusyTheMost;      // el que mas dio ocupado
+	unsigned int maxConcurrentConnections; // maximo de conexiones simultaneas
 
 public:
 	/*
@@ -114,6 +115,13 @@ public:
 	 * Post: Devuelve el celular que mas dio ocupado de todo el sistema
 	 */
 	Cellphone* getCellphoneThatWasBusyTheMost();
+
+	/*
+	 * Pre: ---
+	 * Post: Devuelve el maximo historico concurrente de celulares
+	 *       conecados a la antena.
+	 */
+	unsigned int getMaxConcurrentConnections();
 
 	/*
 	 * Pre: ---
