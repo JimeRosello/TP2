@@ -14,6 +14,14 @@ private:
 	Node<L>* firstNode;
 	Node<L>* cursor;
 
+	/*
+	 * Pre: La lista "List" no esta vacia.
+	 * Post: Quita el nodo siguiente al apuntado por el puntero "previousNode" de la lista "List"
+	 *       (o el primero en caso de que "previousNode" sea NULL).
+	 *       Devuelve un puntero nodo removido, sin liberar la memoria de este.
+	 */
+	Node<L>* getNextNode(Node<L>* previousNode);
+
 public:
 	/*
 	 * Pre: ---
@@ -38,20 +46,20 @@ public:
 	 * Pre: ---
 	 * Post: Devuelve el puntero "cursor".
 	 */
-	L getCursor();
+	Node<L>* getCursor();
 
 	/*
 	 * Pre: ---
 	 * Post: Devuelve el puntero "firstNode".
 	 */
-	L getFirst();
+	Node<L>* getFirst();
 
 	/*
 	 * Pre: "newElement" es un elemento valido.
 	 * Post: Inserta el elemento "newElement" al principio de la lista y aumenta la
 	 *       cantidad de elementos de la lista ("amounOfElements") en 1.
 	 */
-	void addNewElement(L newElement);
+	void addNewElement(L* newElement);
 
 	/*
 	 * Pre: La lista "List" no esta vacia.
@@ -59,7 +67,16 @@ public:
 	 *       (o el primero en caso de que "previousNode" sea NULL) y reduce la cantidad de
 	 *       elementos de la lista ("amountOfElements") en 1.
 	 */
-	void removeNextElement(Node<L>* previousNode);
+	void deleteNextNode(Node<L>* previousNode);
+
+	/*
+	 * Pre: La lista "List" no esta vacia.
+	 * Post: Quita el nodo siguiente al apuntado por el puntero "previousNode" de la lista "List"
+	 *       (o el primero en caso de que "previousNode" sea NULL) y reduce la cantidad de
+	 *       elementos de la lista ("amountOfElements") en 1.
+	 *       Devuelve un puntero al elemento del nodo eliminado, sin liberar la memoria de este.
+	 */
+	L* getPointerNextElement(Node<L>* previousNode);
 
 	/*
 	 * Pre: "readingNode" es un puntero a un nodo Node que se encuentra en la lista "List", en caso
@@ -107,22 +124,23 @@ template<class L> bool List<L>::advanceCursor() {
 	return (this->cursor != NULL);
 }
 
-template<class L> L List<L>::getCursor() {
-	return this->cursor->getElement();
+template<class L> Node<L>* List<L>::getCursor() {
+	return this->cursor;
 }
 
-template<class L> L List<L>::getFirst() {
-	return this->firstNode->getElement();
+template<class L> Node<L>* List<L>::getFirst() {
+	return this->firstNode;
 }
 
-template<class L> void List<L>::addNewElement(L newElement) {
+template<class L> void List<L>::addNewElement(L* newElement) {
 	Node<L>* newNode = new Node<L>(newElement);
 	newNode->changeNextNode(firstNode);
 	firstNode = newNode;
+	this->initiateCursor();							//Para reiniciar el cursor.
 	this->amountOfElements++;
 }
 
-template<class L> void List<L>::removeNextElement(Node<L>* previousNode) {
+template<class L> Node<L>* List<L>::getNextNode(Node<L>* previousNode) {
 	Node<L>* deletedNode;
 	if (previousNode == NULL) {
 		deletedNode = this->firstNode;
@@ -131,16 +149,26 @@ template<class L> void List<L>::removeNextElement(Node<L>* previousNode) {
 		deletedNode = previousNode->getNextNode();
 		previousNode->changeNextNode(deletedNode->getNextNode());
 	}
+	this->initiateCursor();							//Para reiniciar el cursor.
 	this->amountOfElements--;
-	delete deletedNode;
+	return deletedNode;
+}
+
+template<class L> void List<L>::deleteNextNode(Node<L>* previousNode) {
+	delete (this->getNextNode(previousNode));
+}
+
+template<class L> L* List<L>::getPointerNextElement(Node<L>* previousNode) {
+	Node<L>* removedNode = this->getNextNode(previousNode);
+	L cellphone = removedNode->getElement();
+	return &cellphone;
 }
 
 template<class L> L List<L>::getElement(Node<L>* readingNode) {
-	/*if (readingNode == NULL) {
+	if (readingNode == NULL) {
 		readingNode = this->cursor;
 	}
-	return (readingNode->getElement());*/
-	return readingNode->getElement();
+	return (readingNode->getElement());
 }
 
 template<class L> unsigned int List<L>::getAmountOfElements() {
@@ -153,7 +181,7 @@ template<class L> bool List<L>::isEmpty() {
 
 template<class L> List<L>::~List() {
 	while (this->firstNode != NULL) {
-		removeNextElement(NULL);
+		deleteNextNode(NULL);
 	}
 }
 
