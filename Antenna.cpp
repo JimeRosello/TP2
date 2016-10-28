@@ -13,6 +13,7 @@ Antenna::Antenna(unsigned int identification, unsigned int maxConnections) {
 	this->mostCalled = NULL;
 	this->receivedBusyTheMost = NULL;
 	this->wasBusyTheMost = NULL;
+	this->maxConcurrentConnections = 0;
 }
 
 Antenna::Antenna() {
