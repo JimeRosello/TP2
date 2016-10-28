@@ -1,6 +1,5 @@
-//#include "vector.h"
 #include <string>
-#include "List.h"
+
 
 enum MODE {
 	SYSTEM,
@@ -13,6 +12,8 @@ class Index {
 		MODE mode;
 		std::string* systemMenu;
 		std::string* cellphoneMenu;
+		bool inCourse;
+
 		/*
 		 * Pre: ----
 		 * Post: Inicializa los menues para el modo Sistema y Celular
@@ -62,13 +63,26 @@ class Index {
 		 * Post: Devuelve la opcion elegida
 		 */
 		int chooseOption();
-	
-		/* 
-		 * Pre: optionNumber es una opcion valida (mayor que 0 y menor que el maximo 
+
+		/*
+		 * Pre: optionNumber es una opcion valida (mayor que 0 y menor que el maximo
 		 *      de opciones correspondiente al comportamiento del programa
-		 * Post: Ejecuta la opcion del menu correspondiente a optionNumber 
+		 * Post: Ejecuta la opcion del menu correspondiente a optionNumber
 		 */
 		void executeAction(int optionNumber);
-};
 
+		/*
+		 * Pre: ---
+		 * Post: Devuelve true si el programa esta en curso. False si no
+		 */
+		bool isInCourse();
+
+		/*
+		 * Destructor
+		 * Pre: ---
+		 * Post: El indice fue destruido.
+		 *
+		 * ~Index();
+		 */
+};
 

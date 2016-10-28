@@ -3,9 +3,10 @@
 int main() {
 
 	Index index;
-	index.printMenu();
-	int option = index.chooseOption();
-	index.executeAction(option);
-
+	do {
+		index.printMenu();
+		int option = index.chooseOption();
+		index.executeAction(option);
+	} while (index.isInCourse());
 	return 0;
 }

@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+
 #include "List.h"
 
 const int MAX_OPTIONS_SYSTEM = 18;
@@ -13,13 +14,14 @@ Index::Index() {
 	this->cellphoneMenu = NULL;
 	this->setMode();
 	this->setMenues();
+	this->inCourse = true;
 }
 
 void Index::setMode() {
 	char mode;
 	do {
 		std::cout << "Ingrese el modo de ejecucion (S: sistema, C: celular)"
-			  << std::endl;
+				  << std::endl;
 		std::cin >> mode;
 		mode = toupper(mode);
 	} while ((mode != 'S') && (mode != 'C'));
@@ -58,28 +60,30 @@ void Index::setMenues() {
 
 void Index::changeMode() {
 	this->mode == SYSTEM? this->mode = CELLPHONE:
-			      this->mode = SYSTEM;
+						  this->mode = SYSTEM;
 	std::cout << "Se ha cambiado el modo del programa. "
-		  << std::endl
-		  << "El modo actual es "
-		  << (this->mode == SYSTEM? "sistema.":"celular.")
-		  << std::endl;
+		      << std::endl
+			  << "El modo actual es "
+			  << (this->mode == SYSTEM? "sistema.":"celular.")
+			  << std::endl;
+	this->printMenu();
+	this->chooseOption();
 }
 
 void Index::printMenu() {
 	if (this->mode == SYSTEM) {
 		for (int i = 0; i < MAX_OPTIONS_SYSTEM; i++) {
 			std::cout << i+1
-				  << ". "
-				  << systemMenu[i]
-				  << std::endl;
+					  << ". "
+					  << systemMenu[i]
+					  << std::endl;
 		}
 	} else {
 		for (int i = 0; i < MAX_OPTIONS_CELLPHONE; i++) {
 			std::cout << i+1
-				  << ". "
-				  << cellphoneMenu[i]
-				  << std::endl;
+					  << ". "
+					  << cellphoneMenu[i]
+					  << std::endl;
 		}
 	}
 }
@@ -95,15 +99,15 @@ int Index::chooseOption() {
 	// sistema, si el modo es sistema, o la de la lista de opciones del
 	// modo celular, si el modo es celular.
 	int maxOption = this->getMode() == SYSTEM ? MAX_OPTIONS_SYSTEM:
-		  				    MAX_OPTIONS_CELLPHONE;
+												MAX_OPTIONS_CELLPHONE;
 
 	int option;
 	do {
 		std::cout << std::endl
-			  << "Elija un numero de opcion (entre 1 y "
-			  << maxOption
-			  << ")"
-			  << std::endl;
+				  << "Elija un numero de opcion (entre 1 y "
+				  << maxOption
+				  << ")"
+				  << std::endl;
 		std::cin >> option;
 	} while ((option <= 0) || (option > maxOption));
 
@@ -113,35 +117,40 @@ int Index::chooseOption() {
 void Index::executeAction(int optionNumber) {
 	if (this->mode == SYSTEM) {
 		switch (optionNumber) {
-			case 1: break;
-			case 2: break;
-			case 3: break;
-			case 4: break;
-			case 5: break;
-			case 6: break;
-			case 7: break;
-			case 8: break;
-			case 9: break;
-			case 10: break;
-			case 11: break;
-			case 12: break;
-			case 13: break;
-			case 14: break;
-			case 15: break;
-			case 17: break;
+
+			case 1:
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+			case 6:
+			case 7:
+			case 8:
+			case 9:
+			case 10:
+			case 11:
+			case 12:
+			case 13:
+			case 14:
+			case 15:
+			case 16:
+			case 17: this->inCourse = false;
+					 break;
 			case 18: this->changeMode();
-				 break;
+					 break;
 		}
 	} else {
 		switch (optionNumber) {
-			case 1: break;
-			case 2: break;
-			case 3: break;
-			case 4: break;
-			case 5: break;
+			case 1:
+			case 2:
+			case 3:
+			case 4:
+			case 5:
 			case 6: this->changeMode();
-				break; 
 		}
 	}
+}
 
+bool Index::isInCourse() {
+	return this->inCourse;
 }
