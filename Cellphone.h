@@ -1,3 +1,4 @@
+
 #ifndef CELLPHONE_H_
 #define CELLPHONE_H_
 
@@ -7,7 +8,7 @@
 #include "Message.h"
 
 /*
- * Celular es un dispositivo que se conecta a una antena y permite:
+ * Celular es un dispositivo que se conecta a una Antenna y permite:
  *        mostrar en pantalla el historial de mensajes recibidos a partir de un minuto inicial;
  *        mostrar en pantalla el historial de todos los mensajes recibidos;
  *        mostrar en pantalla el historial de mensajes emitidos;
@@ -21,7 +22,7 @@ class Cellphone {
 
 private:
 	unsigned int cellphoneNumber;		//Almacena el numero de este celular.
-	unsigned int assignedAntena;//Identificacion de la antena a la cual esta conectado el celular.
+	unsigned int assignedAntenna;//Identificacion de la Antenna a la cual esta conectado el celular.
 //	std::fstream exitFile;				//Archivo con mensajes de egreso.
 //	std::fstream entryFile;				//Archivo con mensajes de ingreso.
 	List<Message>* waitingMessages;	//Lista para almacenar los mensajes que aun no se han enviado.
@@ -48,15 +49,15 @@ public:
 
 	/*
 	 * Pre: ---
-	 * Post: Le asigna la Antena a la que esta conectado el celular ("pointerToAntena")
+	 * Post: Le asigna la Antenna a la que esta conectado el celular ("pointerToAntenna")
 	 */
-	void assignAntena(unsigned int assignedAntena);
+	void assignAntenna(unsigned int assignedAntenna);
 
 	/*
-	 * Pre: El celular tiene una antena asignada.
-	 * Post: Desasigna la Antena, dejando a "pointerToAntena" en NULL
+	 * Pre: El celular tiene una Antenna asignada.
+	 * Post: Desasigna la Antenna, dejando a "pointerToAntenna" en NULL
 	 */
-	void disassignAntena();
+	void disassignAntenna();
 
 	/*
 	 * Pre: Minuto es mayor a 0 y menor a 1440 (cantidad maxima de minutos en un dia).
@@ -78,14 +79,14 @@ public:
 
 	/*
 	 * Pre: ---
-	 * Post: Devulve TRUE en caso de estar conectado a una Antena o FALSE en caso contrario.
+	 * Post: Devulve TRUE en caso de estar conectado a una Antenna o FALSE en caso contrario.
 	 */
 	bool checkIfOnline();
 
 	/*
 	 * Pre: "receiverNumber" es un numero de celular registrado en el Sistema.
 	 * Post: Escribe el mensaje enviado en el archivo de egreso de este celular y lo guarda en la lista de
-	 *       mensajes de la antena a la que esta conectado. En caso de no estar conectado a ninguna antena
+	 *       mensajes de la Antenna a la que esta conectado. En caso de no estar conectado a ninguna Antenna
 	 *       lo guarda en una lista de mensajes propia.
 	 */
 	void sendMessage(unsigned int receiverNumber, std::string message);
@@ -94,7 +95,7 @@ public:
 	 * Pre: ---
 	 * Post: Libera la memoria de la lista "waitingMessages".
 	 */
-	void cleanWaitintMessagesList();
+	void cleanWaitingMessagesList();
 
 	/*
 	 * Pre: ---

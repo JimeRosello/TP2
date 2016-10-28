@@ -29,3 +29,4 @@ Cellphone::~Cellphone() {
 //	this->exitFile.close();
 	delete waitingMessages;
 }
+
