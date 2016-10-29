@@ -43,23 +43,54 @@ CallStatus System::initiateCall(Cellphone* X, Cellphone* Y) {
 		status = IN_PROGRESS;
 		X->changeStatus(CURRENTLY_SPEAKING);
 		Y->changeStatus(CURRENTLY_SPEAKING);
+		// Cambia los valores de llamadas realizadas para X y recibidas para Y
+		unsigned int numberOfOutgoingCalls =
+				X->getNumberOfOutgoingCalls();
+		numberOfOutgoingCalls++;
+		X->changeNumberOfOutgoingCalls(numberOfOutgoingCalls);
+		unsigned int numberOfIncomingCalls =
+				Y->getNumberOfIncomingCalls();
+		Y->changeNumberOfIncomingCalls(numberOfIncomingCalls);
+		// Se fija si tiene que cambiar el puntero al celular que mas llamo
+		// o al que mas fue llamado
+		this->checkCellphoneThatCalledTheMost(X);
+		this->checkCellphoneThatWasCalledTheMost(Y);
 	}
 	return status;
 }
 
 
 void System::terminateCall(Cellphone* X, Cellphone* Y) {
+	if (X->getStatus() != CURRENTLY_SPEAKING ||
+		Y->getStatus() != CURRENTLY_SPEAKING) {
+		throw std::string ("No hay una llamada en curso");
+	} else {
+		X->changeStatus(CONNECTED);
+		Y->changeStatus(CONNECTED);
 
+		// Falta cambiar los minutos que hablo cada celular
+
+		this->checkCellphoneThatSpokeTheMost(X);
+		this->checkCellphoneThatWasSpokenToTheMost(Y);
+	}
 }
 
 
 void System::connectCellphone(Cellphone* X, Antenna* antenna) {
-
+	if (antenna->checkIfFull()) {
+		throw std::string ("La antena esta llena");
+	}
+	antenna->connectCellphone(X);
 }
 
 
 void System::disconnectCellphone(Cellphone* X) {
-
+	if (X->getStatus() != CONNECTED) {
+		throw std::string ("No se puede desconectar el celular en este momento");
+	}
+	// falta borrar de la lista de celulares conectados a la antena ;
+	// buscar antena a la que esta conectado el celular ;
+	// desconectar el celular de la anetna
 }
 
 Cellphone* System::getCellphoneThatSpokeTheMost() {
@@ -126,6 +157,14 @@ void System::checkCellphoneThatWasBusyTheMost(Cellphone* X) {
 			X->getNumberOfRejectedIncomingCalls()) {
 		this->wasBusyTheMost = X;
 	}
+}
+
+List<Antenna*>* System::getListOfAntennas() {
+	return this->listOfAntennas;
+}
+
+List<Cellphone*>* System::getListOfCellphones() {
+	return this->listOfCellphones;
 }
 
 System::~System() {

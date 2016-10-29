@@ -157,6 +157,18 @@ class System {
 		void checkCellphoneThatWasBusyTheMost(Cellphone* X);
 
 		/*
+		 * Pre: ---
+		 * Post: Devuelve un puntero a una lista de antenas del sistema.
+		 */
+		List<Antenna*>* getListOfAntennas();
+
+		/*
+		 * Pre: ---
+		 * Post: Devuelve un puntero a una lista de celulares del sistema.
+		 */
+		List<Cellphone*>* getListOfCellphones();
+
+		/*
 		 * Destructor
 		 * Pre: -
 		 * Post: El sistema fue destruido.

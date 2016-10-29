@@ -6,6 +6,7 @@
 
 #include "List.h"
 #include "Message.h"
+#include "Antenna.h"
 
 /*
  * Celular es un dispositivo que se conecta a una Antenna y permite:
@@ -32,6 +33,7 @@ private:
 //	std::fstream exitFile;
 //	std::fstream entryFile;
 	List<Message*>* waitingMessages;
+	Antenna* lastConnection;
 	CellphoneStatus status;
 	unsigned int minutesOfOutgoingCalls;
 	unsigned int minutesOfIncomingCalls;
@@ -60,6 +62,12 @@ public:
 	 * Post: Devuelve el numero del celular.
 	 */
 	unsigned int getNumber();
+
+	/*
+	 * Pre: ---
+	 * Post: Devuelve la antena de la ultima conexion.
+	 */
+	Antenna* getLastConnection();
 
 	/*
 	 * Pre: ---

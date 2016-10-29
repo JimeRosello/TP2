@@ -3,6 +3,7 @@
 Cellphone::Cellphone(unsigned int cellphoneNumber) {
 	this->cellphoneNumber = cellphoneNumber;
 	this->assignedAntenna = 0;
+	this->lastConnection = NULL;
 	this->waitingMessages = new List<Message*>();
 	this->status = DISCONNECTED;
 	this->minutesOfOutgoingCalls = 0;
@@ -19,6 +20,7 @@ Cellphone::Cellphone(unsigned int cellphoneNumber) {
 Cellphone::Cellphone() {
 	this->cellphoneNumber = 0;
 	this->assignedAntenna = 0;
+	this->lastConnection = NULL;
 	this->waitingMessages = new List<Message*>();
 	this->status = DISCONNECTED;
 //	this->entryFile.open("\0");
@@ -33,6 +35,10 @@ Cellphone::Cellphone() {
 
 unsigned int Cellphone::getNumber() {
 	return this->cellphoneNumber;
+}
+
+Antenna* Cellphone::getLastConnection() {
+	return this->lastConnection;
 }
 
 void Cellphone::assignAntenna(unsigned int assignedAntenna) {
