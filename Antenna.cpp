@@ -1,12 +1,13 @@
 #include "Antenna.h"
+#include "Cellphone.h"
 
 using namespace std;
 
 Antenna::Antenna(unsigned int identification, unsigned int maxConnections) {
 	this->identification = identification;
 	this->maxConnections = maxConnections;
-	this->messages = new List<Message>();
-	this->cellphones = new List<Cellphone>();
+	this->messages = new List<Message*>();
+	this->cellphones = new List<Cellphone*>();
 	this->spokeTheMost = NULL;
 	this->calledTheMost = NULL;
 	this->mostSpoken = NULL;
@@ -19,15 +20,22 @@ Antenna::Antenna(unsigned int identification, unsigned int maxConnections) {
 Antenna::Antenna() {
 	this->identification = 0;
 	this->maxConnections = 0;
-	this->messages = new List<Message>();
-	this->cellphones = new List<Cellphone>();
+	this->messages = new List<Message*>();
+	this->cellphones = new List<Cellphone*>();
+	this->spokeTheMost = NULL;
+	this->calledTheMost = NULL;
+	this->mostSpoken = NULL;
+	this->mostCalled = NULL;
+	this->receivedBusyTheMost = NULL;
+	this->wasBusyTheMost = NULL;
+	this->maxConcurrentConnections = 0;
 }
 
 unsigned int Antenna::getIdentification() {
 	return this->identification;
 }
 
-bool Antenna::conectCellphone(Cellphone* newCellphone) {
+bool Antenna::connectCellphone(Cellphone* newCellphone) {
 	bool cellphoneConnected = false;
 	if (!checkIfFull()) {
 		newCellphone->assignAntenna(this->getIdentification());
@@ -39,27 +47,27 @@ bool Antenna::conectCellphone(Cellphone* newCellphone) {
 
 Cellphone* Antenna::disconnectCellphone(unsigned int cellphoneID) {
 	bool cellphoneFound = false;
-	Node<Cellphone>* cellphonePointer = NULL;
+	Cellphone* cellphonePointer = NULL;
 	cellphones->initiateCursor();
 	while (!cellphoneFound && cellphones->advanceCursor()) {
-		if (cellphones->getElement(cellphones->getCursor()).getNumber()
-				== cellphoneID) {
+		unsigned int currentCellNumber = cellphones->getCursor()->getNumber();
+		cellphonePointer = cellphones->getCursor();
+		if (currentCellNumber == cellphoneID) {
 			cellphoneFound = true;
-		} else {
-			cellphonePointer = cellphones->getCursor();
 		}
 	}
 	if (!cellphoneFound) {
 		throw string("El Celular a eliminar no se encuentra en esta Lista");
 	}
-	return (cellphones->getPointerNextElement(cellphonePointer));
+	cellphonePointer->disassignAntenna();
+	return cellphonePointer;
 }
 
 bool Antenna::checkIfConnected(unsigned int cellphoneID) {
 	bool cellphoneFound = false;
 	cellphones->initiateCursor();
 	while (!cellphoneFound && cellphones->advanceCursor()) {
-		if ((cellphones->getElement()).getNumber() == cellphoneID) {
+		if (cellphones->getCursor()->getNumber() == cellphoneID) {
 			cellphoneFound = true;
 		}
 	}

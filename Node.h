@@ -7,7 +7,7 @@
 
 template<class N> class Node {
 private:
-	N* element;
+	N element;
 	Node<N>* nextNode;
 
 public:
@@ -15,7 +15,7 @@ public:
 	 * Pre: ---
 	 * Post: El nodo "Node" resulta inicializado con el elemento "element" dado y sin un nodo siguiente.
 	 */
-	Node(N* element);
+	Node(N element);
 
 	/*
 	 * Pre: ---
@@ -36,7 +36,7 @@ public:
 	void changeNextNode(Node<N>* newNextNode);
 };
 
-template<class N> Node<N>::Node(N* element) {
+template<class N> Node<N>::Node(N element) {
 	this->element = element;
 	this->nextNode = NULL;
 }
@@ -46,7 +46,7 @@ template<class N> Node<N>* Node<N>::getNextNode() {
 }
 
 template<class N> N Node<N>::getElement() {
-	return *this->element;
+	return this->element;
 }
 
 template<class N> void Node<N>::changeNextNode(Node<N>* newNextNode) {

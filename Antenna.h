@@ -8,14 +8,14 @@ class Antenna {
 private:
 	unsigned int maxConnections;
 	unsigned int identification;
-	List<Message>* messages;
-	List<Cellphone>* cellphones;
-	Cellphone* spokeTheMost;        // el que hablo mas
-	Cellphone* calledTheMost;       // el que llamo mas
-	Cellphone* mostSpoken;          // al que mas le hablaron
-	Cellphone* mostCalled;          // al que mas llamaron
-	Cellphone* receivedBusyTheMost; // el que mas recibio ocupado
-	Cellphone* wasBusyTheMost;      // el que mas dio ocupado
+	List<Message*>* messages;
+	List<Cellphone*>* cellphones;
+	Cellphone* spokeTheMost;               // el que hablo mas
+	Cellphone* calledTheMost;              // el que llamo mas
+	Cellphone* mostSpoken;                 // al que mas le hablaron
+	Cellphone* mostCalled;                 // al que mas llamaron
+	Cellphone* receivedBusyTheMost;        // el que mas recibio ocupado
+	Cellphone* wasBusyTheMost;             // el que mas dio ocupado
 	unsigned int maxConcurrentConnections; // maximo de conexiones simultaneas
 
 public:
@@ -44,7 +44,7 @@ public:
 	 *       libres devuelve TRUE y guarda dicho identificador en la lista de celulares conectados
 	 *       "cellphones", o devuelve FALSE en caso de que no se haya lugar disponible.
 	 */
-	bool conectCellphone(Cellphone* newCellphone);
+	bool connectCellphone(Cellphone* newCellphone);
 
 	/*
 	 * Pre: El celular con identificador "cellphoneID" se encuentra actualmente en la lista "cellphones".
