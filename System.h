@@ -163,6 +163,12 @@ class System {
 		List<Antenna*>* getListOfAntennas();
 
 		/*
+		 * Pre: ---
+		 * Post: Devuelve un puntero a una lista de celulares del sistema.
+		 */
+		List<Cellphone*>* getListOfCellphones();
+
+		/*
 		 * Destructor
 		 * Pre: -
 		 * Post: El sistema fue destruido.

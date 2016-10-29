@@ -163,6 +163,10 @@ List<Antenna*>* System::getListOfAntennas() {
 	return this->listOfAntennas;
 }
 
+List<Cellphone*>* System::getListOfCellphones() {
+	return this->listOfCellphones;
+}
+
 System::~System() {
 	delete[] this->listOfAntennas;
 	delete[] this->listOfCellphones;

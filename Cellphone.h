@@ -32,6 +32,7 @@ private:
 //	std::fstream exitFile;
 //	std::fstream entryFile;
 	List<Message*>* waitingMessages;
+	unsigned int lastConnection;
 	CellphoneStatus status;
 	unsigned int minutesOfOutgoingCalls;
 	unsigned int minutesOfIncomingCalls;
@@ -60,6 +61,12 @@ public:
 	 * Post: Devuelve el numero del celular.
 	 */
 	unsigned int getNumber();
+
+	/*
+	 * Pre: ---
+	 * Post: Devuelve la antena de la ultima conexion.
+	 */
+	unsigned int getLastConnection();
 
 	/*
 	 * Pre: ---
