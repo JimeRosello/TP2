@@ -159,6 +159,10 @@ void System::checkCellphoneThatWasBusyTheMost(Cellphone* X) {
 	}
 }
 
+List<Antenna*> System::getListOfAntennas() {
+	return this->listOfAntennas;
+}
+
 System::~System() {
 	delete[] this->listOfAntennas;
 	delete[] this->listOfCellphones;
