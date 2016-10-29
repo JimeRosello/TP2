@@ -140,17 +140,6 @@ void Index::printDetailOfAntennas() {
 	while (listOfAntennas->advanceCursor()) {
 		Antenna* currentAntenna = listOfAntennas->getCursor();
 		unsigned int id = currentAntenna->getIdentification();
-		unsigned int maxConnections = currentAntenna->getMaxConcurrentConnections();
-		std::cout << "Antena " << id << ": " << maxConnections << std::endl;
-	}
-}
-
-void Index::printDetailOfCellphones() {
-	List<Antenna*>* listOfAntennas = this->cellphoneSystem->getListOfAntennas();
-	listOfAntennas->initiateCursor();
-	while (listOfAntennas->advanceCursor()) {
-		Antenna* currentAntenna = listOfAntennas->getCursor();
-		unsigned int id = currentAntenna->getIdentification();
 		unsigned int maxSupported = currentAntenna->getMaxConnections();
 		unsigned int maxConnections = currentAntenna->getMaxConcurrentConnections();
 		std::cout << "Antena: " << id << "; "
@@ -158,6 +147,10 @@ void Index::printDetailOfCellphones() {
 				  << "maximas conexiones concurrentes: " << maxConnections << "; "
 				  << std::endl;
 	}
+}
+
+void Index::printDetailOfCellphones() {
+
 }
 
 void Index::processFiles() {
