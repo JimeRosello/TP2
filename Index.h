@@ -1,5 +1,5 @@
 #include <string>
-
+#include "System.h"
 
 enum MODE {
 	SYSTEM,
@@ -13,6 +13,7 @@ class Index {
 		std::string* systemMenu;
 		std::string* cellphoneMenu;
 		bool inCourse;
+		System* cellphoneSystem;
 
 		/*
 		 * Pre: ----
@@ -26,6 +27,36 @@ class Index {
 		 */
 		void setMode();
 
+		/*
+		 * Metodos correspondientes a las acciones a llevar a cabo
+		 * de acuerdo a la opcion elegida por el usuario.
+		 * Pre: ---
+		 * Post: Se imprimen los datos indicados.
+		 */
+
+		void printDetailOfCalls();
+		void printDetailOfMessages();
+		void printCellphonesThatSpokeTheMost();
+		void printCellphonesThatCalledTheMost();
+		void printCellphonesThatReceivedBusyTheMost();
+		void printCellphonesThatWereCalledTheMost();
+		void printCellphonesThatWereSpokenToTheMost();
+		void printCellphonesThatWereBusyTheMost();
+		void printDetailOfOutgoingPhoneCalls();
+		void printDetailOfIncomingPhoneCalls();
+		void printMaxAmountOfCellphonesPerAntenna();
+		void printDetailOfReceivedPhoneCalls();
+		void printAmountOfCancelledCallsDueToLackOfCapacity();
+		void printDetailOfAntennas();
+		void printDetailOfCellphones();
+		void processFiles();
+
+		void showNewMessages();
+		void showHistoryOfSentMessages();
+		void showHistoryOfReceivedMessages();
+		void sendMessage();
+		void changeCellphone();
+
 	public:
 
 		/*
@@ -34,7 +65,7 @@ class Index {
 		 * Post: Crea un indice con los comportamientos del programa
 		 * 		 (Sistema o Celular)
 		 */
-		Index();
+		Index(System* cellphoneSystem);
 
 		/*
 		 * Pre: ---

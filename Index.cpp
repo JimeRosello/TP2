@@ -8,13 +8,14 @@
 const int MAX_OPTIONS_SYSTEM = 18;
 const int MAX_OPTIONS_CELLPHONE = 6;
 
-Index::Index() {
+Index::Index(System* cellphoneSystem) {
 	this->mode = SYSTEM;
 	this->systemMenu = NULL;
 	this->cellphoneMenu = NULL;
 	this->setMode();
 	this->setMenues();
 	this->inCourse = true;
+	this->cellphoneSystem = cellphoneSystem;
 }
 
 void Index::setMode() {
@@ -26,6 +27,12 @@ void Index::setMode() {
 		mode = toupper(mode);
 	} while ((mode != 'S') && (mode != 'C'));
 	this->mode = (mode == 'S'? SYSTEM:CELLPHONE);
+	if (this->mode == CELLPHONE) {
+		int numero;
+		std::cout << "Ingrese el numero de celular"
+				  << std::endl;
+		std::cin >> numero;
+	}
 }
 
 void Index::setMenues() {
@@ -57,6 +64,93 @@ void Index::setMenues() {
 	this->cellphoneMenu[4] = "Cambiar de celular";
 	this->cellphoneMenu[5] = "Cambiar modo";
 }
+
+void Index::printDetailOfCalls() {
+
+}
+
+void Index::printDetailOfMessages() {
+
+}
+
+void Index::printCellphonesThatSpokeTheMost() {
+	std::cout << "Celular que mas hablo de todo el sistema: ";
+	std::cout << this->cellphoneSystem->getCellphoneThatSpokeTheMost()->
+			getNumber();
+}
+
+void Index::printCellphonesThatCalledTheMost() {
+
+}
+
+void Index::printCellphonesThatReceivedBusyTheMost() {
+
+}
+
+void Index::printCellphonesThatWereCalledTheMost() {
+
+}
+
+void Index::printCellphonesThatWereSpokenToTheMost() {
+
+}
+
+void Index::printCellphonesThatWereBusyTheMost() {
+
+}
+
+void Index::printDetailOfOutgoingPhoneCalls() {
+
+}
+
+void Index::printDetailOfIncomingPhoneCalls() {
+
+}
+
+void Index::printMaxAmountOfCellphonesPerAntenna() {
+
+}
+
+void Index::printDetailOfReceivedPhoneCalls() {
+
+}
+
+void Index::printAmountOfCancelledCallsDueToLackOfCapacity() {
+
+}
+
+void Index::printDetailOfAntennas() {
+
+}
+
+void Index::printDetailOfCellphones() {
+
+}
+
+void Index::processFiles() {
+
+}
+
+void Index::showNewMessages() {
+
+}
+
+void Index::showHistoryOfSentMessages() {
+
+}
+
+void Index::showHistoryOfReceivedMessages() {
+
+}
+
+void Index::sendMessage() {
+
+}
+
+void Index::changeCellphone() {
+
+}
+
 
 void Index::changeMode() {
 	this->mode == SYSTEM? this->mode = CELLPHONE:
@@ -118,34 +212,55 @@ void Index::executeAction(int optionNumber) {
 	if (this->mode == SYSTEM) {
 		switch (optionNumber) {
 
-			case 1:
-			case 2:
-			case 3:
-			case 4:
-			case 5:
-			case 6:
-			case 7:
-			case 8:
-			case 9:
-			case 10:
-			case 11:
-			case 12:
-			case 13:
-			case 14:
-			case 15:
-			case 16:
+			case 1: printDetailOfCalls();
+				    break;
+			case 2: printDetailOfMessages();
+			        break;
+			case 3: printCellphonesThatSpokeTheMost();
+			        break;
+			case 4: printCellphonesThatCalledTheMost();
+			        break;
+			case 5: printCellphonesThatReceivedBusyTheMost();
+			        break;
+			case 6: printCellphonesThatWereCalledTheMost();
+			        break;
+			case 7: printCellphonesThatReceivedBusyTheMost();
+			        break;
+			case 8: printCellphonesThatWereBusyTheMost();
+			        break;
+			case 9: printDetailOfOutgoingPhoneCalls();
+			        break;
+			case 10: printDetailOfIncomingPhoneCalls();
+			         break;
+			case 11: printMaxAmountOfCellphonesPerAntenna();
+			         break;
+			case 12: printDetailOfReceivedPhoneCalls();
+			         break;
+			case 13: printAmountOfCancelledCallsDueToLackOfCapacity();
+			         break;
+			case 14: printDetailOfAntennas();
+			         break;
+			case 15: printDetailOfCellphones();
+			         break;
+			case 16: processFiles();
+			         break;
 			case 17: this->inCourse = false;
 					 break;
 			case 18: this->changeMode();
-					 break;
 		}
 	} else {
 		switch (optionNumber) {
-			case 1:
-			case 2:
-			case 3:
-			case 4:
-			case 5:
+
+			case 1: showNewMessages();
+			        break;
+			case 2: showHistoryOfSentMessages();
+			        break;
+			case 3: showHistoryOfReceivedMessages();
+			        break;
+			case 4: sendMessage();
+			        break;
+			case 5: changeCellphone();
+			        break;
 			case 6: this->changeMode();
 		}
 	}
@@ -154,3 +269,4 @@ void Index::executeAction(int optionNumber) {
 bool Index::isInCourse() {
 	return this->inCourse;
 }
+
