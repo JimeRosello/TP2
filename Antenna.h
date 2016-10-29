@@ -40,6 +40,12 @@ public:
 
 	/*
 	 * Pre: ---
+	 * Post: Devuelve el maximo permitido de conexiones
+	 */
+	unsigned int getMaxConnections();
+
+	/*
+	 * Pre: ---
 	 * Post: Conecta al celular "newCellphone" a la Antenna, en caso de haber conexiones
 	 *       libres devuelve TRUE y guarda dicho identificador en la lista de celulares conectados
 	 *       "cellphones", o devuelve FALSE en caso de que no se haya lugar disponible.

@@ -35,6 +35,10 @@ unsigned int Antenna::getIdentification() {
 	return this->identification;
 }
 
+unsigned int Antenna::getMaxConnections() {
+	return this->maxConnections;
+}
+
 bool Antenna::connectCellphone(Cellphone* newCellphone) {
 	bool cellphoneConnected = false;
 	if (!checkIfFull()) {

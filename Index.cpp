@@ -1,9 +1,8 @@
 #include "Index.h"
+#include "System.h"
 
 #include <iostream>
 #include <string>
-
-#include "List.h"
 
 const int MAX_OPTIONS_SYSTEM = 18;
 const int MAX_OPTIONS_CELLPHONE = 6;
@@ -112,19 +111,53 @@ void Index::printMaxAmountOfCellphonesPerAntenna() {
 }
 
 void Index::printDetailOfReceivedPhoneCalls() {
-
+	unsigned int phoneNumber;
+	std::cout << "Ingrese el numero de celular: ";
+	std::cin >> phoneNumber;
+	Cellphone* getCellphone(phoneNumber);
+	/*
+	 *
+	 * Completar!!!!
+	 *
+	 *
+	 */
 }
 
 void Index::printAmountOfCancelledCallsDueToLackOfCapacity() {
-
+	List<Antenna*>* listOfAntennas = this->cellphoneSystem->getListOfAntennas();
+	listOfAntennas->initiateCursor();
+	while (listOfAntennas->advanceCursor()) {
+		Antenna* currentAntenna = listOfAntennas->getCursor();
+		unsigned int id = currentAntenna->getIdentification();
+		unsigned int maxConnections = currentAntenna->getMaxConcurrentConnections();
+		std::cout << "Antena " << id << ": " << maxConnections << std::endl;
+	}
 }
 
 void Index::printDetailOfAntennas() {
-
+	List<Antenna*>* listOfAntennas = this->cellphoneSystem->getListOfAntennas();
+	listOfAntennas->initiateCursor();
+	while (listOfAntennas->advanceCursor()) {
+		Antenna* currentAntenna = listOfAntennas->getCursor();
+		unsigned int id = currentAntenna->getIdentification();
+		unsigned int maxConnections = currentAntenna->getMaxConcurrentConnections();
+		std::cout << "Antena " << id << ": " << maxConnections << std::endl;
+	}
 }
 
 void Index::printDetailOfCellphones() {
-
+	List<Antenna*>* listOfAntennas = this->cellphoneSystem->getListOfAntennas();
+	listOfAntennas->initiateCursor();
+	while (listOfAntennas->advanceCursor()) {
+		Antenna* currentAntenna = listOfAntennas->getCursor();
+		unsigned int id = currentAntenna->getIdentification();
+		unsigned int maxSupported = currentAntenna->getMaxConnections();
+		unsigned int maxConnections = currentAntenna->getMaxConcurrentConnections();
+		std::cout << "Antena: " << id << "; "
+				  << "maximas conexiones soportadas: " << maxSupported << "; "
+				  << "maximas conexiones concurrentes: " << maxConnections << "; "
+				  << std::endl;
+	}
 }
 
 void Index::processFiles() {
