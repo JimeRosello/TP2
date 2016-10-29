@@ -1,6 +1,6 @@
 #include "Antenna.h"
-#include "Cellphone.h"
 #include "List.h"
+
 
 
 enum CallStatus {
@@ -30,27 +30,11 @@ class System {
 		System();
 
 		/*
-		 * Crea una lista de antenas
-		 * Pre: -
-		 * Post: Se crea una lista de punteros a Antenna, vacia.
-		 *       Devuelve un puntero a la lista.
-		 */
-		List<Antenna*>* createAntennaList();
-
-		/*
 		 * Pre: La lista de antenas fue inicializada. Recibe un puntero
 		 *      valido a Antenna.
 		 * Post: Se agrega una antena a la lista de antenas del sistema.
 		 */
 		void addAntenna(Antenna* antenna);
-
-		/*
-		 * Crea una lista de celulares
-		 * Pre: -
-		 * Post: Se crea una lista de punteros a CellPhone, vacia.
-		 *       Devuelve un puntero a la lista.
-		 */
-		List<Cellphone*>* createCellphoneList();
 
 		/*
 		 * Pre: La lista de celulares fue inicializada. Recibe un puntero
@@ -84,7 +68,7 @@ class System {
 		 * Pre: El celular x se encuentra conectado a una antena.
 		 * Post: El celular X se desconecta de la antena.
 		 */
-		void disconnectCellPhone(Cellphone* X);
+		void disconnectCellphone(Cellphone* X);
 
 		/*
 		 * Pre: ---
@@ -122,6 +106,55 @@ class System {
 		 * Post: Devuelve el celular que mas dio ocupado de todo el sistema
 		 */
 		Cellphone* getCellphoneThatWasBusyTheMost();
+
+		/*
+		 * Pre: El puntero pasado como parametro es valido.
+		 * Post: Compara el valor del celular que mas hablo con el de un celular
+		 *       que recientemente efectuo una llamada para decidir si es necesario
+		 *       cambiar el atributo spokeTheMost
+		 */
+		void checkCellphoneThatSpokeTheMost(Cellphone* X);
+
+
+		/*
+		 * Pre: El puntero pasado como parametro es valido.
+		 * Post: Compara el valor del celular que mas hablo con el de un celular
+		 *       que recientemente efectuo una llamada para decidir si es necesario
+		 *       cambiar el atributo calledTheMost
+		 */
+		void checkCellphoneThatCalledTheMost(Cellphone* X);
+
+		/*
+		 * Pre: El puntero pasado como parametro es valido.
+		 * Post: Compara el valor del celular que mas hablo con el de un celular
+		 *       que recientemente efectuo una llamada para decidir si es necesario
+		 *       cambiar el atributo mostSpoken
+		 */
+		void checkCellphoneThatWasSpokenToTheMost(Cellphone* X);
+
+		/*
+		 * Pre: El puntero pasado como parametro es valido.
+		 * Post: Compara el valor del celular que mas hablo con el de un celular
+		 *       que recientemente efectuo una llamada para decidir si es necesario
+		 *       cambiar el atributo mostCalled
+		 */
+		void checkCellphoneThatWasCalledTheMost(Cellphone* X);
+
+		/*
+		 * Pre: El puntero pasado como parametro es valido.
+		 * Post: Compara el valor del celular que mas hablo con el de un celular
+		 *       que recientemente efectuo una llamada para decidir si es necesario
+		 *       cambiar el atributo receivedBusyTheMost
+		 */
+		void checkCellphoneThatReceivedBusyTheMost(Cellphone* X);
+
+		/*
+		 * Pre: El puntero pasado como parametro es valido.
+		 * Post: Compara el valor del celular que mas hablo con el de un celular
+		 *       que recientemente efectuo una llamada para decidir si es necesario
+		 *       cambiar el atributo wasBusyTheMost
+		 */
+		void checkCellphoneThatWasBusyTheMost(Cellphone* X);
 
 		/*
 		 * Destructor

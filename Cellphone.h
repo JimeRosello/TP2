@@ -18,14 +18,28 @@
  * Al momento de realizar una consulta, los celulares se indican por ID o por Numero.
  */
 
+enum CellphoneStatus {
+	CONNECTED,
+	DISCONNECTED,
+	CURRENTLY_SPEAKING
+};
+
 class Cellphone {
 
 private:
-	unsigned int cellphoneNumber;		//Almacena el numero de este celular.
-	unsigned int assignedAntenna;//Identificacion de la Antenna a la cual esta conectado el celular.
-//	std::fstream exitFile;				//Archivo con mensajes de egreso.
-//	std::fstream entryFile;				//Archivo con mensajes de ingreso.
-	List<Message>* waitingMessages;	//Lista para almacenar los mensajes que aun no se han enviado.
+	unsigned int cellphoneNumber;
+	unsigned int assignedAntenna;
+//	std::fstream exitFile;
+//	std::fstream entryFile;
+	List<Message*>* waitingMessages;
+	CellphoneStatus status;
+	unsigned int minutesOfOutgoingCalls;
+	unsigned int minutesOfIncomingCalls;
+	unsigned int numberOfRejectedOutgoingCalls;
+	unsigned int numberOfRejectedIncomingCalls;
+	unsigned int numberOfOutgoingCalls;
+	unsigned int numberOfIncomingCalls;
+
 
 public:
 	/*
@@ -78,12 +92,6 @@ public:
 	void showOutbox();
 
 	/*
-	 * Pre: ---
-	 * Post: Devulve TRUE en caso de estar conectado a una Antenna o FALSE en caso contrario.
-	 */
-	bool checkIfOnline();
-
-	/*
 	 * Pre: "receiverNumber" es un numero de celular registrado en el Sistema.
 	 * Post: Escribe el mensaje enviado en el archivo de egreso de este celular y lo guarda en la lista de
 	 *       mensajes de la Antenna a la que esta conectado. En caso de no estar conectado a ninguna Antenna
@@ -96,6 +104,91 @@ public:
 	 * Post: Libera la memoria de la lista "waitingMessages".
 	 */
 	void cleanWaitingMessagesList();
+
+	/*
+	 * Pre: ---
+	 * Post: Devuelve el estado en que se encuentra el celular (CONNECTED,
+	 * 	     DISCONNECTED, o CURRENTLY_SPEAKING)
+	 */
+	CellphoneStatus getStatus();
+
+	/*
+	 * Pre: El estado pasado como parametro es valido.
+	 * Post: Cambia el estado del celular al pasado como parametro.
+	 */
+	void changeStatus(CellphoneStatus status);
+
+	/*
+	 * Pre: ---
+	 * Post: Devuelve los minutos de llamadas salientes
+	 */
+	unsigned int getMinutesOfOutgoingCalls();
+
+	/*
+	 * Pre: ---
+	 * Post: Devuelve los minutos de llamadas entrantes
+	 */
+	unsigned int getMinutesOfIncomingCalls();
+
+	/*
+	 * Pre: ---
+	 * Post: Devuelve el numero de llamadas salientes rechazadas
+	 */
+	unsigned int getNumberOfRejectedOutgoingCalls();
+
+	/*
+	 * Pre: ---
+	 * Post: Devuelve el numero de llamadas entrantes rechazadas
+	 */
+	unsigned int getNumberOfRejectedIncomingCalls();
+
+	/*
+	 * Pre: ---
+	 * Post: Devuelve el numero de llamadas salientes rechazadas
+	 */
+	unsigned int getNumberOfOutgoingCalls();
+
+	/*
+	 * Pre: ---
+	 * Post: Devuelve el numero de llamadas entrantes rechazadas
+	 */
+	unsigned int getNumberOfIncomingCalls();
+
+	/*
+	 * Pre: Los minutos pasados como parametro son validos
+	 * Post: Cambia el atributo correspondiente por el pasado como parametro
+	 */
+	void changeMinutesOfOutgoingCalls(unsigned int newValue);
+
+	/*
+	 * Pre: Los minutos pasados como parametro son validos
+	 * Post: Cambia el atributo correspondiente por el pasado como parametro
+	 */
+	void changeMinutesOfIncomingCalls(unsigned int newValue);
+
+	/*
+	 * Pre: Los minutos pasados como parametro son validos
+	 * Post: Cambia el atributo correspondiente por el pasado como parametro
+	 */
+	void changeNumberOfRejectedOutgoingCalls(unsigned int newValue);
+
+	/*
+	 * Pre: Los minutos pasados como parametro son validos
+	 * Post: Cambia el atributo correspondiente por el pasado como parametro
+	 */
+	void changeNumberOfRejectedIncomingCalls(unsigned int newValue);
+
+	/*
+	 * Pre: Los minutos pasados como parametro son validos
+	 * Post: Cambia el atributo correspondiente por el pasado como parametro
+	 */
+	void changeNumberOfOutgoingCalls(unsigned int newValue);
+
+	/*
+	 * Pre: Los minutos pasados como parametro son validos
+	 * Post: Cambia el atributo correspondiente por el pasado como parametro
+	 */
+	void changeNumberOfIncomingCalls(unsigned int newValue);
 
 	/*
 	 * Pre: ---
