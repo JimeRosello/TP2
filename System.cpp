@@ -159,7 +159,7 @@ void System::checkCellphoneThatWasBusyTheMost(Cellphone* X) {
 	}
 }
 
-List<Antenna*> System::getListOfAntennas() {
+List<Antenna*>* System::getListOfAntennas() {
 	return this->listOfAntennas;
 }
 

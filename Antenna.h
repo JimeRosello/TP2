@@ -125,6 +125,12 @@ public:
 
 	/*
 	 * Pre: ---
+	 * Post: Devuelve un puntero a una lista de celulares conectados a una antena.
+	 */
+	List<Cellphone*>* getListOfCellphones();
+
+	/*
+	 * Pre: ---
 	 * Post: Libera la memoria.
 	 */
 	~Antenna();

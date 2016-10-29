@@ -119,6 +119,10 @@ unsigned int Antenna::getMaxConcurrentConnections() {
 	return this->maxConcurrentConnections;
 }
 
+List<Cellphone*>* Antenna::getListOfCellphones() {
+	return this->cellphones;
+}
+
 Antenna::~Antenna() {
 	delete this->cellphones;
 	delete this->messages;

@@ -158,9 +158,9 @@ class System {
 
 		/*
 		 * Pre: ---
-		 * Post: Devuelve una lista de antenas del sistema.
+		 * Post: Devuelve un puntero a una lista de antenas del sistema.
 		 */
-		List<Antenna*> getListOfAntennas();
+		List<Antenna*>* getListOfAntennas();
 
 		/*
 		 * Destructor
