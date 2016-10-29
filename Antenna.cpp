@@ -42,6 +42,9 @@ bool Antenna::connectCellphone(Cellphone* newCellphone) {
 		cellphones->addNewElement(newCellphone);
 		cellphoneConnected = true;
 	}
+	if (cellphoneConnected) {
+		newCellphone->changeStatus(CONNECTED);
+	}
 	return cellphoneConnected;
 }
 
@@ -59,6 +62,7 @@ Cellphone* Antenna::disconnectCellphone(unsigned int cellphoneID) {
 	if (!cellphoneFound) {
 		throw string("El Celular a eliminar no se encuentra en esta Lista");
 	}
+	cellphonePointer->changeStatus(DISCONNECTED);
 	cellphonePointer->disassignAntenna();
 	return cellphonePointer;
 }
