@@ -266,8 +266,11 @@ void Index::changeMode() {
 			  << "El modo actual es "
 			  << (this->mode == SYSTEM? "sistema.":"celular.")
 			  << std::endl;
-	this->printMenu();
-	this->chooseOption();
+	//Joel: comento las siguientes lineas porque considero que
+	//      las que estan en el do-while del main son suficientes
+	//      (de otra forma mostraria 2 veces el menu)
+	//this->printMenu();
+	//this->chooseOption();
 }
 
 void Index::printMenu() {
