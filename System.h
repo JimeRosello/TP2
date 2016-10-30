@@ -169,6 +169,15 @@ class System {
 		List<Cellphone*>* getListOfCellphones();
 
 		/*
+		 * Busca un celular en la lista de celulares.
+		 * Pre: El numero pasado como parametro es un numero de celular valido.
+		 * Post: Devuelve un puntero al celular buscado, o NULL si no lo encontro.
+		 */
+		Cellphone* findCellphone(unsigned int cellphoneNumber);
+
+
+
+		/*
 		 * Destructor
 		 * Pre: -
 		 * Post: El sistema fue destruido.

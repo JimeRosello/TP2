@@ -167,6 +167,19 @@ List<Cellphone*>* System::getListOfCellphones() {
 	return this->listOfCellphones;
 }
 
+Cellphone* System::findCellphone(unsigned int cellphoneNumber) {
+	this->listOfCellphones->initiateCursor();
+	bool found = false;
+	Cellphone* foundCellphone;
+	while (!found && this->listOfCellphones->advanceCursor()) {
+		foundCellphone = this->listOfCellphones->getCursor();
+		if (foundCellphone->getNumber() == cellphoneNumber) {
+			found = true;
+		}
+	}
+	return (found? foundCellphone:NULL);
+}
+
 System::~System() {
 	delete[] this->listOfAntennas;
 	delete[] this->listOfCellphones;
