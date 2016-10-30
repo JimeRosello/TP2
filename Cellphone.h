@@ -28,7 +28,6 @@ class Cellphone {
 
 private:
 	unsigned int cellphoneNumber;
-	unsigned int assignedAntenna;
 //	std::fstream exitFile;
 //	std::fstream entryFile;
 	List<Message*>* waitingMessages;
@@ -61,24 +60,6 @@ public:
 	 * Post: Devuelve el numero del celular.
 	 */
 	unsigned int getNumber();
-
-	/*
-	 * Pre: ---
-	 * Post: Devuelve la antena de la ultima conexion.
-	 */
-	unsigned int getLastConnection();
-
-	/*
-	 * Pre: ---
-	 * Post: Le asigna la Antenna a la que esta conectado el celular ("pointerToAntenna")
-	 */
-	void assignAntenna(unsigned int assignedAntenna);
-
-	/*
-	 * Pre: El celular tiene una Antenna asignada.
-	 * Post: Desasigna la Antenna, dejando a "pointerToAntenna" en NULL
-	 */
-	void disassignAntenna();
 
 	/*
 	 * Pre: Minuto es mayor a 0 y menor a 1440 (cantidad maxima de minutos en un dia).
