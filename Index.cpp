@@ -1,4 +1,5 @@
 #include "Index.h"
+#include "LoadFile.h"
 
 #include <iostream>
 #include <string>
@@ -226,7 +227,8 @@ void Index::printDetailOfCellphones() {
 	while (listOfCellphones->advanceCursor()) {
 		Cellphone* currentCellphone = listOfCellphones->getCursor();
 		unsigned int number = currentCellphone->getNumber();
-		unsigned int lastConnection = currentCellphone->getLastConnection();
+		//unsigned int lastConnection = currentCellphone->getLastConnection();
+		unsigned int lastConnection = 0; //TODO: Ver si estaba bien eliminar el metodo getLastConnection();
 		std::cout << "Celular: " << number << "; "
 				  << "ID ultima antena: " << lastConnection << " "
 				  << std::endl;
@@ -234,7 +236,9 @@ void Index::printDetailOfCellphones() {
 }
 
 void Index::processFiles() {
-
+	int i = 0;
+	//LoadFile("C:\\Repositorio\\TP2\\Debug\\Celulares\\SistemaDeTelefonia\\RegistrosHistoricos.txt", i);
+	LoadFile(".\\Celulares\\SistemaDeTelefonia\\RegistrosHistoricos.txt", i);
 }
 
 void Index::showNewMessages() {

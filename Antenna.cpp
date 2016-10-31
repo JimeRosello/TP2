@@ -42,7 +42,7 @@ unsigned int Antenna::getMaxConnections() {
 bool Antenna::connectCellphone(Cellphone* newCellphone) {
 	bool cellphoneConnected = false;
 	if (!checkIfFull()) {
-		newCellphone->assignAntenna(this->getIdentification());
+		//newCellphone->assignAntenna(this->getIdentification()); //TODO: Ver si estaba bien eliminar ese metodo assignAntenna.
 		cellphones->addNewElement(newCellphone);
 		cellphoneConnected = true;
 	}
@@ -67,7 +67,7 @@ Cellphone* Antenna::disconnectCellphone(unsigned int cellphoneID) {
 		throw string("El Celular a eliminar no se encuentra en esta Lista");
 	}
 	cellphonePointer->changeStatus(DISCONNECTED);
-	cellphonePointer->disassignAntenna();
+	//cellphonePointer->disassignAntenna(); //TODO: Ver si esta bien haber eliminado el metodo disassignAntenna.
 	return cellphonePointer;
 }
 

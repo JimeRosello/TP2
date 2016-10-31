@@ -2,7 +2,7 @@
 
 Cellphone::Cellphone(unsigned int cellphoneNumber) {
 	this->cellphoneNumber = cellphoneNumber;
-	this->assignedAntenna = 0;
+//    this->assignedAntenna = 0;
 	this->lastConnection = 0;
 	this->waitingMessages = new List<Message*>();
 	this->status = DISCONNECTED;
@@ -19,8 +19,9 @@ Cellphone::Cellphone(unsigned int cellphoneNumber) {
 
 Cellphone::Cellphone() {
 	this->cellphoneNumber = 0;
-	this->assignedAntenna = 0;
-	this->lastConnection = NULL;
+//    this->assignedAntenna = 0;
+//    this->lastConnection = NULL;
+	this->lastConnection = 0;
 	this->waitingMessages = new List<Message*>();
 	this->status = DISCONNECTED;
 //	this->entryFile.open("\0");
@@ -37,18 +38,18 @@ unsigned int Cellphone::getNumber() {
 	return this->cellphoneNumber;
 }
 
-unsigned int Cellphone::getLastConnection() {
-	return this->lastConnection;
-}
+// unsigned int Cellphone::getLastConnection() {
+//    return this->lastConnection;
+// }
 
-void Cellphone::assignAntenna(unsigned int assignedAntenna) {
-	this->assignedAntenna = assignedAntenna;
-	this->lastConnection = assignedAntenna;
-}
+// void Cellphone::assignAntenna(unsigned int assignedAntenna) {
+//     this->assignedAntenna = assignedAntenna;
+//     this->lastConnection = assignedAntenna;
+// }
 
-void Cellphone::disassignAntenna() {
-	this->assignedAntenna = 0;
-}
+// void Cellphone::disassignAntenna() {
+//     this->assignedAntenna = 0;
+// }
 
 CellphoneStatus Cellphone::getStatus() {
 	return this->status;
