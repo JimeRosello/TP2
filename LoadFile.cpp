@@ -58,7 +58,6 @@ void LoadFile(std::string fileName, int maxLogical, System* system) {
 				// Agrega una nueva antena al sistema
 				Antenna* antenna = new Antenna(id, capacity);
 				system->addAntenna(antenna);
-
 			} else if (strEqual(command, "Inicio")) {
 				std::string startMin;
 				posSeparator = getKeyValue(values, strNumberX, rest);
@@ -86,6 +85,10 @@ void LoadFile(std::string fileName, int maxLogical, System* system) {
 					system->initiateCall(X, Y);
 				}
 
+// HASTA ACA TODO OK
+
+// SEG FAULT ABAJO
+				/*
 			} else if (strEqual(command, "Fin")) {
 				std::string endMin;
 				posSeparator = getKeyValue(values, strNumberX, rest);
@@ -122,6 +125,9 @@ void LoadFile(std::string fileName, int maxLogical, System* system) {
 
 				// Enviar mensaje
 
+
+// SEG FAULT ABAJO
+
 			} else if (strEqual(command, "Conectar")) {
 
 				std::string minute;
@@ -147,6 +153,8 @@ void LoadFile(std::string fileName, int maxLogical, System* system) {
 				// Conecta el celular X a la antena
 				system->connectCellphone(X, antenna);
 
+
+// SEG FAULT ABAJO
 			} else if (strEqual(command, "Desconectar")) {
 
 				std::string minute;
@@ -171,7 +179,7 @@ void LoadFile(std::string fileName, int maxLogical, System* system) {
 
 				// Desonecta el celular X de la antena
 				system->disconnectCellphone(X);
-
+*/
 			}
 		}
 		i++;
