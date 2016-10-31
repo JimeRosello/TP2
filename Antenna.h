@@ -24,7 +24,7 @@ public:
 	 * Post: Crea una Antenna con un identificador "identification" con una cantidad de conexiones
 	 *       para llamadas maximas simultaneas de "maxConnections", 10 por default.
 	 */
-	Antenna(unsigned int identification, unsigned int maxConnections = 10);
+	Antenna(unsigned int identification, unsigned int maxConnections);
 
 	/*
 	 * Pre: ---

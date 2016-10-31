@@ -1,5 +1,5 @@
 #include <string>
-#include "System.h"
+#include "LoadFile.h"
 
 enum MODE {
 	SYSTEM,

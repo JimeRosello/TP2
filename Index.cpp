@@ -1,5 +1,4 @@
 #include "Index.h"
-#include "LoadFile.h"
 
 #include <iostream>
 #include <string>
@@ -238,7 +237,7 @@ void Index::printDetailOfCellphones() {
 void Index::processFiles() {
 	int i = 0;
 	//LoadFile("C:\\Repositorio\\TP2\\Debug\\Celulares\\SistemaDeTelefonia\\RegistrosHistoricos.txt", i);
-	LoadFile(".\\Celulares\\SistemaDeTelefonia\\RegistrosHistoricos.txt", i);
+	LoadFile(".\\Celulares\\SistemaDeTelefonia\\RegistrosHistoricos.txt", i, cellphoneSystem);
 }
 
 void Index::showNewMessages() {
@@ -382,4 +381,3 @@ void Index::executeAction(int optionNumber) {
 bool Index::isInCourse() {
 	return this->inCourse;
 }
-

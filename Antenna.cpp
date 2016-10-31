@@ -1,5 +1,5 @@
+
 #include "Antenna.h"
-#include "Cellphone.h"
 
 using namespace std;
 
@@ -131,6 +131,3 @@ Antenna::~Antenna() {
 	delete this->cellphones;
 	delete this->messages;
 }
-
-
-

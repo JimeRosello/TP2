@@ -180,6 +180,19 @@ Cellphone* System::findCellphone(unsigned int cellphoneNumber) {
 	return (found? foundCellphone:NULL);
 }
 
+Antenna* System::findAntenna(unsigned int idAntenna) {
+	this->listOfAntennas->initiateCursor();
+	bool found = false;
+	Antenna* foundAntenna;
+	while (!found && this->listOfAntennas->advanceCursor()) {
+		foundAntenna = this->listOfAntennas->getCursor();
+		if (foundAntenna->getIdentification() == idAntenna) {
+			found = true;
+		}
+	}
+	return (found? foundAntenna:NULL);
+}
+
 System::~System() {
 	delete[] this->listOfAntennas;
 	delete[] this->listOfCellphones;

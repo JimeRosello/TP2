@@ -175,6 +175,12 @@ class System {
 		 */
 		Cellphone* findCellphone(unsigned int cellphoneNumber);
 
+		/*
+		 * Busca una antena en la lista de antenas.
+		 * Pre: El numero pasado como parametro es un id valido.
+		 * Post: Devuelve un puntero a la antena buscada, o NULL si no la encontro.
+		 */
+		Antenna* findAntenna(unsigned int idAntenna);
 
 
 		/*
