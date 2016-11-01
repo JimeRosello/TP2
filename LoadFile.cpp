@@ -65,9 +65,14 @@ void LoadFile(std::string fileName, int maxLogical, System* system) {
 	if (!file) {
 		std::cout << "no se abrio";
 	}
+
+	// Lee una a una las lineas del archivo
  	while (getline(file, line)) {
 
+ 		// Obtiene un vector con una keyword en cada uno de sus campos
  		std::vector<std::string> strVector = split(line, ' ');
+ 		// La primera posicion corresponde al comando a ejecutar
+ 		// (Antena, Inicio, Conectar, etc.)
  		command = strVector[0];
 
 		if (strEqual(command, "Antena")) {
@@ -107,9 +112,7 @@ void LoadFile(std::string fileName, int maxLogical, System* system) {
 			std::cout << "Celular X: " << strNumberX << " Celular Y: "
 					<< strNumberY << " Minuto: " << minute << std::endl;
 			// Inicia una llamada entre los celulares encontrados
-			if (X->getStatus() == CONNECTED && Y->getStatus() == CONNECTED) {
-				system->initiateCall(X, Y);
-			}
+			system->initiateCall(minute, X, Y);
 
 // HASTA ACA TODO OK
 
@@ -121,25 +124,10 @@ void LoadFile(std::string fileName, int maxLogical, System* system) {
 			unsigned int minute = strtoi(endMin);
 			// Busca los celulares en el sistema.
 			// Si no estan, los agrega
-			Cellphone* X = system->findCellphone(numberX);
-			Cellphone* Y = system->findCellphone(numberY);
-			if (!X) {
-				X = new Cellphone(numberX);
-				system->addCellphone(X);
-			}
-			if (!Y) {
-				Y = new Cellphone(numberY);
-				system->addCellphone(Y);
-			}
 
-			// Excepciones
-			if (X == NULL || Y == NULL ||
-				X->getStatus() != CURRENTLY_SPEAKING ||
-				Y->getStatus() != CURRENTLY_SPEAKING) {
-				throw std::string("Estos celulares no se encuentran hablando");
-			}
+			Call* call = system->findCallInProgress(numberX, numberY);
 			// Termina la llamada
-			system->terminateCall(X, Y);
+			system->terminateCall(call, minute);
 			std::cout << "Celular X: " << strNumberX << " Celular Y: "
 					<< strNumberY << " Minuto: " << minute << std::endl;
 

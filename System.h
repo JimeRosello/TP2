@@ -2,13 +2,6 @@
 #include "List.h"
 
 
-
-enum CallStatus {
-	BUSY,
-	IN_PROGRESS
-};
-
-
 class System {
 	private:
 		List<Antenna*>* listOfAntennas;
@@ -19,6 +12,7 @@ class System {
 		Cellphone* mostCalled;          // al que mas llamaron
 		Cellphone* receivedBusyTheMost; // el que mas recibio ocupado
 		Cellphone* wasBusyTheMost;      // el que mas dio ocupado
+		List<Call*>* callsInProgress;
 
 	public:
 
@@ -46,17 +40,16 @@ class System {
 		/*
 		 * Inicia una llamada entre dos celulares.
 		 * Pre: Los celulares se encuentran en el sistema.
-		 * Post: Devuelve un estado (BUSY o IN_PROGRESS). En caso de
-		 *       poder efectuarse, inicia una llamada entre los celulares
-		 *       X e Y.
+		 *      startMin es un minuto valido.
+		 * Post: Devuelve un puntero a una instancia objeto Call (llamada).
 		 */
-		CallStatus initiateCall(Cellphone* X, Cellphone* Y);
+		Call* initiateCall(unsigned int startMin, Cellphone* X, Cellphone* Y);
 
 		/*
 		 * Pre: Una llamada entre X e Y se encuentra en curso (IN_PROGRESS).
-		 * Post: Concluye la llamada.
+		 * Post: Concluye la llamada. Devuelve la duracion de la llamada.
 		 */
-		void terminateCall(Cellphone* X, Cellphone* Y);
+		unsigned int terminateCall(Call* call, unsigned int endMin);
 
 		/*
 		 * Pre: El celular X se encuentra en el sistema.
@@ -182,6 +175,13 @@ class System {
 		 */
 		Antenna* findAntenna(unsigned int idAntenna);
 
+		/*
+		 * BUsca una llamada en la lista de llamadas del sistema
+		 * Pre: ---
+		 * Post: Devuelve un puntero a la llamada encontrada o NULL si no la
+		 *       encontro
+		 */
+		Call* findCallInProgress(unsigned int initiator, unsigned int receiver);
 
 		/*
 		 * Destructor

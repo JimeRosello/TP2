@@ -10,6 +10,7 @@ System::System() {
 	this->mostCalled = NULL;
 	this->receivedBusyTheMost = NULL;
 	this->wasBusyTheMost = NULL;
+	this->callsInProgress = new List<Call*>();
 }
 
 
@@ -23,56 +24,32 @@ void System::addCellphone(Cellphone* cellphone) {
 }
 
 
-CallStatus System::initiateCall(Cellphone* X, Cellphone* Y) {
-	CallStatus status;
-	if (Y->getStatus() != CONNECTED) {
-		status = BUSY;
-		// Cambia los valores de llamadas rechazadas para X y para Y
-		unsigned int numberOfRejectedOutgoingCalls =
-				X->getNumberOfRejectedOutgoingCalls();
-		numberOfRejectedOutgoingCalls++;
-		X->changeNumberOfRejectedOutgoingCalls(numberOfRejectedOutgoingCalls);
-		unsigned int numberOfRejectedIncomingCalls =
-				Y->getNumberOfIncomingCalls();
-		Y->changeNumberOfRejectedIncomingCalls(numberOfRejectedIncomingCalls);
+Call* System::initiateCall(unsigned int minute, Cellphone* X, Cellphone* Y) {
+	Call* newCall = new Call(minute, X, Y);
+	if (newCall->getCallStatus() == BUSY) {
 		// Se fija si tiene que cambiar el puntero al celular que mas recibio
 		// o dio ocupado
 		this->checkCellphoneThatReceivedBusyTheMost(X);
 		this->checkCellphoneThatWasBusyTheMost(Y);
 	} else {
-		status = IN_PROGRESS;
-		X->changeStatus(CURRENTLY_SPEAKING);
-		Y->changeStatus(CURRENTLY_SPEAKING);
-		// Cambia los valores de llamadas realizadas para X y recibidas para Y
-		unsigned int numberOfOutgoingCalls =
-				X->getNumberOfOutgoingCalls();
-		numberOfOutgoingCalls++;
-		X->changeNumberOfOutgoingCalls(numberOfOutgoingCalls);
-		unsigned int numberOfIncomingCalls =
-				Y->getNumberOfIncomingCalls();
-		Y->changeNumberOfIncomingCalls(numberOfIncomingCalls);
 		// Se fija si tiene que cambiar el puntero al celular que mas llamo
 		// o al que mas fue llamado
 		this->checkCellphoneThatCalledTheMost(X);
 		this->checkCellphoneThatWasCalledTheMost(Y);
+		this->callsInProgress->addNewElement(newCall);
 	}
-	return status;
+	return newCall;
 }
 
 
-void System::terminateCall(Cellphone* X, Cellphone* Y) {
-	if (X->getStatus() != CURRENTLY_SPEAKING ||
-		Y->getStatus() != CURRENTLY_SPEAKING) {
-		throw std::string ("No hay una llamada en curso");
-	} else {
-		X->changeStatus(CONNECTED);
-		Y->changeStatus(CONNECTED);
-
-		// Falta cambiar los minutos que hablo cada celular
-
-		this->checkCellphoneThatSpokeTheMost(X);
-		this->checkCellphoneThatWasSpokenToTheMost(Y);
-	}
+unsigned int System::terminateCall(Call* call, unsigned int endMin) {
+	call->endCall(endMin);
+	// Falta cambiar los minutos que hablo cada celular
+	Cellphone* X = call->getInitiator();
+	Cellphone* Y = call->getReceiver();
+	this->checkCellphoneThatSpokeTheMost(X);
+	this->checkCellphoneThatWasSpokenToTheMost(Y);
+	return call->getCallDuration();
 }
 
 
@@ -191,6 +168,21 @@ Antenna* System::findAntenna(unsigned int idAntenna) {
 		}
 	}
 	return (found? foundAntenna:NULL);
+}
+
+Call* System::findCallInProgress(unsigned int initiator, unsigned int receiver) {
+	this->callsInProgress->initiateCursor();
+	bool found = false;
+	Call* foundCall;
+	while (!found && this->callsInProgress->advanceCursor()) {
+		foundCall = this->callsInProgress->getCursor();
+		if ((foundCall->getInitiator()->getNumber == initiator) &&
+			(foundCall->getReceiver()->getNumber == receiver)) {
+			found = true;
+		}
+	}
+	return (found? foundCall:NULL);
+
 }
 
 System::~System() {
