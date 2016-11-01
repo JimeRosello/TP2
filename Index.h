@@ -10,6 +10,7 @@ class Index {
 
 	private:
 		MODE mode;
+		Cellphone* currentCellphone;
 		std::string* systemMenu;
 		std::string* cellphoneMenu;
 		bool inCourse;

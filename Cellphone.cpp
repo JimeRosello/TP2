@@ -6,8 +6,10 @@ Cellphone::Cellphone(unsigned int cellphoneNumber) {
 	this->lastConnection = 0;
 	this->waitingMessages = new List<Message*>();
 	this->status = DISCONNECTED;
-	this->inbox = new Heap<Message*>();
-	this->outbox = new Heap<Message*>();
+	this->inbox = new List<Message*>();
+	this->outbox = new List<Message*>();
+	this->incomingCalls = new List<Call*>();
+	this->outgoingCalls = new List<Call*>();
 	this->minutesOfOutgoingCalls = 0;
 	this->minutesOfIncomingCalls = 0;
 	this->numberOfRejectedOutgoingCalls = 0;
@@ -26,10 +28,12 @@ Cellphone::Cellphone() {
 	this->lastConnection = 0;
 	this->waitingMessages = new List<Message*>();
 	this->status = DISCONNECTED;
+	this->incomingCalls = new List<Call*>();
+	this->outgoingCalls = new List<Call*>();
 //	this->entryFile.open("\0");
 //	this->exitFile.open("\0");
-	this->inbox = new Heap<Message*>();
-	this->outbox = new Heap<Message*>();
+	this->inbox = new List<Message*>();
+	this->outbox = new List<Message*>();
 	this->minutesOfOutgoingCalls = 0;
 	this->minutesOfIncomingCalls = 0;
 	this->numberOfRejectedOutgoingCalls = 0;
@@ -42,18 +46,6 @@ unsigned int Cellphone::getNumber() {
 	return this->cellphoneNumber;
 }
 
-// unsigned int Cellphone::getLastConnection() {
-//    return this->lastConnection;
-// }
-
-// void Cellphone::assignAntenna(unsigned int assignedAntenna) {
-//     this->assignedAntenna = assignedAntenna;
-//     this->lastConnection = assignedAntenna;
-// }
-
-// void Cellphone::disassignAntenna() {
-//     this->assignedAntenna = 0;
-// }
 
 CellphoneStatus Cellphone::getStatus() {
 	return this->status;
@@ -65,7 +57,7 @@ void Cellphone::changeStatus(CellphoneStatus status) {
 
 void Cellphone::sendMessage(unsigned int receiverNumber, std::string message) {
 	Message* msg = new Message(message, receiverNumber);
-	this->outbox->addElement(msg);
+	this->outbox->addNewElement(msg);
 }
 
 unsigned int Cellphone::getMinutesOfOutgoingCalls() {
@@ -114,6 +106,23 @@ void Cellphone::changeNumberOfOutgoingCalls(unsigned int newValue) {
 
 void Cellphone::changeNumberOfIncomingCalls(unsigned int newValue) {
 	this->numberOfIncomingCalls = newValue;
+}
+
+List<Message*>* Cellphone::getOutgoingMessages() {
+	return this->outbox;
+}
+
+List<Message*>* Cellphone::getIncomingMessages() {
+	return this->inbox;
+}
+
+
+List<Call*>* Cellphone::getOutgoingCalls() {
+	return this->outgoingCalls;
+}
+
+List <Call*>* Cellphone::getIncomingCalls() {
+	return this->incomingCalls;
 }
 
 

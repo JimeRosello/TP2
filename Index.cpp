@@ -8,6 +8,7 @@ const int MAX_OPTIONS_CELLPHONE = 6;
 
 Index::Index(System* cellphoneSystem) {
 	this->mode = SYSTEM;
+	this->currentCellphone = NULL;
 	this->systemMenu = NULL;
 	this->cellphoneMenu = NULL;
 	this->setMode();
@@ -26,10 +27,7 @@ void Index::setMode() {
 	} while ((mode != 'S') && (mode != 'C'));
 	this->mode = (mode == 'S'? SYSTEM:CELLPHONE);
 	if (this->mode == CELLPHONE) {
-		int numero;
-		std::cout << "Ingrese el numero de celular"
-				  << std::endl;
-		std::cin >> numero;
+		this->changeCellphone();
 	}
 }
 
@@ -63,12 +61,119 @@ void Index::setMenues() {
 	this->cellphoneMenu[5] = "Cambiar modo";
 }
 
+List<Call*>* findCallsInCommon(Cellphone* X, Cellphone* Y) {
+	List<Call*>* callsInCommon = new List<Call*>();
+	List<Call*>* xIncomingCalls = X->getIncomingCalls();
+	List<Call*>* xOutgoingCalls = X->getOutgoingCalls();
+	xIncomingCalls->initiateCursor();
+	xOutgoingCalls->initiateCursor();
+	Call* currentCall;
+	while (xIncomingCalls->advanceCursor()) {
+		currentCall = xIncomingCalls->getCursor();
+		if (currentCall->getReceiver() == Y->getNumber()) {
+			callsInCommon->addNewElement(currentCall);
+		}
+	}
+	while (xOutgoingCalls->advanceCursor()) {
+		currentCall = xOutgoingCalls->getCursor();
+		if (currentCall->getInitiator() == Y->getNumber()) {
+			callsInCommon->addNewElement(currentCall);
+		}
+	}
+
+	return callsInCommon;
+}
+
+
+List<Message*>* findMessagesInCommon(Cellphone* X, Cellphone* Y) {
+	List<Message*>* messagesInCommon = new List<Message*>();
+	List<Message*>* xInbox = X->getIncomingMessages();
+	List<Message*>* xOutbox = X->getOutgoingMessages();
+	xInbox->initiateCursor();
+	xOutbox->initiateCursor();
+	Message* currentMsg;
+	while (xInbox->advanceCursor()) {
+		currentMsg = xInbox->getCursor();
+		if (currentMsg->getReceiver() == Y->getNumber()) {
+			messagesInCommon->addNewElement(currentMsg);
+		}
+	}
+	while (xOutbox->advanceCursor()) {
+		currentMsg = xOutbox->getCursor();
+		if (currentMsg->getReceiver() == Y->getNumber()) {
+			messagesInCommon->addNewElement(currentMsg);
+		}
+	}
+
+	return messagesInCommon;
+}
+
+
 void Index::printDetailOfCalls() {
+	unsigned int numberX, numberY;
+	std::cout << "Ingrese los celulares" << std::endl;
+	std::cout << "X: ";
+	std::cin >> numberX;
+	std::cout << "Y: ";
+	std::cin >> numberY;
+	Cellphone* X = this->cellphoneSystem->findCellphone(numberX);
+	Cellphone* Y = this->cellphoneSystem->findCellphone(numberY);
+	List<Call*>* callsInCommon = findCallsInCommon(X, Y);
+	callsInCommon->initiateCursor();
+	Call* currentCall;
+	unsigned int totalMinutes = 0;
+	unsigned int amountOfBusyCalls = 0;
+	std::cout << "Horarios de las llamadas: "
+			  << std::endl;
+	while (callsInCommon->advanceCursor()) {
+		currentCall = callsInCommon->getCursor();
+		totalMinutes += currentCall->getCallDuration();
+		if (currentCall->getStatus() == BUSY) {
+			amountOfBusyCalls++;
+		}
+		std::cout << "Inicio: " << currentCall->getStartMinute() << std::endl
+				  << "Fin: " << currentCall->getEndMinute() << std::endl;
+
+	}
+	std::cout << "Cantidad total de llamadas: " << callsInCommon->
+													getAmountOfElements()
+		 	  << std::endl
+			  << "Duracion total de llamadas: " << totalMinutes
+			  << std::endl
+			  << "Cantidad de llamadas ocupadas: " << amountOfBusyCalls;
+
+	/*
+	 *
+	 * Faltan antenas utilizadas!!!!
+	 *
+	 */
 
 }
 
 void Index::printDetailOfMessages() {
+	unsigned int numberX, numberY;
+	std::cout << "Ingrese los celulares" << std::endl;
+	std::cout << "X: ";
+	std::cin >> numberX;
+	std::cout << "Y: ";
+	std::cin >> numberY;
+	Cellphone* X = this->cellphoneSystem->findCellphone(numberX);
+	Cellphone* Y = this->cellphoneSystem->findCellphone(numberY);
+	List<Message*>* messagesInCommon = findMessagesInCommon(X, Y);
+	messagesInCommon->initiateCursor();
+	Message* currentMsg;
+	while (messagesInCommon->advanceCursor()) {
+		currentMsg = messagesInCommon->getCursor();
+		std::cout //<< "Minuto: " << currentMsg->getMinute() << std::endl
+				  << "Mensaje: " << currentMsg->getBody() << std::endl;
 
+	}
+
+	/*
+	 *
+	 * Falta minuto de mensajes!!!!!
+	 *
+	 */
 }
 
 void Index::printCellphonesThatSpokeTheMost() {
@@ -170,29 +275,67 @@ void Index::printCellphonesThatWereBusyTheMost() {
 }
 
 void Index::printDetailOfOutgoingPhoneCalls() {
-
+	unsigned int number;
+	std::cout << "Ingrese el celular" << std::endl;
+	std::cin >> number;
+	Cellphone* X = this->cellphoneSystem->findCellphone(number);
+	List<Call*>* outgoingPhoneCalls = X->getOutgoingCalls();
+	outgoingPhoneCalls->initiateCursor();
+	Call* currentCall;
+	while (outgoingPhoneCalls->advanceCursor()) {
+		currentCall = outgoingPhoneCalls->getCursor();
+		if (currentCall->getStatus() == BUSY) {
+			std::cout << "Llamada ocupada a " << currentCall->getReceiver()
+					  << std::endl;
+		} else {
+			std::cout << "Receptor de la llamada: " << currentCall->getReceiver()
+					  << std::endl
+					  << "Minuto de inicio: " << currentCall->getStartMinute()
+					  << std::endl
+					  << "Minuto de fin: " << currentCall->getEndMinute()
+					  << std::endl;
+		}
+	}
 }
 
 void Index::printDetailOfIncomingPhoneCalls() {
-
+	unsigned int number;
+	std::cout << "Ingrese el celular" << std::endl;
+	std::cin >> number;
+	Cellphone* X = this->cellphoneSystem->findCellphone(number);
+	List<Call*>* incomingPhoneCalls = X->getIncomingCalls();
+	incomingPhoneCalls->initiateCursor();
+	Call* currentCall;
+	while (incomingPhoneCalls->advanceCursor()) {
+		currentCall = incomingPhoneCalls->getCursor();
+		if (currentCall->getStatus() == BUSY) {
+			std::cout << "Llamada ocupada de " << currentCall->getInitiator()
+					  << std::endl;
+		} else {
+			std::cout << "Emisor de la llamada: " << currentCall->getInitiator()
+					  << std::endl
+					  << "Minuto de inicio: " << currentCall->getStartMinute()
+					  << std::endl
+					  << "Minuto de fin: " << currentCall->getEndMinute()
+					  << std::endl;
+		}
+	}
 }
 
 void Index::printMaxAmountOfCellphonesPerAntenna() {
-
+	List<Antenna*>* antennas = this->cellphoneSystem->getListOfAntennas();
+	antennas->initiateCursor();
+	Antenna* currentAntenna;
+	while (antennas->advanceCursor()) {
+		currentAntenna = antennas->getCursor();
+		std::cout << "Antena " << currentAntenna->getIdentification()
+				  << std::endl
+				  << "Maximo concurrente utilizado: "
+				  << currentAntenna->getMaxConcurrentConnections()
+				  << std::endl;
+	}
 }
 
-void Index::printDetailOfReceivedPhoneCalls() {
-	unsigned int phoneNumber;
-	std::cout << "Ingrese el numero de celular: ";
-	std::cin >> phoneNumber;
-	//Cellphone* getCellphone(phoneNumber);
-	/*
-	 *
-	 * Completar!!!!
-	 *
-	 *
-	 */
-}
 
 void Index::printAmountOfCancelledCallsDueToLackOfCapacity() {
 	List<Antenna*>* listOfAntennas = this->cellphoneSystem->getListOfAntennas();
@@ -245,18 +388,51 @@ void Index::showNewMessages() {
 }
 
 void Index::showHistoryOfSentMessages() {
-
+	unsigned int number;
+	List<Message*>* outbox = this->currentCellphone->getOutgoingMessages();
+	outbox->initiateCursor();
+	Message* currentMsg;
+	while (outbox->advanceCursor()) {
+		currentMsg = outbox->getCursor();
+		std::cout //<< "Minuto: " << currentMsg->getMinute() << std::endl
+				  << "Mensaje: " << currentMsg->getBody() << std::endl
+				  << "Receptor: " << currentMsg->getReceiver() << std::endl;
+	}
 }
 
 void Index::showHistoryOfReceivedMessages() {
-
+	List<Message*>* inbox = this->currentCellphone->getOutgoingMessages();
+	inbox->initiateCursor();
+	Message* currentMsg;
+	while (inbox->advanceCursor()) {
+		currentMsg = inbox->getCursor();
+		std::cout //<< "Minuto: " << currentMsg->getMinute() << std::endl
+				  << "Mensaje: " << currentMsg->getBody() << std::endl;
+				 // << "Remitente: " << currentMsg->getSender() << std::endl;
+	}
 }
 
 void Index::sendMessage() {
-
+	unsigned int receiver;
+	std::string message;
+	std::cout << "Ingrese el destinatario del mensaje" << std::endl;
+	std::cin >> receiver;
+	std::cout << std::endl << "Ingrese el mensaje" << std::endl;
+	std::cin >> message;
+	this->currentCellphone->sendMessage(receiver, message);
 }
 
 void Index::changeCellphone() {
+	unsigned int number;
+	std::cout << "Ingrese el numero de celular"
+			  << std::endl;
+	std::cin >> number;
+	Cellphone* cellphone = this->cellphoneSystem->findCellphone(number);
+	if (!cellphone) {
+		std::cout << "El celular ingresado no se encuentra en el sistema"
+				  << std::endl;
+	}
+	this->currentCellphone = cellphone;
 
 }
 

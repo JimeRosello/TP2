@@ -6,7 +6,8 @@
 
 #include "List.h"
 #include "Message.h"
-#include "Heap.h"
+#include "Call.h"
+#include "List.h"
 
 /*
  * Celular es un dispositivo que se conecta a una Antenna y permite:
@@ -29,11 +30,11 @@ class Cellphone {
 
 private:
 	unsigned int cellphoneNumber;
-//	std::fstream exitFile;
-//	std::fstream entryFile;
 	List<Message*>* waitingMessages;
-	Heap<Message*>* inbox;
-	Heap<Message*>* outbox;
+	List<Message*>* inbox;
+	List<Message*>* outbox;
+	List<Call*>* incomingCalls;
+	List<Call*>* outgoingCalls;
 	unsigned int lastConnection;
 	CellphoneStatus status;
 	unsigned int minutesOfOutgoingCalls;
@@ -180,6 +181,30 @@ public:
 	 * Post: Cambia el atributo correspondiente por el pasado como parametro
 	 */
 	void changeNumberOfIncomingCalls(unsigned int newValue);
+
+	/*
+	 * Pre: ---
+	 * Post: Devuelve un puntero a una pila (List) de mensajes de salida
+	 */
+	List<Message*>* getOutgoingMessages();
+
+	/*
+	 * Pre: ---
+	 * Post: Devuelve un putnero a una pila de mensajes de entrada
+	 */
+	List<Message*>* getIncomingMessages();
+
+	/*
+	 * Pre: ---
+	 * Post: Devuelve un puntero a una pila de llamadas salientes
+	 */
+	List<Call*>* getOutgoingCalls();
+
+	/*
+	 * Pre: ---
+	 * Post: Devuelve un puntero a una pila de llamadas entrantes
+	 */
+	List<Call*>* getIncomingCalls();
 
 	/*
 	 * Pre: ---

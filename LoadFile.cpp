@@ -98,16 +98,14 @@ void LoadFile(std::string fileName, int maxLogical, System* system) {
 
 
 			// Busca los celulares en el sistema.
-			// Si no estan, los agrega
+
 			Cellphone* X = system->findCellphone(numberX);
 			Cellphone* Y = system->findCellphone(numberY);
 			if (!X) {
-				X = new Cellphone(numberX);
-				system->addCellphone(X);
+				throw std::string ("El celular no se encuentra en el sistema");
 			}
 			if (!Y) {
-				Y = new Cellphone(numberY);
-				system->addCellphone(Y);
+				throw std::string ("El celular no se encuentra en el sistema");
 			}
 			std::cout << "Celular X: " << strNumberX << " Celular Y: "
 					<< strNumberY << " Minuto: " << minute << std::endl;
@@ -122,8 +120,6 @@ void LoadFile(std::string fileName, int maxLogical, System* system) {
 			unsigned int numberX = strtoi(strNumberX);
 			unsigned int numberY = strtoi(strNumberY);
 			unsigned int minute = strtoi(endMin);
-			// Busca los celulares en el sistema.
-			// Si no estan, los agrega
 
 			Call* call = system->findCallInProgress(numberX, numberY);
 			// Termina la llamada

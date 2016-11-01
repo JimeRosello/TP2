@@ -1,17 +1,17 @@
 #ifndef CALL_H_
 #define CALL_H_
 
-#include "Cellphone.h"
 
 enum CallStatus {
 	BUSY,
-	IN_PROGRESS
+	IN_PROGRESS,
+	TERMINATED
 };
 
 class Call {
 	private:
-		Cellphone* initiator;
-		Cellphone* receiver;
+		unsigned int initiator;
+		unsigned int receiver;
 		unsigned int startMin;
 		unsigned int endMin;
 		CallStatus status;
@@ -24,7 +24,7 @@ class Call {
 		 * Post: Crea una llamada con minuto de inicio startMin,
 		 *       minuto de fin por default = startMin
 		 */
-		Call(unsigned int startMin, Cellphone* initiator, Cellphone* receiver);
+		Call(unsigned int startMin, unsigned int initiator, unsigned int receiver);
 
 		/*
 		 * Pre: El minuto pasado como parametro endMin es valido (>= startMin)
@@ -41,23 +41,39 @@ class Call {
 
 		/*
 		 * Pre: ---
-		 * Post: Devuelve el estado de la llamada
+		 * Post: Devuelve el numero del celular que inicio la llamada.
 		 */
-		CallStatus getCallStatus();
-
-		/*
-		 * Pre: ---
-		 * Post: Devuelve un puntero al celular que inicio la llamada.
-		 */
-		Cellphone* getInitiator();
+		unsigned int getInitiator();
 
 		/*
 		 * Pre: ----
-		 * Post: Devuelve un putnero al celular que recibio la llamada.
+		 * Post: Devuelve el numero del celular que recibio la llamada.
 		 */
-		Cellphone* getReceiver();
+		unsigned int getReceiver();
 
+		/*
+		 * Pre: El estado pasado como parametro es valido (BUSY o IN_PROGRESS)
+		 * Post: Cambia el estado de la llamada al pasado como parametro
+		 */
+		void changeStatus(CallStatus status);
 
+		/*
+		 * Pre: ---
+		 * Post: Devuelve el estado de la llamada (IN_PROGRESS, BUSY o TERMINATED)
+		 */
+		CallStatus getStatus();
+
+		/*
+		 * Pre: ---
+		 * Post: Devuelve el minuto de inicio de la llamada
+		 */
+		unsigned int getStartMinute();
+
+		/*
+		 * Pre: ---
+		 * Post: Devuelve el minuto de fin de la llamada
+		 */
+		unsigned int getEndMinute();
 
 		/*
 		 * Destructor

@@ -26,27 +26,51 @@ void System::addCellphone(Cellphone* cellphone) {
 
 Call* System::initiateCall(unsigned int minute, Cellphone* X, Cellphone* Y) {
 	Call* newCall = new Call(minute, X, Y);
-	if (newCall->getCallStatus() == BUSY) {
+
+	if ((X->getStatus() == CONNECTED) &&
+		(Y->getStatus() == CONNECTED)) {
+		newCall->changeStatus(IN_PROGRESS);
+		X->changeStatus(CURRENTLY_SPEAKING);
+		Y->changeStatus(CURRENTLY_SPEAKING);
+		unsigned int outgoingCalls = X->getNumberOfOutgoingCalls();
+		unsigned int incomingCalls = Y->getNumberOfIncomingCalls();
+		X->changeNumberOfOutgoingCalls(++outgoingCalls);
+		Y->changeNumberOfIncomingCalls(++incomingCalls);
+
+	} else if (Y->getStatus() == CURRENTLY_SPEAKING) {
+
+		unsigned int numberOfRejectedOutgoingCalls =
+				X->getNumberOfRejectedOutgoingCalls();
+		numberOfRejectedOutgoingCalls++;
+		X->changeNumberOfRejectedOutgoingCalls(numberOfRejectedOutgoingCalls);
+		unsigned int numberOfRejectedIncomingCalls =
+				Y->getNumberOfIncomingCalls();
+		Y->changeNumberOfRejectedIncomingCalls(numberOfRejectedIncomingCalls);
+
 		// Se fija si tiene que cambiar el puntero al celular que mas recibio
 		// o dio ocupado
 		this->checkCellphoneThatReceivedBusyTheMost(X);
 		this->checkCellphoneThatWasBusyTheMost(Y);
-	} else {
-		// Se fija si tiene que cambiar el puntero al celular que mas llamo
-		// o al que mas fue llamado
-		this->checkCellphoneThatCalledTheMost(X);
-		this->checkCellphoneThatWasCalledTheMost(Y);
-		this->callsInProgress->addNewElement(newCall);
 	}
+
+	// Se fija si tiene que cambiar el puntero al celular que mas llamo
+	// o al que mas fue llamado
+	this->checkCellphoneThatCalledTheMost(X);
+	this->checkCellphoneThatWasCalledTheMost(Y);
+	this->callsInProgress->addNewElement(newCall);
+
 	return newCall;
 }
 
 
 unsigned int System::terminateCall(Call* call, unsigned int endMin) {
 	call->endCall(endMin);
-	// Falta cambiar los minutos que hablo cada celular
-	Cellphone* X = call->getInitiator();
-	Cellphone* Y = call->getReceiver();
+	Cellphone* X = findCellphone(call->getInitiator());
+	X->changeStatus(CONNECTED);
+	X->changeMinutesOfOutgoingCalls(call->getCallDuration());
+	Cellphone* Y = findCellphone(call->getReceiver());
+	Y->changeStatus(CONNECTED);
+	Y->changeMinutesOfIncomingCalls(call->getCallDuration());
 	this->checkCellphoneThatSpokeTheMost(X);
 	this->checkCellphoneThatWasSpokenToTheMost(Y);
 	return call->getCallDuration();
