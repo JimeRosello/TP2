@@ -6,6 +6,8 @@ Cellphone::Cellphone(unsigned int cellphoneNumber) {
 	this->lastConnection = 0;
 	this->waitingMessages = new List<Message*>();
 	this->status = DISCONNECTED;
+	this->inbox = new Heap<Message*>();
+	this->outbox = new Heap<Message*>();
 	this->minutesOfOutgoingCalls = 0;
 	this->minutesOfIncomingCalls = 0;
 	this->numberOfRejectedOutgoingCalls = 0;
@@ -13,8 +15,8 @@ Cellphone::Cellphone(unsigned int cellphoneNumber) {
 	this->numberOfOutgoingCalls = 0;
 	this->numberOfIncomingCalls = 0;
 
-//	this->entryFile.open("a");
-//	this->exitFile.open("a");
+//	  this->entryFile.open("a");
+//	  this->exitFile.open("a");
 }
 
 Cellphone::Cellphone() {
@@ -26,6 +28,8 @@ Cellphone::Cellphone() {
 	this->status = DISCONNECTED;
 //	this->entryFile.open("\0");
 //	this->exitFile.open("\0");
+	this->inbox = new Heap<Message*>();
+	this->outbox = new Heap<Message*>();
 	this->minutesOfOutgoingCalls = 0;
 	this->minutesOfIncomingCalls = 0;
 	this->numberOfRejectedOutgoingCalls = 0;
@@ -59,6 +63,10 @@ void Cellphone::changeStatus(CellphoneStatus status) {
 	this->status = status;
 }
 
+void Cellphone::sendMessage(unsigned int receiverNumber, std::string message) {
+	Message* msg = new Message(message, receiverNumber);
+	this->outbox->addElement(msg);
+}
 
 unsigned int Cellphone::getMinutesOfOutgoingCalls() {
 	return this->minutesOfOutgoingCalls;

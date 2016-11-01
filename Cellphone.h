@@ -6,6 +6,7 @@
 
 #include "List.h"
 #include "Message.h"
+#include "Heap.h"
 
 /*
  * Celular es un dispositivo que se conecta a una Antenna y permite:
@@ -31,6 +32,8 @@ private:
 //	std::fstream exitFile;
 //	std::fstream entryFile;
 	List<Message*>* waitingMessages;
+	Heap<Message*>* inbox;
+	Heap<Message*>* outbox;
 	unsigned int lastConnection;
 	CellphoneStatus status;
 	unsigned int minutesOfOutgoingCalls;
