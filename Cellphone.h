@@ -7,7 +7,6 @@
 #include "List.h"
 #include "Message.h"
 #include "Call.h"
-#include "List.h"
 
 /*
  * Celular es un dispositivo que se conecta a una Antenna y permite:
@@ -205,6 +204,12 @@ public:
 	 * Post: Devuelve un puntero a una pila de llamadas entrantes
 	 */
 	List<Call*>* getIncomingCalls();
+
+	/*
+	 * Pre: ---
+	 * Post: Devuelve la lista de mensajes en espera
+	 */
+	List<Message*>* getWaitingMessages();
 
 	/*
 	 * Pre: ---

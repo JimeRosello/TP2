@@ -125,6 +125,9 @@ List <Call*>* Cellphone::getIncomingCalls() {
 	return this->incomingCalls;
 }
 
+List<Message*>* Cellphone::getWaitingMessages() {
+	return this->waitingMessages;
+}
 
 Cellphone::~Cellphone() {
 //	this->entryFile.close();

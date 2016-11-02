@@ -383,7 +383,16 @@ void Index::processFiles() {
 }
 
 void Index::showNewMessages() {
-
+	List<Message*>* waitingMessages = this->currentCellphone->
+												getWaitingMessages();
+	waitingMessages->initiateCursor();
+	Message* currentMessage;
+	while (waitingMessages->advanceCursor()) {
+		currentMessage = waitingMessages->getCursor();
+		std::cout << "Mensaje de " << currentMessage->getSender()
+				  << " en el minuto " << currentMessage->getMinute() << ": "
+				  << std::endl << currentMessage->getBody() << std::endl;
+	}
 }
 
 void Index::showHistoryOfSentMessages() {
