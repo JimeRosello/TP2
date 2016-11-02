@@ -164,16 +164,11 @@ void Index::printDetailOfMessages() {
 	Message* currentMsg;
 	while (messagesInCommon->advanceCursor()) {
 		currentMsg = messagesInCommon->getCursor();
-		std::cout //<< "Minuto: " << currentMsg->getMinute() << std::endl
+		std::cout << "Minuto: " << currentMsg->getMinute() << std::endl
 				  << "Mensaje: " << currentMsg->getBody() << std::endl;
 
 	}
 
-	/*
-	 *
-	 * Falta minuto de mensajes!!!!!
-	 *
-	 */
 }
 
 void Index::printCellphonesThatSpokeTheMost() {
@@ -346,6 +341,10 @@ void Index::printAmountOfCancelledCallsDueToLackOfCapacity() {
 		unsigned int maxConnections = currentAntenna->getMaxConcurrentConnections();
 		std::cout << "Antena " << id << ": " << maxConnections << std::endl;
 	}
+
+	/*
+	 * Completar
+	 */
 }
 
 void Index::printDetailOfAntennas() {
@@ -433,7 +432,6 @@ void Index::changeCellphone() {
 				  << std::endl;
 	}
 	this->currentCellphone = cellphone;
-
 }
 
 
@@ -445,11 +443,6 @@ void Index::changeMode() {
 			  << "El modo actual es "
 			  << (this->mode == SYSTEM? "sistema.":"celular.")
 			  << std::endl;
-	//Joel: comento las siguientes lineas porque considero que
-	//      las que estan en el do-while del main son suficientes
-	//      (de otra forma mostraria 2 veces el menu)
-	//this->printMenu();
-	//this->chooseOption();
 }
 
 void Index::printMenu() {
@@ -485,11 +478,8 @@ int Index::chooseOption() {
 
 	int option;
 	do {
-		std::cout << std::endl
-				  << "Elija un numero de opcion (entre 1 y "
-				  << maxOption
-				  << ")"
-				  << std::endl;
+		std::cout << std::endl << "Elija un numero de opcion (entre 1 y "
+				  << maxOption << ")" << std::endl;
 		std::cin >> option;
 	} while ((option <= 0) || (option > maxOption));
 
@@ -522,7 +512,7 @@ void Index::executeAction(int optionNumber) {
 			         break;
 			case 11: printMaxAmountOfCellphonesPerAntenna();
 			         break;
-			case 12: printDetailOfReceivedPhoneCalls();
+			case 12: this->printDetailOfIncomingPhoneCalls();
 			         break;
 			case 13: printAmountOfCancelledCallsDueToLackOfCapacity();
 			         break;
@@ -549,7 +539,7 @@ void Index::executeAction(int optionNumber) {
 			        break;
 			case 5: changeCellphone();
 			        break;
-			case 6: this->changeMode();
+			case 6: changeMode();
 		}
 	}
 }
