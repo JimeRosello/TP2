@@ -402,7 +402,7 @@ void Index::showHistoryOfSentMessages() {
 	Message* currentMsg;
 	while (outbox->advanceCursor()) {
 		currentMsg = outbox->getCursor();
-		std::cout //<< "Minuto: " << currentMsg->getMinute() << std::endl
+		std::cout << "Minuto: " << currentMsg->getMinute() << std::endl
 				  << "Mensaje: " << currentMsg->getBody() << std::endl
 				  << "Receptor: " << currentMsg->getReceiver() << std::endl;
 	}
@@ -414,9 +414,9 @@ void Index::showHistoryOfReceivedMessages() {
 	Message* currentMsg;
 	while (inbox->advanceCursor()) {
 		currentMsg = inbox->getCursor();
-		std::cout //<< "Minuto: " << currentMsg->getMinute() << std::endl
-				  << "Mensaje: " << currentMsg->getBody() << std::endl;
-				 // << "Remitente: " << currentMsg->getSender() << std::endl;
+		std::cout << "Minuto: " << currentMsg->getMinute() << std::endl
+				  << "Mensaje: " << currentMsg->getBody() << std::endl
+				  << "Remitente: " << currentMsg->getSender() << std::endl;
 	}
 }
 
@@ -447,8 +447,7 @@ void Index::changeCellphone() {
 void Index::changeMode() {
 	this->mode == SYSTEM? this->mode = CELLPHONE:
 						  this->mode = SYSTEM;
-	std::cout << "Se ha cambiado el modo del programa. "
-		      << std::endl
+	std::cout << "Se ha cambiado el modo del programa. " << std::endl
 			  << "El modo actual es "
 			  << (this->mode == SYSTEM? "sistema.":"celular.")
 			  << std::endl;
@@ -457,17 +456,11 @@ void Index::changeMode() {
 void Index::printMenu() {
 	if (this->mode == SYSTEM) {
 		for (int i = 0; i < MAX_OPTIONS_SYSTEM; i++) {
-			std::cout << i+1
-					  << ". "
-					  << systemMenu[i]
-					  << std::endl;
+			std::cout << i+1 << ". " << systemMenu[i] << std::endl;
 		}
 	} else {
 		for (int i = 0; i < MAX_OPTIONS_CELLPHONE; i++) {
-			std::cout << i+1
-					  << ". "
-					  << cellphoneMenu[i]
-					  << std::endl;
+			std::cout << i+1 << ". " << cellphoneMenu[i] << std::endl;
 		}
 	}
 }
