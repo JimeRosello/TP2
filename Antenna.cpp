@@ -1,7 +1,4 @@
-
 #include "Antenna.h"
-
-using namespace std;
 
 Antenna::Antenna(unsigned int identification, unsigned int maxConnections) {
 	this->identification = identification;
@@ -42,11 +39,8 @@ unsigned int Antenna::getMaxConnections() {
 bool Antenna::connectCellphone(Cellphone* newCellphone) {
 	bool cellphoneConnected = false;
 	if (!checkIfFull()) {
-		//newCellphone->assignAntenna(this->getIdentification()); //TODO: Ver si estaba bien eliminar ese metodo assignAntenna.
 		cellphones->addNewElement(newCellphone);
 		cellphoneConnected = true;
-	}
-	if (cellphoneConnected) {
 		newCellphone->changeStatus(CONNECTED);
 	}
 	return cellphoneConnected;
@@ -55,19 +49,17 @@ bool Antenna::connectCellphone(Cellphone* newCellphone) {
 Cellphone* Antenna::disconnectCellphone(unsigned int cellphoneID) {
 	bool cellphoneFound = false;
 	Cellphone* cellphonePointer = NULL;
-	cellphones->initiateCursor();
-	while (!cellphoneFound && cellphones->advanceCursor()) {
-		unsigned int currentCellNumber = cellphones->getCursor()->getNumber();
-		cellphonePointer = cellphones->getCursor();
-		if (currentCellNumber == cellphoneID) {
+	if (cellphones->isEmpty()) {
+		throw std::string("La lista esta vacia");
+	}
+	this->cellphones->initiateCursor();
+	do {
+		Cellphone* nextCellphone = this->cellphones->getNextElement();
+		if (nextCellphone->getNumber() == cellphoneID) {
 			cellphoneFound = true;
+			cellphonePointer = nextCellphone;
 		}
-	}
-	if (!cellphoneFound) {
-		throw string("El Celular a eliminar no se encuentra en esta Lista");
-	}
-	cellphonePointer->changeStatus(DISCONNECTED);
-	//cellphonePointer->disassignAntenna(); //TODO: Ver si esta bien haber eliminado el metodo disassignAntenna.
+	} while (!cellphoneFound && this->cellphones->advanceCursor());
 	return cellphonePointer;
 }
 
@@ -90,7 +82,8 @@ bool Antenna::checkIfFull() {
 	return (getActiveConnections() == this->maxConnections);
 }
 
-void Antenna::saveMessage(unsigned int receiverID, string message) {
+void Antenna::saveMessage(unsigned int transmitterID, unsigned int receiverID,
+		std::string message) {
 	Message* newMessage = new Message(message, receiverID);
 	messages->addNewElement(newMessage);
 }
