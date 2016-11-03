@@ -223,6 +223,26 @@ Call* System::findCallInProgress(unsigned int initiator, unsigned int receiver) 
 
 }
 
+Antenna* System::findAntennaToWhichCellIsConnected(Cellphone* cellphone) {
+	List<Antenna*>* listOfAntennas = this->listOfAntennas;
+	listOfAntennas->initiateCursor();
+	bool found = false;
+	Antenna* currentAntenna;
+	Cellphone* currentCellphone;
+	while (!found && listOfAntennas->advanceCursor()) {
+		currentAntenna = listOfAntennas->getCursor();
+		List<Cellphone*>* listOfCellphones = currentAntenna->getListOfCellphones();
+		listOfCellphones->initiateCursor();
+		while (!found && listOfCellphones->advanceCursor()) {
+			currentCellphone = listOfCellphones->getCursor();
+			if (currentCellphone->getNumber() == cellphone->getNumber()) {
+				found = true;
+			}
+		}
+	}
+	return (found? currentAntenna:NULL);
+}
+
 System::~System() {
 	delete[] this->listOfAntennas;
 	delete[] this->listOfCellphones;

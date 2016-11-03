@@ -108,7 +108,6 @@ List<Message*>* findMessagesInCommon(Cellphone* X, Cellphone* Y) {
 	return messagesInCommon;
 }
 
-
 void Index::printDetailOfCalls() {
 	unsigned int numberX, numberY;
 	std::cout << "Ingrese los celulares" << std::endl;
@@ -367,10 +366,9 @@ void Index::printDetailOfCellphones() {
 	while (listOfCellphones->advanceCursor()) {
 		Cellphone* currentCellphone = listOfCellphones->getCursor();
 		unsigned int number = currentCellphone->getNumber();
-		//unsigned int lastConnection = currentCellphone->getLastConnection();
-		unsigned int lastConnection = 0; //TODO: Ver si estaba bien eliminar el metodo getLastConnection();
+		unsigned int lastConnection = currentCellphone->getLastConnection();
 		std::cout << "Celular: " << number << "; "
-				  << "ID ultima antena: " << lastConnection << " "
+				  << "ID ultima antena: A" << lastConnection << " "
 				  << std::endl;
 	}
 }

@@ -1,5 +1,4 @@
 #include "Antenna.h"
-#include "List.h"
 
 
 class System {
@@ -174,6 +173,14 @@ class System {
 		 * Post: Devuelve un puntero a la antena buscada, o NULL si no la encontro.
 		 */
 		Antenna* findAntenna(unsigned int idAntenna);
+
+		/*
+		 * Pre: El celular se encuentra en el sistema
+		 * Post: Devuelve un puntero a la antena a la que se encuentra conectado
+		 *       el celular cellphone pasado como parametro.
+		 *       Devuelve NULL si no se encuentra conectado a ninguna antena.
+		 */
+		Antenna* findAntennaToWhichCellIsConnected(Cellphone* cellphone);
 
 		/*
 		 * BUsca una llamada en la lista de llamadas del sistema
