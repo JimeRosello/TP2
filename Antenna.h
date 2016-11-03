@@ -1,7 +1,7 @@
 #ifndef ANTENNA_H_
 #define ANTENNA_H_
 
-#include "Call.h"
+#include "Cellphone.h"
 
 class Antenna {
 
@@ -24,7 +24,7 @@ public:
 	 * Post: Crea una Antenna con un identificador "identification" con una cantidad de conexiones
 	 *       para llamadas maximas simultaneas de "maxConnections", 10 por default.
 	 */
-	Antenna(unsigned int identification, unsigned int maxConnections);
+	Antenna(unsigned int identification, unsigned int maxConnections = 10);
 
 	/*
 	 * Pre: ---
@@ -48,7 +48,7 @@ public:
 	 * Pre: ---
 	 * Post: Conecta al celular "newCellphone" a la Antenna, en caso de haber conexiones
 	 *       libres devuelve TRUE y guarda dicho identificador en la lista de celulares conectados
-	 *       "cellphones", o devuelve FALSE en caso de que no se haya lugar disponible.
+	 *       "cellphones", o devuelve FALSE en caso de que no haya lugar disponible.
 	 */
 	bool connectCellphone(Cellphone* newCellphone);
 
@@ -62,7 +62,7 @@ public:
 	/*
 	 * Pre: ---
 	 * Post: Devuelve TRUE si el celular con identificador "cellphoneID" se encuentra actualmente en la lista
-	 *       "cellphones", o FALSE si no lo est�. En caso de encontrarlo dejara al puntero "cursor"
+	 *       "cellphones", o FALSE si no lo esta. En caso de encontrarlo dejara al puntero "cursor"
 	 *       de la lista "cellphones" apuntando al celular buscado, de otra forma este sera NULL.
 	 */
 	bool checkIfConnected(unsigned int cellphoneID);
@@ -75,7 +75,7 @@ public:
 
 	/*
 	 * Pre: ---
-	 * Post: Devuelve TRUE si la Antenna tiene todos sus canales ocupados o FALSE en el caso contrario.
+	 * Post: Devuelve TRUE si la Antena tiene todos sus canales ocupados o FALSE en el caso contrario.
 	 */
 	bool checkIfFull();
 
@@ -83,7 +83,8 @@ public:
 	 * Pre: El celular con identificador "transmitterID" se encuentra conectado a la Antenna.
 	 * Post: Guarda un Mensaje para posteriormente tener la opcion de mandarlo a su remitente.
 	 */
-	void saveMessage(unsigned int recieverID, std::string message);
+	void saveMessage(unsigned int transmitterID, unsigned int recieverID,
+			std::string message);
 
 	/*
 	 * Pre: ---
