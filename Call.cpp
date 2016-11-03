@@ -1,5 +1,5 @@
 #include "Call.h"
-
+#include <string>
 
 Call::Call(unsigned int startMin, unsigned int initiator, unsigned int receiver) {
 	this->startMin = startMin;
@@ -7,6 +7,7 @@ Call::Call(unsigned int startMin, unsigned int initiator, unsigned int receiver)
 	this->initiator = initiator;
 	this->receiver = receiver;
 	this->status = BUSY;
+	this->involvedAntennas = new List<unsigned int>;
 }
 
 unsigned int Call::getCallDuration() {
@@ -45,4 +46,8 @@ unsigned int Call::getStartMinute() {
 
 unsigned int Call::getEndMinute() {
 	return this->endMin;
+}
+
+void Call::addInvolvedAntenna(unsigned int antennaID) {
+	this->involvedAntennas->addNewElement(antennaID);
 }

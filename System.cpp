@@ -26,6 +26,8 @@ void System::addCellphone(Cellphone* cellphone) {
 
 Call* System::initiateCall(unsigned int minute, Cellphone* X, Cellphone* Y) {
 	Call* newCall = new Call(minute, X->getNumber(), Y->getNumber());
+	newCall->addInvolvedAntenna(X->getLastConnection());
+	newCall->addInvolvedAntenna(Y->getLastConnection());
 
 	if ((X->getStatus() == CONNECTED) &&
 		(Y->getStatus() == CONNECTED)) {
