@@ -84,7 +84,7 @@ public:
 	 * Post: Guarda un Mensaje para posteriormente tener la opcion de mandarlo a su remitente.
 	 */
 	void saveMessage(unsigned int transmitterID, unsigned int recieverID,
-			std::string message);
+			std::string message, unsigned int minute);
 
 	/*
 	 * Pre: ---
@@ -144,3 +144,4 @@ public:
 };
 
 #endif /* Antenna_H_ */
+

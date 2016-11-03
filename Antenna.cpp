@@ -83,8 +83,8 @@ bool Antenna::checkIfFull() {
 }
 
 void Antenna::saveMessage(unsigned int transmitterID, unsigned int receiverID,
-		std::string message) {
-	Message* newMessage = new Message(message, receiverID);
+		std::string message, unsigned int minute) {
+	Message* newMessage = new Message(message, receiverID, transmitterID, minute);
 	messages->addNewElement(newMessage);
 }
 
