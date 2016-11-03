@@ -36,38 +36,43 @@ public:
 
 	/*
 	 * Pre: ---
-	 * Post: Devuelve el puntero "cursor".
+	 * Post: Devuelve el elemento del puntero "cursor".
 	 */
 	L getCursor();
 
 	/*
 	 * Pre: ---
-	 * Post: Devuelve el puntero "firstNode".
+	 * Post: Devuelve el elemento del puntero "firstNode".
 	 */
 	L getFirst();
 
 	/*
 	 * Pre: "newElement" es un elemento valido.
 	 * Post: Inserta el elemento "newElement" al principio de la lista y aumenta la
-	 *       cantidad de elementos de la lista ("amounOfElements") en 1.
+	 *       cantidad de elementos de la lista ("amountOfElements") en 1.
 	 */
 	void addNewElement(L newElement);
 
 	/*
 	 * Pre: La lista "List" no esta vacia.
-	 * Post: Borra el nodo siguiente al apuntado por el puntero "previousNode" de la lista "List"
-	 *       (o el primero en caso de que "previousNode" sea NULL) y reduce la cantidad de
-	 *       elementos de la lista ("amountOfElements") en 1.
+	 * Post: Borra el nodo siguiente al apuntado por el puntero "cursor" de la lista "List"
+	 *       y reduce la cantidad de elementos de la lista ("amountOfElements") en 1. En
+	 *       caso de que el cursor se encuentre en NULL, borrara el primer elemento de la lista.
 	 */
-	void removeNextElement(Node<L>* previousNode);
+	void removeNextElement();
 
 	/*
-	 * Pre: "readingNode" es un puntero a un nodo Node que se encuentra en la lista "List", en caso
-	 *      de no indicarse ninguno se tomara la ubicacion del cursor.
-	 * Post: Devuelve el elemento dentro del nodo al que se esta apuntando, en caso de no mandar un
-	 *       puntero por parametro se tomara al puntero "cursor".
+	 * Pre: La lista "List" no esta vacia y el cursor apunta a algun nodo.
+	 * Post: Devuelve el elemento dentro del nodo al que esta apuntando el cursor.
 	 */
-	L getElement(Node<L>* readingNode);
+	L getElement();
+
+	/*
+	 * Pre: La lista "List" no esta vacia y hay un elemento despues del apuntado por el cursor.
+	 * Post: Devuelve el elemento dentro del nodo siguiente del que esta apuntando por el cursor,
+	 *       en caso de ser NULL devolvera el primer elemento de la lista.
+	 */
+	L getNextElement();
 
 	/*
 	 * Pre: ---
@@ -119,24 +124,45 @@ template<class L> void List<L>::addNewElement(L newElement) {
 	Node<L>* newNode = new Node<L>(newElement);
 	newNode->changeNextNode(firstNode);
 	firstNode = newNode;
+	initiateCursor();
 	this->amountOfElements++;
 }
 
-template<class L> void List<L>::removeNextElement(Node<L>* previousNode) {
+template<class L> void List<L>::removeNextElement() {
 	Node<L>* deletedNode;
-	if (previousNode == NULL) {
+	if (this->cursor == NULL) {
 		deletedNode = this->firstNode;
 		this->firstNode = deletedNode->getNextNode();
 	} else {
-		deletedNode = previousNode->getNextNode();
-		previousNode->changeNextNode(deletedNode->getNextNode());
+		if (this->cursor->getNextNode() == NULL) {
+			throw std::string("No hay mas elementos despues del cursor.");
+		}
+		deletedNode = this->cursor->getNextNode();
+		this->cursor->changeNextNode(deletedNode->getNextNode());
 	}
 	this->amountOfElements--;
 	delete deletedNode;
+	initiateCursor();
 }
 
-template<class L> L List<L>::getElement(Node<L>* readingNode) {
-	return readingNode->getElement();
+template<class L> L List<L>::getElement() {
+	if (this->cursor == NULL) {
+		throw std::string("El cursor no apunta a ningun elemento.");
+	}
+	return this->cursor->getElement();
+}
+
+template<class L> L List<L>::getNextElement() {
+	L returningElement;
+	if (this->cursor == NULL) {
+		returningElement = this->firstNode->getElement();
+	} else {
+		if (this->cursor->getNextNode() == NULL) {
+			throw std::string("No hay mas elementos despues del cursor.");
+		}
+		returningElement = this->cursor->getNextNode()->getElement();
+	}
+	return returningElement;
 }
 
 template<class L> unsigned int List<L>::getAmountOfElements() {
@@ -148,9 +174,11 @@ template<class L> bool List<L>::isEmpty() {
 }
 
 template<class L> List<L>::~List() {
-	while (this->firstNode != NULL) {
-		removeNextElement(NULL);
+	initiateCursor();
+	while (!isEmpty()) {
+		removeNextElement();
 	}
 }
 
 #endif /* LIST_H_ */
+
