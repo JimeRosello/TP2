@@ -26,6 +26,8 @@ void System::addCellphone(Cellphone* cellphone) {
 
 Call* System::initiateCall(unsigned int minute, Cellphone* X, Cellphone* Y) {
 	Call* newCall = new Call(minute, X->getNumber(), Y->getNumber());
+	newCall->addInvolvedAntenna(X->getLastConnection());
+	newCall->addInvolvedAntenna(Y->getLastConnection());
 
 	if ((X->getStatus() == CONNECTED) &&
 		(Y->getStatus() == CONNECTED)) {
@@ -221,6 +223,26 @@ Call* System::findCallInProgress(unsigned int initiator, unsigned int receiver) 
 	}
 	return (found? foundCall:NULL);
 
+}
+
+Antenna* System::findAntennaToWhichCellIsConnected(Cellphone* cellphone) {
+	List<Antenna*>* listOfAntennas = this->listOfAntennas;
+	listOfAntennas->initiateCursor();
+	bool found = false;
+	Antenna* currentAntenna;
+	Cellphone* currentCellphone;
+	while (!found && listOfAntennas->advanceCursor()) {
+		currentAntenna = listOfAntennas->getCursor();
+		List<Cellphone*>* listOfCellphones = currentAntenna->getListOfCellphones();
+		listOfCellphones->initiateCursor();
+		while (!found && listOfCellphones->advanceCursor()) {
+			currentCellphone = listOfCellphones->getCursor();
+			if (currentCellphone->getNumber() == cellphone->getNumber()) {
+				found = true;
+			}
+		}
+	}
+	return (found? currentAntenna:NULL);
 }
 
 System::~System() {

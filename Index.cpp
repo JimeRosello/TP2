@@ -108,7 +108,6 @@ List<Message*>* findMessagesInCommon(Cellphone* X, Cellphone* Y) {
 	return messagesInCommon;
 }
 
-
 void Index::printDetailOfCalls() {
 	unsigned int numberX, numberY;
 	std::cout << "Ingrese los celulares" << std::endl;
@@ -131,22 +130,23 @@ void Index::printDetailOfCalls() {
 		if (currentCall->getStatus() == BUSY) {
 			amountOfBusyCalls++;
 		}
+		List<unsigned int>* involvedAntennas = currentCall->getInvolvedAntennas();
+		involvedAntennas->initiateCursor();
 		std::cout << "Inicio: " << currentCall->getStartMinute() << std::endl
-				  << "Fin: " << currentCall->getEndMinute() << std::endl;
+				  << "Fin: " << currentCall->getEndMinute() << std::endl
+				  << "Antenas utilizadas: " << std::endl;
+		while (involvedAntennas->advanceCursor()) {
+			unsigned int currentAntenna = involvedAntennas->getCursor();
+			std::cout << currentAntenna << std::endl;
+		}
 	}
 	std::cout << "Cantidad total de llamadas: " << callsInCommon->
 													getAmountOfElements()
 		 	  << std::endl
 			  << "Duracion total de llamadas: " << totalMinutes
 			  << std::endl
-			  << "Cantidad de llamadas ocupadas: " << amountOfBusyCalls;
-
-	/*
-	 *
-	 * Faltan antenas utilizadas!!!!
-	 *
-	 */
-
+			  << "Cantidad de llamadas ocupadas: " << amountOfBusyCalls
+			  << std::endl;
 }
 
 void Index::printDetailOfMessages() {
@@ -367,10 +367,9 @@ void Index::printDetailOfCellphones() {
 	while (listOfCellphones->advanceCursor()) {
 		Cellphone* currentCellphone = listOfCellphones->getCursor();
 		unsigned int number = currentCellphone->getNumber();
-		//unsigned int lastConnection = currentCellphone->getLastConnection();
-		unsigned int lastConnection = 0; //TODO: Ver si estaba bien eliminar el metodo getLastConnection();
+		unsigned int lastConnection = currentCellphone->getLastConnection();
 		std::cout << "Celular: " << number << "; "
-				  << "ID ultima antena: " << lastConnection << " "
+				  << "ID ultima antena: A" << lastConnection << " "
 				  << std::endl;
 	}
 }
@@ -395,7 +394,6 @@ void Index::showNewMessages() {
 }
 
 void Index::showHistoryOfSentMessages() {
-	unsigned int number;
 	List<Message*>* outbox = this->currentCellphone->getOutgoingMessages();
 	outbox->initiateCursor();
 	Message* currentMsg;

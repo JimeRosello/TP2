@@ -88,7 +88,14 @@ public:
 	 *       mensajes de la Antenna a la que esta conectado. En caso de no estar conectado a ninguna Antenna
 	 *       lo guarda en una lista de mensajes propia.
 	 */
-	void sendMessage(unsigned int receiverNumber, std::string message);
+	void sendMessage(unsigned int receiverNumber, std::string message,
+														unsigned int minute);
+
+	/*
+	 * Pre: ---
+	 * Post: Devuelve la ultima conexion del celular
+	 */
+	unsigned int getLastConnection();
 
 	/*
 	 * Pre: ---

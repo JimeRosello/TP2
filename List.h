@@ -6,6 +6,7 @@
 #endif
 
 #include "Node.h"
+#include <string>
 
 template<class L> class List {
 
@@ -181,4 +182,3 @@ template<class L> List<L>::~List() {
 }
 
 #endif /* LIST_H_ */
-

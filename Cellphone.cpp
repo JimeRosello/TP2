@@ -2,7 +2,6 @@
 
 Cellphone::Cellphone(unsigned int cellphoneNumber) {
 	this->cellphoneNumber = cellphoneNumber;
-//    this->assignedAntenna = 0;
 	this->lastConnection = 0;
 	this->waitingMessages = new List<Message*>();
 	this->status = DISCONNECTED;
@@ -55,9 +54,15 @@ void Cellphone::changeStatus(CellphoneStatus status) {
 	this->status = status;
 }
 
-void Cellphone::sendMessage(unsigned int receiverNumber, std::string message) {
-	Message* msg = new Message(message, receiverNumber);
+void Cellphone::sendMessage(unsigned int receiverNumber, std::string message,
+												unsigned int minute) {
+	Message* msg = new Message(message, receiverNumber, this->cellphoneNumber,
+												minute);
 	this->outbox->addNewElement(msg);
+}
+
+unsigned int Cellphone::getLastConnection() {
+	return this->lastConnection;
 }
 
 unsigned int Cellphone::getMinutesOfOutgoingCalls() {

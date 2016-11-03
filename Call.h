@@ -1,6 +1,7 @@
 #ifndef CALL_H_
 #define CALL_H_
 
+#include "List.h"
 
 enum CallStatus {
 	BUSY,
@@ -15,6 +16,7 @@ class Call {
 		unsigned int startMin;
 		unsigned int endMin;
 		CallStatus status;
+		List<unsigned int>* involvedAntennas;
 
 	public:
 
@@ -74,6 +76,18 @@ class Call {
 		 * Post: Devuelve el minuto de fin de la llamada
 		 */
 		unsigned int getEndMinute();
+
+		/*
+		 * Pre: antennaID es valido
+		 * Post: Agrega un id de una anetna a la lista
+		 */
+		void addInvolvedAntenna(unsigned int antennaID);
+
+		/*
+		 * Pre: ---
+		 * Post: Devuelve una lista de las antenas involucradas en la llamada
+		 */
+		List<unsigned int>* getInvolvedAntennas();
 
 		/*
 		 * Destructor
