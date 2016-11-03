@@ -51,3 +51,7 @@ unsigned int Call::getEndMinute() {
 void Call::addInvolvedAntenna(unsigned int antennaID) {
 	this->involvedAntennas->addNewElement(antennaID);
 }
+
+List<unsigned int>* Call::getInvolvedAntennas() {
+	return this->involvedAntennas;
+}

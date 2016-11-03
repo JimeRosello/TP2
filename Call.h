@@ -84,6 +84,12 @@ class Call {
 		void addInvolvedAntenna(unsigned int antennaID);
 
 		/*
+		 * Pre: ---
+		 * Post: Devuelve una lista de las antenas involucradas en la llamada
+		 */
+		List<unsigned int>* getInvolvedAntennas();
+
+		/*
 		 * Destructor
 		 * Pre: ---
 		 * Post: La instancia de llamada fue destruida
