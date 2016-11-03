@@ -133,7 +133,6 @@ void Index::printDetailOfCalls() {
 		}
 		std::cout << "Inicio: " << currentCall->getStartMinute() << std::endl
 				  << "Fin: " << currentCall->getEndMinute() << std::endl;
-
 	}
 	std::cout << "Cantidad total de llamadas: " << callsInCommon->
 													getAmountOfElements()
@@ -427,7 +426,8 @@ void Index::sendMessage() {
 	std::cin >> receiver;
 	std::cout << std::endl << "Ingrese el mensaje" << std::endl;
 	std::cin >> message;
-	this->currentCellphone->sendMessage(receiver, message);
+	unsigned int minute = 1;
+	this->currentCellphone->sendMessage(receiver, message, minute);
 }
 
 void Index::changeCellphone() {

@@ -61,10 +61,6 @@ void LoadFile(std::string fileName, int maxLogical, System* system) {
 				startMin, strNumberX, strNumberY, endMin, message;
 	int i = 0;
 	std::ifstream file(fileName.c_str());
-	std::string keyword;
-	if (!file) {
-		std::cout << "no se abrio";
-	}
 
 	// Lee una a una las lineas del archivo
  	while (getline(file, line)) {
@@ -107,7 +103,7 @@ void LoadFile(std::string fileName, int maxLogical, System* system) {
 			if (!Y) {
 				throw std::string ("El celular no se encuentra en el sistema");
 			}
-			std::cout << "Celular X: " << strNumberX << " Celular Y: "
+			std::cout << "CelularX: " << strNumberX << " Celular Y: "
 					<< strNumberY << " Minuto: " << minute << std::endl;
 			// Inicia una llamada entre los celulares encontrados
 			system->initiateCall(minute, X, Y);
@@ -137,7 +133,7 @@ void LoadFile(std::string fileName, int maxLogical, System* system) {
 			unsigned int numberY = strtoi(strNumberY);
 			unsigned int minute = strtoi(startMin);
 			Cellphone* X = system->findCellphone(numberX);
-			X->sendMessage(numberY, message);
+			X->sendMessage(numberY, message, minute);
 
 
 // SEG FAULT ABAJO
@@ -164,9 +160,9 @@ void LoadFile(std::string fileName, int maxLogical, System* system) {
 			}
 			std::cout << "Celular X: " << numberX << " Antena: "
 					<< id << " Minuto: " << min << std::endl;
-
+std::cout << "hola";
 			// Conecta el celular X a la antena
-			system->connectCellphone(X, antenna);
+		//	system->connectCellphone(X, antenna);
 
 
 // SEG FAULT ABAJO
@@ -201,6 +197,7 @@ void LoadFile(std::string fileName, int maxLogical, System* system) {
 	}
 	i++;
 	maxLogical = i;
+	std::cout << i << std::endl;
 }
 
 
