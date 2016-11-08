@@ -26,11 +26,10 @@ void System::addCellphone(Cellphone* cellphone) {
 
 Call* System::initiateCall(unsigned int minute, Cellphone* X, Cellphone* Y) {
 	Call* newCall = new Call(minute, X->getNumber(), Y->getNumber());
-	newCall->addInvolvedAntenna(X->getLastConnection());
-	newCall->addInvolvedAntenna(Y->getLastConnection());
-
 	if ((X->getStatus() == CONNECTED) &&
 		(Y->getStatus() == CONNECTED)) {
+		newCall->addInvolvedAntenna(X->getLastConnection());
+		newCall->addInvolvedAntenna(Y->getLastConnection());
 		newCall->changeStatus(IN_PROGRESS);
 		X->changeStatus(CURRENTLY_SPEAKING);
 		Y->changeStatus(CURRENTLY_SPEAKING);
@@ -68,10 +67,9 @@ Call* System::initiateCall(unsigned int minute, Cellphone* X, Cellphone* Y) {
 	return newCall;
 }
 
-
 unsigned int System::terminateCall(Call* call, unsigned int endMin) {
-	call->endCall(endMin);
 	Cellphone* X = findCellphone(call->getInitiator());
+	call->endCall(endMin);
 	X->changeStatus(CONNECTED);
 	X->changeMinutesOfOutgoingCalls(call->getCallDuration());
 	Cellphone* Y = findCellphone(call->getReceiver());
@@ -93,7 +91,9 @@ void System::disconnectCellphone(Cellphone* X) {
 		throw std::string ("No se puede desconectar el celular en este momento");
 	}
 	Antenna* antenna = this->findAntennaToWhichCellIsConnected(X);
-	antenna->disconnectCellphone(X->getNumber());
+	if (antenna) {
+		antenna->disconnectCellphone(X->getNumber());
+	}
 }
 
 Cellphone* System::getCellphoneThatSpokeTheMost() {

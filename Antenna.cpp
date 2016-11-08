@@ -42,6 +42,7 @@ bool Antenna::connectCellphone(Cellphone* newCellphone) {
 		cellphones->addNewElement(newCellphone);
 		cellphoneConnected = true;
 		newCellphone->changeStatus(CONNECTED);
+		newCellphone->changeLastConnection(this->identification);
 	}
 	return cellphoneConnected;
 }

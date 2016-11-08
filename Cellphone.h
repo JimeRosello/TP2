@@ -189,6 +189,12 @@ public:
 	void changeNumberOfIncomingCalls(unsigned int newValue);
 
 	/*
+	 * Pre: antennaId es una identificacion valida
+	 * Post: Cambia la ultima conexion del celular
+	 */
+	void changeLastConnection(unsigned int antennaId);
+
+	/*
 	 * Pre: ---
 	 * Post: Devuelve un puntero a una pila (List) de mensajes de salida
 	 */

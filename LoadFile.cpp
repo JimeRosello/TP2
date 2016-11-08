@@ -82,14 +82,13 @@ void LoadFile(std::string fileName, System* system) {
 			Antenna* antenna = new Antenna(id, capacity);
 			system->addAntenna(antenna);
 
-		} else if (strEqual(command, "Inicio")) {
+		} else if (strEqual(command, "Inicio")) { // ESTA PARTE ES LA QUE FALLA
 			strNumberX = strVector[1];
 			strNumberY = strVector[2];
 			startMin = strVector[3];
 			unsigned int numberX = strtoi(strNumberX);
 			unsigned int numberY = strtoi(strNumberY);
 			unsigned int minute = strtoi(startMin);
-
 
 			// Busca los celulares en el sistema.
 
@@ -113,7 +112,9 @@ void LoadFile(std::string fileName, System* system) {
 
 			Call* call = system->findCallInProgress(numberX, numberY);
 			// Termina la llamada
-			system->terminateCall(call, minute); // FALLA
+			if (call) {
+				system->terminateCall(call, minute);
+			}
 			std::cout << "Celular X: " << strNumberX << " Celular Y: "
 					<< strNumberY << " Minuto: " << minute << std::endl;
 
@@ -128,9 +129,6 @@ void LoadFile(std::string fileName, System* system) {
 			unsigned int minute = strtoi(startMin);
 			Cellphone* X = system->findCellphone(numberX);
 			X->sendMessage(numberY, message, minute);
-
-
-// SEG FAULT ABAJO
 
 		} else if (strEqual(command, "Conectar")) {
 
@@ -164,7 +162,6 @@ void LoadFile(std::string fileName, System* system) {
 			std::cout << "Celular X: " << numberX << " Antena: "
 					<< id << " Minuto: " << min << std::endl;
 
-// SEG FAULT ABAJO
 		} else if (strEqual(command, "Desconectar")) {
 
 			strNumberX = strVector[1];

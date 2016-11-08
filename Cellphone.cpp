@@ -22,8 +22,6 @@ Cellphone::Cellphone(unsigned int cellphoneNumber) {
 
 Cellphone::Cellphone() {
 	this->cellphoneNumber = 0;
-//    this->assignedAntenna = 0;
-//    this->lastConnection = NULL;
 	this->lastConnection = 0;
 	this->waitingMessages = new List<Message*>();
 	this->status = DISCONNECTED;
@@ -111,6 +109,10 @@ void Cellphone::changeNumberOfOutgoingCalls(unsigned int newValue) {
 
 void Cellphone::changeNumberOfIncomingCalls(unsigned int newValue) {
 	this->numberOfIncomingCalls = newValue;
+}
+
+void Cellphone::changeLastConnection(unsigned int antennaId) {
+	this->lastConnection = antennaId;
 }
 
 List<Message*>* Cellphone::getOutgoingMessages() {
