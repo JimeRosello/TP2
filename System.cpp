@@ -84,7 +84,6 @@ unsigned int System::terminateCall(Call* call, unsigned int endMin) {
 
 
 void System::connectCellphone(Cellphone* X, Antenna* antenna) {
-
 	antenna->connectCellphone(X);
 }
 
@@ -93,9 +92,8 @@ void System::disconnectCellphone(Cellphone* X) {
 	if (X->getStatus() != CONNECTED) {
 		throw std::string ("No se puede desconectar el celular en este momento");
 	}
-	// falta borrar de la lista de celulares conectados a la antena ;
-	// buscar antena a la que esta conectado el celular ;
-	// desconectar el celular de la anetna
+	Antenna* antenna = this->findAntennaToWhichCellIsConnected(X);
+	antenna->disconnectCellphone(X->getNumber());
 }
 
 Cellphone* System::getCellphoneThatSpokeTheMost() {

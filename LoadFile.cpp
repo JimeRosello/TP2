@@ -55,11 +55,9 @@ std::vector<std::string> split(const std::string &s, char delim) {
 }
 
 
-
-void LoadFile(std::string fileName, int maxLogical, System* system) {
+void LoadFile(std::string fileName, System* system) {
 	std::string line, command, values, antennaId, antennaCapacity,
 				startMin, strNumberX, strNumberY, endMin, message;
-	int i = 0;
 	std::ifstream file(fileName.c_str());
 
 	// Lee una a una las lineas del archivo
@@ -71,7 +69,7 @@ void LoadFile(std::string fileName, int maxLogical, System* system) {
  		// (Antena, Inicio, Conectar, etc.)
  		command = strVector[0];
 
-		if (strEqual(command, "Antena")) {
+		if (strEqual(command, "Antena")) { // esta parte anda ok
 			antennaId = strVector[1];
 			antennaCapacity = strVector[2];
 			unsigned int id = strtoi(antennaId);
@@ -98,19 +96,15 @@ void LoadFile(std::string fileName, int maxLogical, System* system) {
 			Cellphone* X = system->findCellphone(numberX);
 			Cellphone* Y = system->findCellphone(numberY);
 			if (!X) {
-				throw std::string ("El celular no se encuentra en el sistema");
+				system->addCellphone(X);
 			}
 			if (!Y) {
-				throw std::string ("El celular no se encuentra en el sistema");
+				system->addCellphone(Y);
 			}
 			std::cout << "CelularX: " << strNumberX << " Celular Y: "
 					<< strNumberY << " Minuto: " << minute << std::endl;
 			// Inicia una llamada entre los celulares encontrados
-			system->initiateCall(minute, X, Y);
-
-// HASTA ACA TODO OK
-
-// SEG FAULT ABAJO
+			system->initiateCall(minute, X, Y); // FALLA
 
 		} else if (strEqual(command, "Fin")) {
 			unsigned int numberX = strtoi(strNumberX);
@@ -119,7 +113,7 @@ void LoadFile(std::string fileName, int maxLogical, System* system) {
 
 			Call* call = system->findCallInProgress(numberX, numberY);
 			// Termina la llamada
-			system->terminateCall(call, minute);
+			system->terminateCall(call, minute); // FALLA
 			std::cout << "Celular X: " << strNumberX << " Celular Y: "
 					<< strNumberY << " Minuto: " << minute << std::endl;
 
@@ -154,16 +148,21 @@ void LoadFile(std::string fileName, int maxLogical, System* system) {
 
 			// Busca la antena en el sistema
 			Antenna* antenna = system->findAntenna(id);
+			if (!antenna) {
+				// Si no esta la antena en el sistema, la crea y la agrega
+				antenna = new Antenna(id, 10);
+				system->addAntenna(antenna);
+			}
 			if (!X) {
 				X = new Cellphone(numberX);
 				system->addCellphone(X);
 			}
+
+			// Conecta el celular X a la antena
+			system->connectCellphone(X, antenna);
+
 			std::cout << "Celular X: " << numberX << " Antena: "
 					<< id << " Minuto: " << min << std::endl;
-std::cout << "hola";
-			// Conecta el celular X a la antena
-		//	system->connectCellphone(X, antenna);
-
 
 // SEG FAULT ABAJO
 		} else if (strEqual(command, "Desconectar")) {
@@ -182,7 +181,7 @@ std::cout << "hola";
 			Cellphone* X = system->findCellphone(numberX);
 
 			// Busca la antena en el sistema
-			// Antenna* antenna = system->findAntenna(id);
+			Antenna* antenna = system->findAntenna(id);
 			if (!X) {
 				X = new Cellphone(numberX);
 				system->addCellphone(X);
@@ -195,9 +194,6 @@ std::cout << "hola";
 
 		}
 	}
-	i++;
-	maxLogical = i;
-	std::cout << i << std::endl;
 }
 
 

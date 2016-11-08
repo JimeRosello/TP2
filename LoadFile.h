@@ -12,7 +12,7 @@
  * Pre:
  * Post:
  */
-void LoadFile(std::string fileName, int maxLogical, System* system);
+void LoadFile(std::string fileName, System* system);
 
 #endif /* LOADFILE_H_ */
 

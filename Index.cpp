@@ -375,9 +375,10 @@ void Index::printDetailOfCellphones() {
 }
 
 void Index::processFiles() {
-	int i = 0;
+	std::string filename = "/home/jime/Desktop/Algoritmos/TP2/src/hola.txt";
+	LoadFile(filename, this->cellphoneSystem);
 	//LoadFile("C:\\Repositorio\\TP2\\Debug\\Celulares\\SistemaDeTelefonia\\RegistrosHistoricos.txt", i);
-	LoadFile(".\\Celulares\\SistemaDeTelefonia\\RegistrosHistoricos.txt", i, cellphoneSystem);
+	//LoadFile(".\\Celulares\\SistemaDeTelefonia\\RegistrosHistoricos.txt", i, cellphoneSystem);
 }
 
 void Index::showNewMessages() {
