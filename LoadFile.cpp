@@ -93,12 +93,11 @@ void LoadFile(std::string fileName, System* system) {
 			// Busca los celulares en el sistema.
 
 			Cellphone* X = system->findCellphone(numberX);
+			//X == NULL? (std::cout<<"No lo encontro"):(std::cout<<"Lo encontro");
 			Cellphone* Y = system->findCellphone(numberY);
-			if (!X) {
-				system->addCellphone(X);
-			}
-			if (!Y) {
-				system->addCellphone(Y);
+			//Y == NULL? (std::cout<<"No lo encontro"):(std::cout<<"Lo encontro");
+			if (!X || !Y) {
+				throw std::string("El celular no se encuentra en el sistema");
 			}
 			std::cout << "CelularX: " << strNumberX << " Celular Y: "
 					<< strNumberY << " Minuto: " << minute << std::endl;
@@ -177,8 +176,6 @@ void LoadFile(std::string fileName, System* system) {
 			// Si no esta, lo agrega
 			Cellphone* X = system->findCellphone(numberX);
 
-			// Busca la antena en el sistema
-			Antenna* antenna = system->findAntenna(id);
 			if (!X) {
 				X = new Cellphone(numberX);
 				system->addCellphone(X);

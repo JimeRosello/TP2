@@ -172,13 +172,13 @@ void Index::printDetailOfMessages() {
 
 void Index::printCellphonesThatSpokeTheMost() {
 	std::cout << "Celular que mas hablo de todo el sistema: ";
-	std::cout << this->cellphoneSystem->getCellphoneThatSpokeTheMost()->
-			getNumber();
+	Cellphone* spokeTheMost = this->cellphoneSystem->getCellphoneThatSpokeTheMost();
+	std::cout << spokeTheMost->getNumber();
 	List<Antenna*>* listOfAntennas = this->cellphoneSystem->getListOfAntennas();
 	listOfAntennas->initiateCursor();
 	while (listOfAntennas->advanceCursor()) {
 		Antenna* currentAntenna = listOfAntennas->getCursor();
-		Cellphone* spokeTheMost = currentAntenna->getCellphoneThatSpokeTheMost();
+		spokeTheMost = currentAntenna->getCellphoneThatSpokeTheMost();
 		unsigned int id = currentAntenna->getIdentification();
 		std::cout << "Celular que mas hablo de la antena " << id << ": "
 		          << spokeTheMost->getNumber()
