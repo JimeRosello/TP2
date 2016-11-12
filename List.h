@@ -152,6 +152,7 @@ template<class L> L List<L>::removeNextElement() {
 	L element = deletedNode->getElement();
 	delete deletedNode;
 	initiateCursor();
+	return element; 
 }
 
 template<class L> L List<L>::getElement() {
