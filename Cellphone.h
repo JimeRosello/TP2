@@ -93,6 +93,14 @@ public:
 
 	/*
 	 * Pre: ---
+	 * Post: Agrega un mensaje a la lista de espera. Cuando el celular este
+	 *       conectado, los mensajes se agregaran a la lista de mensajes de
+	 *       entrada inbox.
+	 */
+	void addWaitingMessage(Message* message);
+
+	/*
+	 * Pre: ---
 	 * Post: Devuelve la ultima conexion del celular
 	 */
 	unsigned int getLastConnection();
@@ -109,6 +117,12 @@ public:
 	 * 	     DISCONNECTED, o CURRENTLY_SPEAKING)
 	 */
 	CellphoneStatus getStatus();
+
+	/*
+	 * Pre: El celular se encuentra conectado.
+	 * Post: Los mensajes en lista de espera son transferidos al buzon de entrada.
+	 */
+	void receiveNewMessages();
 
 	/*
 	 * Pre: El estado pasado como parametro es valido.

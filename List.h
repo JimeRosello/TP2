@@ -88,6 +88,12 @@ public:
 	bool isEmpty();
 
 	/*
+	 * Pre: La posicion pasada como parametro es valida.
+	 * Post: Devuelve un puntero al nodo que se encuentra en la posicion pos.
+	 */
+	Node<L>* getNode(unsigned int pos);
+
+	/*
 	 * Pre: ---
 	 * Post: Libera la memoria.
 	 */

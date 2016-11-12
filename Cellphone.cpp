@@ -50,6 +50,19 @@ CellphoneStatus Cellphone::getStatus() {
 
 void Cellphone::changeStatus(CellphoneStatus status) {
 	this->status = status;
+	if (this->status == CONNECTED) {
+		this->receiveNewMessages();
+	}
+}
+
+void Cellphone::receiveNewMessages() {
+	if (this->status != CONNECTED) {
+		throw std::string("No se pueden recibir mensajes nuevos");
+	}
+	while (!(this->waitingMessages->isEmpty())) {
+		Message* newMessage = this->waitingMessages->removeNextElement();
+		this->inbox->addNewElement(newMessage);
+	}
 }
 
 void Cellphone::sendMessage(unsigned int receiverNumber, std::string message,
@@ -57,6 +70,10 @@ void Cellphone::sendMessage(unsigned int receiverNumber, std::string message,
 	Message* msg = new Message(message, receiverNumber, this->cellphoneNumber,
 												minute);
 	this->outbox->addNewElement(msg);
+}
+
+void Cellphone::addWaitingMessage(Message* message) {
+	this->waitingMessages->addNewElement(message);
 }
 
 unsigned int Cellphone::getLastConnection() {
