@@ -61,6 +61,19 @@ void Index::setMenues() {
 	this->cellphoneMenu[5] = "Cambiar modo";
 }
 
+void Index::sendAllNewMessages() {
+	if (this->mode == CELLPHONE) {
+		List<Message*>* newMessages = this->currentCellphone->getUnsentMessages();
+		newMessages->initiateCursor();
+		while (!newMessages->isEmpty()) {
+			Message* currentMessage = newMessages->getCursor();
+			unsigned int receiverNumber = currentMessage->getReceiver();
+			Cellphone* receiver = this->cellphoneSystem->findCellphone(receiverNumber);
+			receiver->addWaitingMessage(currentMessage);
+		}
+	}
+}
+
 List<Call*>* findCallsInCommon(Cellphone* X, Cellphone* Y) {
 	List<Call*>* callsInCommon = new List<Call*>();
 	List<Call*>* xIncomingCalls = X->getIncomingCalls();

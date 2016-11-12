@@ -57,6 +57,7 @@ class Index {
 		void showHistoryOfReceivedMessages();
 		void sendMessage();
 		void changeCellphone();
+		void sendAllNewMessages();
 
 	public:
 

@@ -7,6 +7,7 @@ Cellphone::Cellphone(unsigned int cellphoneNumber) {
 	this->status = DISCONNECTED;
 	this->inbox = new List<Message*>();
 	this->outbox = new List<Message*>();
+	this->unsentMessages = new List<Message*>();
 	this->incomingCalls = new List<Call*>();
 	this->outgoingCalls = new List<Call*>();
 	this->minutesOfOutgoingCalls = 0;
@@ -15,7 +16,6 @@ Cellphone::Cellphone(unsigned int cellphoneNumber) {
 	this->numberOfRejectedIncomingCalls = 0;
 	this->numberOfOutgoingCalls = 0;
 	this->numberOfIncomingCalls = 0;
-
 //	  this->entryFile.open("a");
 //	  this->exitFile.open("a");
 }
@@ -28,9 +28,10 @@ Cellphone::Cellphone() {
 	this->incomingCalls = new List<Call*>();
 	this->outgoingCalls = new List<Call*>();
 //	this->entryFile.open("\0");
-//	this->exitFile.open("\0");
+// 	this->exitFile.open("\0");
 	this->inbox = new List<Message*>();
 	this->outbox = new List<Message*>();
+	this->unsentMessages = new List<Message*>();
 	this->minutesOfOutgoingCalls = 0;
 	this->minutesOfIncomingCalls = 0;
 	this->numberOfRejectedOutgoingCalls = 0;
@@ -70,6 +71,7 @@ void Cellphone::sendMessage(unsigned int receiverNumber, std::string message,
 	Message* msg = new Message(message, receiverNumber, this->cellphoneNumber,
 												minute);
 	this->outbox->addNewElement(msg);
+	this->unsentMessages->addNewElement(msg);
 }
 
 void Cellphone::addWaitingMessage(Message* message) {
@@ -134,6 +136,10 @@ void Cellphone::changeLastConnection(unsigned int antennaId) {
 
 List<Message*>* Cellphone::getOutgoingMessages() {
 	return this->outbox;
+}
+
+List<Message*>* Cellphone::getUnsentMessages() {
+	return this->unsentMessages;
 }
 
 List<Message*>* Cellphone::getIncomingMessages() {

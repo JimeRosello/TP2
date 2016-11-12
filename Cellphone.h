@@ -32,6 +32,7 @@ private:
 	List<Message*>* waitingMessages;
 	List<Message*>* inbox;
 	List<Message*>* outbox;
+	List<Message*>* unsentMessages;
 	List<Call*>* incomingCalls;
 	List<Call*>* outgoingCalls;
 	unsigned int lastConnection;
@@ -210,9 +211,15 @@ public:
 
 	/*
 	 * Pre: ---
-	 * Post: Devuelve un puntero a una pila (List) de mensajes de salida
+	 * Post: Devuelve un puntero a una Lista de mensajes de salida
 	 */
 	List<Message*>* getOutgoingMessages();
+
+	/*
+	 * Pre: ---
+	 * Post: Devuelve un puntero a una lista de los mensajes aun no enviados.
+	 */
+	List<Message*>* getUnsentMessages();
 
 	/*
 	 * Pre: ---
