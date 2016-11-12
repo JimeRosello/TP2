@@ -59,8 +59,9 @@ public:
 	 * Post: Borra el nodo siguiente al apuntado por el puntero "cursor" de la lista "List"
 	 *       y reduce la cantidad de elementos de la lista ("amountOfElements") en 1. En
 	 *       caso de que el cursor se encuentre en NULL, borrara el primer elemento de la lista.
+	 *       Devuelve el elemento borrado.
 	 */
-	void removeNextElement();
+	L removeNextElement();
 
 	/*
 	 * Pre: La lista "List" no esta vacia y el cursor apunta a algun nodo.
@@ -135,7 +136,7 @@ template<class L> void List<L>::addNewElement(L newElement) {
 	this->amountOfElements++;
 }
 
-template<class L> void List<L>::removeNextElement() {
+template<class L> L List<L>::removeNextElement() {
 	Node<L>* deletedNode;
 	if (this->cursor == NULL) {
 		deletedNode = this->firstNode;
@@ -148,6 +149,7 @@ template<class L> void List<L>::removeNextElement() {
 		this->cursor->changeNextNode(deletedNode->getNextNode());
 	}
 	this->amountOfElements--;
+	L element = deletedNode->getElement();
 	delete deletedNode;
 	initiateCursor();
 }
