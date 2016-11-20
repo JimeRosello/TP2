@@ -59,7 +59,8 @@ void Index::setMenues() {
 	this->cellphoneMenu[2] = "Mostrar historial de mensajes recibidos";
 	this->cellphoneMenu[3] = "Enviar mensaje";
 	this->cellphoneMenu[4] = "Cambiar de celular";
-	this->cellphoneMenu[5] = "Cambiar modo";
+	this->cellphoneMenu[5] = "Salir";
+	this->cellphoneMenu[6] = "Cambiar modo";
 }
 
 void Index::sendAllNewMessages() {
@@ -566,7 +567,9 @@ void Index::executeAction(int optionNumber) {
 			        break;
 			case 5: changeCellphone();
 			        break;
-			case 6: changeMode();
+			case 6: this->inCourse = false;
+					break;
+			case 7: changeMode();
 		}
 	}
 }

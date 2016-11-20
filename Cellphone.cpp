@@ -8,6 +8,7 @@ Cellphone::Cellphone(unsigned int cellphoneNumber) {
 	this->inbox = new List<Message*>();
 	this->outbox = new List<Message*>();
 	this->unsentMessages = new List<Message*>();
+	this->newMessages = new List<Message*>();
 	this->incomingCalls = new List<Call*>();
 	this->outgoingCalls = new List<Call*>();
 	this->minutesOfOutgoingCalls = 0;
@@ -16,8 +17,8 @@ Cellphone::Cellphone(unsigned int cellphoneNumber) {
 	this->numberOfRejectedIncomingCalls = 0;
 	this->numberOfOutgoingCalls = 0;
 	this->numberOfIncomingCalls = 0;
-//	  this->entryFile.open("a");
-//	  this->exitFile.open("a");
+	//this->entryFile.open(entryFilename.c_str());
+	//this->exitFile.open(exitFilename.c_str());
 }
 
 Cellphone::Cellphone() {
@@ -27,17 +28,18 @@ Cellphone::Cellphone() {
 	this->status = DISCONNECTED;
 	this->incomingCalls = new List<Call*>();
 	this->outgoingCalls = new List<Call*>();
-//	this->entryFile.open("\0");
-// 	this->exitFile.open("\0");
 	this->inbox = new List<Message*>();
 	this->outbox = new List<Message*>();
 	this->unsentMessages = new List<Message*>();
+	this->newMessages = new List<Message*>();
 	this->minutesOfOutgoingCalls = 0;
 	this->minutesOfIncomingCalls = 0;
 	this->numberOfRejectedOutgoingCalls = 0;
 	this->numberOfRejectedIncomingCalls = 0;
 	this->numberOfOutgoingCalls = 0;
 	this->numberOfIncomingCalls = 0;
+	//this->entryFile.open(entryFilename.c_str());
+	//this->exitFile.open(exitFilename.c_str());
 }
 
 unsigned int Cellphone::getNumber() {
@@ -62,16 +64,18 @@ void Cellphone::receiveNewMessages() {
 	}
 	while (!(this->waitingMessages->isEmpty())) {
 		Message* newMessage = this->waitingMessages->removeNextElement();
+		this->newMessages->addNewElement(newMessage);
 		this->inbox->addNewElement(newMessage);
 	}
 }
 
-void Cellphone::sendMessage(unsigned int receiverNumber, std::string message,
+void Cellphone::sendMessage(unsigned int receiverNumber, string message,
 												unsigned int minute) {
 	Message* msg = new Message(message, receiverNumber, this->cellphoneNumber,
 												minute);
 	this->outbox->addNewElement(msg);
 	this->unsentMessages->addNewElement(msg);
+
 }
 
 void Cellphone::addWaitingMessage(Message* message) {
@@ -157,6 +161,10 @@ List <Call*>* Cellphone::getIncomingCalls() {
 
 List<Message*>* Cellphone::getWaitingMessages() {
 	return this->waitingMessages;
+}
+
+List<Message*>* Cellphone::getNewMessages() {
+	return this->newMessages;
 }
 
 Cellphone::~Cellphone() {
