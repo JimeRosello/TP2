@@ -21,3 +21,6 @@ void cancelledCallsPerAntenna::changeNumberOfCancelledCalls(unsigned int numberO
 	this->numberOfCalls = numberOfCancelledCalls;
 }
 
+cancelledCallsPerAntenna::~cancelledCallsPerAntenna() {
+
+}

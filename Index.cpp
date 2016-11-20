@@ -371,7 +371,7 @@ void Index::printAmountOfCancelledCallsDueToLackOfCapacity() {
 				  << std::endl;
 		i++;
 	}
-	delete[] cancelledCallsVector;
+	//delete[] cancelledCallsVector;
 }
 
 void Index::printDetailOfAntennas() {

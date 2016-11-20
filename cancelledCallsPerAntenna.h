@@ -1,4 +1,5 @@
-
+#ifndef CANCELLEDCALLSPERANTENNA_H_
+#define CANCELLEDCALLSPERANTENNA_H_
 
 class cancelledCallsPerAntenna {
 	private:
@@ -43,5 +44,4 @@ class cancelledCallsPerAntenna {
 
 };
 
-
-
+#endif
