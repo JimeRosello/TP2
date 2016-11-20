@@ -10,6 +10,7 @@ private:
 	unsigned int identification;
 	List<Message*>* messages;
 	List<Cellphone*>* cellphones;
+	List<Cellphone*>* waitingCellphoneList;
 	Cellphone* spokeTheMost;               // el que hablo mas
 	Cellphone* calledTheMost;              // el que llamo mas
 	Cellphone* mostSpoken;                 // al que mas le hablaron
@@ -17,6 +18,7 @@ private:
 	Cellphone* receivedBusyTheMost;        // el que mas recibio ocupado
 	Cellphone* wasBusyTheMost;             // el que mas dio ocupado
 	unsigned int maxConcurrentConnections; // maximo de conexiones simultaneas
+	unsigned int cancelledCallsDueToLackOfCapacity;
 
 public:
 	/*
@@ -135,6 +137,24 @@ public:
 	 * Post: Devuelve un puntero a una lista de celulares conectados a una antena.
 	 */
 	List<Cellphone*>* getListOfCellphones();
+
+	/*
+	 * Pre: ---
+	 * Post: Devuelve un puntero a una lista de celulares en espera para conectarse.
+	 */
+	List<Cellphone*>* getWaitingListOfCellphones();
+
+	/*
+	 * Pre: ---
+	 * Post: Incrementa el numero de llamadas canceladas por falta de capacidad.
+	 */
+	void increaseCancelledCallsDueToLackOfCapacity();
+
+	/*
+	 * Pre: ---
+	 * Post: Devuelve el numero d ellamadas canceladas por falta de capacidad.
+	 */
+	unsigned int getAmountOfCancelledCallsDueToLackOfCapacity();
 
 	/*
 	 * Pre: ---

@@ -5,6 +5,7 @@ Antenna::Antenna(unsigned int identification, unsigned int maxConnections) {
 	this->maxConnections = maxConnections;
 	this->messages = new List<Message*>();
 	this->cellphones = new List<Cellphone*>();
+	this->waitingCellphoneList = new List<Cellphone*>();
 	this->spokeTheMost = NULL;
 	this->calledTheMost = NULL;
 	this->mostSpoken = NULL;
@@ -12,6 +13,7 @@ Antenna::Antenna(unsigned int identification, unsigned int maxConnections) {
 	this->receivedBusyTheMost = NULL;
 	this->wasBusyTheMost = NULL;
 	this->maxConcurrentConnections = 0;
+	this->cancelledCallsDueToLackOfCapacity = 0;
 }
 
 Antenna::Antenna() {
@@ -19,6 +21,7 @@ Antenna::Antenna() {
 	this->maxConnections = 0;
 	this->messages = new List<Message*>();
 	this->cellphones = new List<Cellphone*>();
+	this->waitingCellphoneList = new List<Cellphone*>();
 	this->spokeTheMost = NULL;
 	this->calledTheMost = NULL;
 	this->mostSpoken = NULL;
@@ -26,6 +29,7 @@ Antenna::Antenna() {
 	this->receivedBusyTheMost = NULL;
 	this->wasBusyTheMost = NULL;
 	this->maxConcurrentConnections = 0;
+	this->cancelledCallsDueToLackOfCapacity = 0;
 }
 
 unsigned int Antenna::getIdentification() {
@@ -119,6 +123,18 @@ unsigned int Antenna::getMaxConcurrentConnections() {
 
 List<Cellphone*>* Antenna::getListOfCellphones() {
 	return this->cellphones;
+}
+
+List<Cellphone*>* Antenna::getWaitingListOfCellphones() {
+	return this->waitingCellphoneList;
+}
+
+void Antenna::increaseCancelledCallsDueToLackOfCapacity() {
+	this->cancelledCallsDueToLackOfCapacity++;
+}
+
+unsigned int Antenna::getAmountOfCancelledCallsDueToLackOfCapacity() {
+	return this->cancelledCallsDueToLackOfCapacity;
 }
 
 Antenna::~Antenna() {

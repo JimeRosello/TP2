@@ -101,6 +101,7 @@ void LoadFile(std::string fileName, System* system) {
 			}
 			std::cout << "CelularX: " << strNumberX << " Celular Y: "
 					<< strNumberY << " Minuto: " << minute << std::endl;
+
 			// Inicia una llamada entre los celulares encontrados
 			system->initiateCall(minute, X, Y); // FALLA
 

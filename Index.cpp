@@ -1,4 +1,5 @@
 #include "Index.h"
+#include "cancelledCallsPerAntenna.h"
 
 #include <iostream>
 #include <string>
@@ -343,20 +344,34 @@ void Index::printMaxAmountOfCellphonesPerAntenna() {
 	}
 }
 
+void sort (cancelledCallsPerAntenna* vector) {
+	//
+}
 
 void Index::printAmountOfCancelledCallsDueToLackOfCapacity() {
 	List<Antenna*>* listOfAntennas = this->cellphoneSystem->getListOfAntennas();
+	unsigned int numberOfAntennas = listOfAntennas->getAmountOfElements();
+	cancelledCallsPerAntenna* cancelledCallsVector = new cancelledCallsPerAntenna[numberOfAntennas];
 	listOfAntennas->initiateCursor();
+	unsigned int i = 0;
 	while (listOfAntennas->advanceCursor()) {
 		Antenna* currentAntenna = listOfAntennas->getCursor();
 		unsigned int id = currentAntenna->getIdentification();
-		unsigned int maxConnections = currentAntenna->getMaxConcurrentConnections();
-		std::cout << "Antena " << id << ": " << maxConnections << std::endl;
+		unsigned int numberOfCancelledCalls = currentAntenna->getAmountOfCancelledCallsDueToLackOfCapacity();
+		cancelledCallsVector[i].changeAntennaId(id);
+		cancelledCallsVector[i].changeNumberOfCancelledCalls(numberOfCancelledCalls);
+		i++;
 	}
-
-	/*
-	 * Completar
-	 */
+	sort(cancelledCallsVector);
+	i = 0;
+	while (i <= numberOfAntennas) {
+		std::cout << "Antena: " << cancelledCallsVector[i].getAntennaId()
+				  << " ~ Numero de llamadas canceladas: "
+				  << cancelledCallsVector[i].getNumberOfCancelledCalls()
+				  << std::endl;
+		i++;
+	}
+	delete[] cancelledCallsVector;
 }
 
 void Index::printDetailOfAntennas() {
@@ -395,12 +410,10 @@ void Index::processFiles() {
 }
 
 void Index::showNewMessages() {
-	List<Message*>* waitingMessages = this->currentCellphone->
-												getWaitingMessages();
-	waitingMessages->initiateCursor();
+	List<Message*>* newMessages = this->currentCellphone->getNewMessages();
 	Message* currentMessage;
-	while (waitingMessages->advanceCursor()) {
-		currentMessage = waitingMessages->getCursor();
+	while (!newMessages->isEmpty()) {
+		currentMessage = newMessages->removeNextElement();
 		std::cout << "Mensaje de " << currentMessage->getSender()
 				  << " en el minuto " << currentMessage->getMinute() << ": "
 				  << std::endl << currentMessage->getBody() << std::endl;

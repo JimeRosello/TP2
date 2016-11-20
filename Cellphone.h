@@ -3,10 +3,12 @@
 #define CELLPHONE_H_
 
 #include <fstream>
+#include <iostream>
 
 #include "List.h"
 #include "Message.h"
 #include "Call.h"
+using namespace std;
 
 /*
  * Celular es un dispositivo que se conecta a una Antenna y permite:
@@ -22,7 +24,8 @@
 enum CellphoneStatus {
 	CONNECTED,
 	DISCONNECTED,
-	CURRENTLY_SPEAKING
+	CURRENTLY_SPEAKING,
+	WAITING_FOR_CONNECTION
 };
 
 class Cellphone {
@@ -33,6 +36,7 @@ private:
 	List<Message*>* inbox;
 	List<Message*>* outbox;
 	List<Message*>* unsentMessages;
+	List<Message*>* newMessages;
 	List<Call*>* incomingCalls;
 	List<Call*>* outgoingCalls;
 	unsigned int lastConnection;
@@ -43,6 +47,8 @@ private:
 	unsigned int numberOfRejectedIncomingCalls;
 	unsigned int numberOfOutgoingCalls;
 	unsigned int numberOfIncomingCalls;
+	fstream entryFile;
+	fstream exitFile;
 
 
 public:
@@ -102,7 +108,7 @@ public:
 
 	/*
 	 * Pre: ---
-	 * Post: Devuelve la ultima conexion del celular
+	 * Post: Devuelve la ultima conexion del celular.
 	 */
 	unsigned int getLastConnection();
 
@@ -115,7 +121,7 @@ public:
 	/*
 	 * Pre: ---
 	 * Post: Devuelve el estado en que se encuentra el celular (CONNECTED,
-	 * 	     DISCONNECTED, o CURRENTLY_SPEAKING)
+	 * 	     DISCONNECTED, o CURRENTLY_SPEAKING).
 	 */
 	CellphoneStatus getStatus();
 
@@ -133,85 +139,85 @@ public:
 
 	/*
 	 * Pre: ---
-	 * Post: Devuelve los minutos de llamadas salientes
+	 * Post: Devuelve los minutos de llamadas salientes.
 	 */
 	unsigned int getMinutesOfOutgoingCalls();
 
 	/*
 	 * Pre: ---
-	 * Post: Devuelve los minutos de llamadas entrantes
+	 * Post: Devuelve los minutos de llamadas entrantes.
 	 */
 	unsigned int getMinutesOfIncomingCalls();
 
 	/*
 	 * Pre: ---
-	 * Post: Devuelve el numero de llamadas salientes rechazadas
+	 * Post: Devuelve el numero de llamadas salientes rechazadas.
 	 */
 	unsigned int getNumberOfRejectedOutgoingCalls();
 
 	/*
 	 * Pre: ---
-	 * Post: Devuelve el numero de llamadas entrantes rechazadas
+	 * Post: Devuelve el numero de llamadas entrantes rechazadas.
 	 */
 	unsigned int getNumberOfRejectedIncomingCalls();
 
 	/*
 	 * Pre: ---
-	 * Post: Devuelve el numero de llamadas salientes rechazadas
+	 * Post: Devuelve el numero de llamadas salientes rechazadas.
 	 */
 	unsigned int getNumberOfOutgoingCalls();
 
 	/*
 	 * Pre: ---
-	 * Post: Devuelve el numero de llamadas entrantes rechazadas
+	 * Post: Devuelve el numero de llamadas entrantes rechazadas.
 	 */
 	unsigned int getNumberOfIncomingCalls();
 
 	/*
-	 * Pre: Los minutos pasados como parametro son validos
-	 * Post: Cambia el atributo correspondiente por el pasado como parametro
+	 * Pre: Los minutos pasados como parametro son validos.
+	 * Post: Cambia el atributo correspondiente por el pasado como parametro.
 	 */
 	void changeMinutesOfOutgoingCalls(unsigned int newValue);
 
 	/*
-	 * Pre: Los minutos pasados como parametro son validos
-	 * Post: Cambia el atributo correspondiente por el pasado como parametro
+	 * Pre: Los minutos pasados como parametro son validos.
+	 * Post: Cambia el atributo correspondiente por el pasado como parametro.
 	 */
 	void changeMinutesOfIncomingCalls(unsigned int newValue);
 
 	/*
-	 * Pre: Los minutos pasados como parametro son validos
-	 * Post: Cambia el atributo correspondiente por el pasado como parametro
+	 * Pre: Los minutos pasados como parametro son validos.
+	 * Post: Cambia el atributo correspondiente por el pasado como parametro.
 	 */
 	void changeNumberOfRejectedOutgoingCalls(unsigned int newValue);
 
 	/*
-	 * Pre: Los minutos pasados como parametro son validos
-	 * Post: Cambia el atributo correspondiente por el pasado como parametro
+	 * Pre: Los minutos pasados como parametro son validos.
+	 * Post: Cambia el atributo correspondiente por el pasado como parametro.
 	 */
 	void changeNumberOfRejectedIncomingCalls(unsigned int newValue);
 
 	/*
-	 * Pre: Los minutos pasados como parametro son validos
-	 * Post: Cambia el atributo correspondiente por el pasado como parametro
+	 * Pre: Los minutos pasados como parametro son validos.
+	 * Post: Cambia el atributo correspondiente por el pasado como parametro.
 	 */
 	void changeNumberOfOutgoingCalls(unsigned int newValue);
 
 	/*
-	 * Pre: Los minutos pasados como parametro son validos
-	 * Post: Cambia el atributo correspondiente por el pasado como parametro
+	 * Pre: Los minutos pasados como parametro son validos.
+	 * Post: Cambia el atributo correspondiente por el pasado como parametro.
 	 */
 	void changeNumberOfIncomingCalls(unsigned int newValue);
 
 	/*
-	 * Pre: antennaId es una identificacion valida
-	 * Post: Cambia la ultima conexion del celular
+	 * Pre: antennaId es una identificacion valida.
+	 * Post: Cambia la ultima conexion del celular.
 	 */
 	void changeLastConnection(unsigned int antennaId);
 
 	/*
 	 * Pre: ---
-	 * Post: Devuelve un puntero a una Lista de mensajes de salida
+	 * Post: Devuelve un puntero a una Lista de mensajes de salida.
 	 */
 	List<Message*>* getOutgoingMessages();
 
@@ -223,27 +229,33 @@ public:
 
 	/*
 	 * Pre: ---
-	 * Post: Devuelve un putnero a una pila de mensajes de entrada
+	 * Post: Devuelve un putnero a una pila de mensajes de entrada.
 	 */
 	List<Message*>* getIncomingMessages();
 
 	/*
 	 * Pre: ---
-	 * Post: Devuelve un puntero a una pila de llamadas salientes
+	 * Post: Devuelve un puntero a una pila de llamadas salientes.
 	 */
 	List<Call*>* getOutgoingCalls();
 
 	/*
 	 * Pre: ---
-	 * Post: Devuelve un puntero a una pila de llamadas entrantes
+	 * Post: Devuelve un puntero a una pila de llamadas entrantes.
 	 */
 	List<Call*>* getIncomingCalls();
 
 	/*
 	 * Pre: ---
-	 * Post: Devuelve la lista de mensajes en espera
+	 * Post: Devuelve la lista de mensajes en espera.
 	 */
 	List<Message*>* getWaitingMessages();
+
+	/*
+	 * Pre: ---
+	 * Post: Devuelve la lista de los ultimos mensajes recibidos.
+	 */
+	List<Message*>* getNewMessages();
 
 	/*
 	 * Pre: ---

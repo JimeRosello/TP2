@@ -54,6 +54,11 @@ Call* System::initiateCall(unsigned int minute, Cellphone* X, Cellphone* Y) {
 		 */
 		this->checkCellphoneThatReceivedBusyTheMost(X);
 		this->checkCellphoneThatWasBusyTheMost(Y);
+	} else if (X->getStatus() == WAITING_FOR_CONNECTION) {
+		Antenna* antenna = this->findAntennaToWhichCellIsConnected(X);
+		antenna->increaseCancelledCallsDueToLackOfCapacity();
+		newCall->changeStatus(TERMINATED);
+
 	}
 
 	/*
