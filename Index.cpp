@@ -5,7 +5,7 @@
 #include <string>
 
 const int MAX_OPTIONS_SYSTEM = 18;
-const int MAX_OPTIONS_CELLPHONE = 6;
+const int MAX_OPTIONS_CELLPHONE = 7;
 
 Index::Index(System* cellphoneSystem) {
 	this->mode = SYSTEM;
