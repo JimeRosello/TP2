@@ -20,7 +20,3 @@ void cancelledCallsPerAntenna::changeAntennaId(unsigned int antennaId) {
 void cancelledCallsPerAntenna::changeNumberOfCancelledCalls(unsigned int numberOfCancelledCalls) {
 	this->numberOfCalls = numberOfCancelledCalls;
 }
-
-cancelledCallsPerAntenna::~cancelledCallsPerAntenna() {
-
-}

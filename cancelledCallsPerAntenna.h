@@ -37,11 +37,6 @@ class cancelledCallsPerAntenna {
 		 */
 		void changeAntennaId(unsigned int antennaId);
 
-		/*
-		 * Destructor
-		 */
-		~cancelledCallsPerAntenna();
-
 };
 
 #endif
