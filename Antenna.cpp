@@ -140,4 +140,5 @@ unsigned int Antenna::getAmountOfCancelledCallsDueToLackOfCapacity() {
 Antenna::~Antenna() {
 	delete this->cellphones;
 	delete this->messages;
+	delete this->waitingCellphoneList;
 }

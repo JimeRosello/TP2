@@ -63,19 +63,6 @@ void Index::setMenues() {
 	this->cellphoneMenu[6] = "Cambiar modo";
 }
 
-void Index::sendAllNewMessages() {
-	if (this->mode == CELLPHONE) {
-		List<Message*>* newMessages = this->currentCellphone->getUnsentMessages();
-		newMessages->initiateCursor();
-		while (!newMessages->isEmpty()) {
-			Message* currentMessage = newMessages->getCursor();
-			unsigned int receiverNumber = currentMessage->getReceiver();
-			Cellphone* receiver = this->cellphoneSystem->findCellphone(receiverNumber);
-			receiver->addWaitingMessage(currentMessage);
-		}
-	}
-}
-
 List<Call*>* findCallsInCommon(Cellphone* X, Cellphone* Y) {
 	List<Call*>* callsInCommon = new List<Call*>();
 	List<Call*>* xIncomingCalls = X->getIncomingCalls();
@@ -454,6 +441,7 @@ void Index::sendMessage() {
 	std::cin >> message;
 	unsigned int minute = 1;
 	this->currentCellphone->sendMessage(receiver, message, minute);
+	this->cellphoneSystem->sendAllUnsentMessages();
 }
 
 void Index::changeCellphone() {
@@ -503,7 +491,6 @@ int Index::chooseOption() {
 	// modo celular, si el modo es celular.
 	int maxOption = this->getMode() == SYSTEM ? MAX_OPTIONS_SYSTEM:
 												MAX_OPTIONS_CELLPHONE;
-
 	int option;
 	do {
 		std::cout << std::endl << "Elija un numero de opcion (entre 1 y "

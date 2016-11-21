@@ -51,6 +51,13 @@ class System {
 		unsigned int terminateCall(Call* call, unsigned int endMin);
 
 		/*
+		 * Pre: ---
+		 * Post: Todos los mensajes no enviados son enviados a sus correspondientes
+		 *  	 receptores.
+		 */
+		void sendAllUnsentMessages();
+
+		/*
 		 * Pre: El celular X se encuentra en el sistema.
 		 * Post: El celular X se conecta a la antena pasada como parametro
 		 */

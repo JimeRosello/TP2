@@ -85,6 +85,19 @@ unsigned int System::terminateCall(Call* call, unsigned int endMin) {
 	return call->getCallDuration();
 }
 
+void System::sendAllUnsentMessages() {
+	List<Cellphone*>* cellphones = this->listOfCellphones;
+	cellphones->initiateCursor();
+	while (cellphones->advanceCursor()) {
+		List<Message*>* unsentMessages = cellphones->getCursor()->getUnsentMessages();
+		while (!unsentMessages->isEmpty()) {
+			Message* message = unsentMessages->removeNextElement();
+			unsigned int receiverNumber = message->getReceiver();
+			Cellphone* receiver = this->findCellphone(receiverNumber);
+			receiver->addWaitingMessage(message);
+		}
+	}
+}
 
 void System::connectCellphone(Cellphone* X, Antenna* antenna) {
 	antenna->connectCellphone(X);
