@@ -332,9 +332,46 @@ void Index::printMaxAmountOfCellphonesPerAntenna() {
 	}
 }
 
-void sort (cancelledCallsPerAntenna* vector) {
-	//
+void QS (cancelledCallsPerAntenna* vector, unsigned int first, unsigned int last)
+{
+    
+    if(first<last)
+    {
+        unsigned int left,right,pivot,temp;
+        
+        pivot = vector[first].getNumberOfCancelledCalls();
+        left = first;
+        right = last;
+        
+        while (left < right)
+        {
+            while (vector[right].getNumberOfCancelledCalls() > pivot) {
+                right--;
+            }
+            
+            while ((left < right) && (vector[left].getNumberOfCancelledCalls() <= pivot)) {
+                left++;
+            }
+            
+            if (left < right)
+            {
+                temp = vector[left].getNumberOfCancelledCalls();
+                vector[left].changeNumberOfCancelledCalls(vector[right].getNumberOfCancelledCalls());
+                vector[right].changeNumberOfCancelledCalls(temp);
+            }
+        }
+        
+        temp = vector[right].getNumberOfCancelledCalls();
+        vector[right].changeNumberOfCancelledCalls(vector[first].getNumberOfCancelledCalls());
+        vector[first].changeNumberOfCancelledCalls(temp);
+ 
+        unsigned int postpivot = right;
+        
+        QS(vector, first, postpivot - 1);
+        QS(vector, postpivot + 1, last);
+    }
 }
+
 
 void Index::printAmountOfCancelledCallsDueToLackOfCapacity() {
 	List<Antenna*>* listOfAntennas = this->cellphoneSystem->getListOfAntennas();
@@ -350,7 +387,7 @@ void Index::printAmountOfCancelledCallsDueToLackOfCapacity() {
 		cancelledCallsVector[i].changeNumberOfCancelledCalls(numberOfCancelledCalls);
 		i++;
 	}
-	sort(cancelledCallsVector);
+	QS(cancelledCallsVector,i,0); //ordenado de forma descendente
 	i = 0;
 	while (i <= numberOfAntennas) {
 		std::cout << "Antena: " << cancelledCallsVector[i].getAntennaId()
