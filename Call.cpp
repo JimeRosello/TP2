@@ -55,3 +55,7 @@ void Call::addInvolvedAntenna(unsigned int antennaID) {
 List<unsigned int>* Call::getInvolvedAntennas() {
 	return this->involvedAntennas;
 }
+
+Call::~Call() {
+	delete this->involvedAntennas;
+}

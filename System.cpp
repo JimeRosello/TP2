@@ -272,3 +272,8 @@ Antenna* System::findAntennaToWhichCellIsConnected(Cellphone* cellphone) {
 	return (found? currentAntenna:NULL);
 }
 
+System::~System() {
+	delete this->listOfAntennas;
+	delete this->listOfCellphones;
+	delete this->callsInProgress;
+}

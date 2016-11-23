@@ -168,7 +168,10 @@ List<Message*>* Cellphone::getNewMessages() {
 }
 
 Cellphone::~Cellphone() {
-//	this->entryFile.close();
-//	this->exitFile.close();
-	delete waitingMessages;
+	delete this->inbox;
+	delete this->outbox;
+	delete this->waitingMessages;
+	delete this->newMessages;
+	delete this->incomingCalls;
+	delete this->outgoingCalls;
 }
