@@ -110,28 +110,28 @@ unsigned int Cellphone::getNumberOfIncomingCalls() {
 	return this->numberOfIncomingCalls;
 }
 
-void Cellphone::changeMinutesOfOutgoingCalls(unsigned int newValue) {
-	this->minutesOfOutgoingCalls = newValue;
+void Cellphone::addMinutesOfOutgoingCalls(unsigned int newValue) {
+	this->minutesOfOutgoingCalls += newValue;
 }
 
-void Cellphone::changeMinutesOfIncomingCalls(unsigned int newValue) {
-	this->minutesOfIncomingCalls = newValue;
+void Cellphone::addMinutesOfIncomingCalls(unsigned int newValue) {
+	this->minutesOfIncomingCalls += newValue;
 }
 
-void Cellphone::changeNumberOfRejectedOutgoingCalls(unsigned int newValue) {
-	this->numberOfOutgoingCalls = newValue;
+void Cellphone::increaseNumberOfRejectedOutgoingCalls() {
+	this->numberOfOutgoingCalls++;
 }
 
-void Cellphone::changeNumberOfRejectedIncomingCalls(unsigned int newValue) {
-	this->numberOfRejectedIncomingCalls = newValue;
+void Cellphone::increaseNumberOfRejectedIncomingCalls() {
+	this->numberOfRejectedIncomingCalls++;
 }
 
-void Cellphone::changeNumberOfOutgoingCalls(unsigned int newValue) {
-	this->numberOfOutgoingCalls = newValue;
+void Cellphone::increaseNumberOfOutgoingCalls() {
+	this->numberOfOutgoingCalls++;
 }
 
-void Cellphone::changeNumberOfIncomingCalls(unsigned int newValue) {
-	this->numberOfIncomingCalls = newValue;
+void Cellphone::increaseNumberOfIncomingCalls() {
+	this->numberOfIncomingCalls++;
 }
 
 void Cellphone::changeLastConnection(unsigned int antennaId) {

@@ -177,37 +177,37 @@ public:
 	 * Pre: Los minutos pasados como parametro son validos.
 	 * Post: Cambia el atributo correspondiente por el pasado como parametro.
 	 */
-	void changeMinutesOfOutgoingCalls(unsigned int newValue);
+	void addMinutesOfOutgoingCalls(unsigned int newValue);
 
 	/*
 	 * Pre: Los minutos pasados como parametro son validos.
 	 * Post: Cambia el atributo correspondiente por el pasado como parametro.
 	 */
-	void changeMinutesOfIncomingCalls(unsigned int newValue);
+	void addMinutesOfIncomingCalls(unsigned int newValue);
 
 	/*
 	 * Pre: Los minutos pasados como parametro son validos.
 	 * Post: Cambia el atributo correspondiente por el pasado como parametro.
 	 */
-	void changeNumberOfRejectedOutgoingCalls(unsigned int newValue);
+	void increaseNumberOfRejectedOutgoingCalls();
 
 	/*
 	 * Pre: Los minutos pasados como parametro son validos.
 	 * Post: Cambia el atributo correspondiente por el pasado como parametro.
 	 */
-	void changeNumberOfRejectedIncomingCalls(unsigned int newValue);
+	void increaseNumberOfRejectedIncomingCalls();
 
 	/*
 	 * Pre: Los minutos pasados como parametro son validos.
 	 * Post: Cambia el atributo correspondiente por el pasado como parametro.
 	 */
-	void changeNumberOfOutgoingCalls(unsigned int newValue);
+	void increaseNumberOfOutgoingCalls();
 
 	/*
 	 * Pre: Los minutos pasados como parametro son validos.
 	 * Post: Cambia el atributo correspondiente por el pasado como parametro.
 	 */
-	void changeNumberOfIncomingCalls(unsigned int newValue);
+	void increaseNumberOfIncomingCalls();
 
 	/*
 	 * Pre: antennaId es una identificacion valida.

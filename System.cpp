@@ -48,20 +48,13 @@ void System::initiateCall(unsigned int minute, Cellphone* X, Cellphone* Y) {
 		newCall->changeStatus(IN_PROGRESS);
 		X->changeStatus(CURRENTLY_SPEAKING);
 		Y->changeStatus(CURRENTLY_SPEAKING);
-		unsigned int outgoingCalls = X->getNumberOfOutgoingCalls();
-		unsigned int incomingCalls = Y->getNumberOfIncomingCalls();
-		X->changeNumberOfOutgoingCalls(++outgoingCalls);
-		Y->changeNumberOfIncomingCalls(++incomingCalls);
+		X->increaseNumberOfOutgoingCalls();
+		Y->increaseNumberOfIncomingCalls();
 
 	} else if (Y->getStatus() == CURRENTLY_SPEAKING) {
 
-		unsigned int numberOfRejectedOutgoingCalls =
-				X->getNumberOfRejectedOutgoingCalls();
-		numberOfRejectedOutgoingCalls++;
-		X->changeNumberOfRejectedOutgoingCalls(numberOfRejectedOutgoingCalls);
-		unsigned int numberOfRejectedIncomingCalls =
-				Y->getNumberOfIncomingCalls();
-		Y->changeNumberOfRejectedIncomingCalls(numberOfRejectedIncomingCalls);
+		X->increaseNumberOfRejectedOutgoingCalls();
+		Y->increaseNumberOfRejectedIncomingCalls();
 
 		/*
 		 * Se fija si tiene que cambiar el puntero al celular que mas recibio
@@ -88,10 +81,10 @@ unsigned int System::terminateCall(Call* call, unsigned int endMin) {
 	Cellphone* X = findCellphone(call->getInitiator());
 	call->endCall(endMin);
 	X->changeStatus(CONNECTED);
-	X->changeMinutesOfOutgoingCalls(call->getCallDuration());
+	X->addMinutesOfOutgoingCalls(call->getCallDuration());
 	Cellphone* Y = findCellphone(call->getReceiver());
 	Y->changeStatus(CONNECTED);
-	Y->changeMinutesOfIncomingCalls(call->getCallDuration());
+	Y->addMinutesOfIncomingCalls(call->getCallDuration());
 	this->checkCellphoneThatSpokeTheMost(X);
 	this->checkCellphoneThatWasSpokenToTheMost(Y);
 	return call->getCallDuration();
