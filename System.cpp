@@ -21,10 +21,25 @@ void System::addAntenna(Antenna* antenna) {
 
 void System::addCellphone(Cellphone* cellphone) {
 	this->listOfCellphones->addNewElement(cellphone);
+	if (!this->mostCalled) {
+		this->mostCalled = cellphone;
+	}
+	if (!this->mostSpoken) {
+		this->mostSpoken = cellphone;
+	}
+	if (!this->receivedBusyTheMost) {
+		this->receivedBusyTheMost = cellphone;
+	}
+	if (!this->spokeTheMost) {
+		this->spokeTheMost = cellphone;
+	}
+	if (!this->wasBusyTheMost) {
+		this->wasBusyTheMost = cellphone;
+	}
 }
 
 
-Call* System::initiateCall(unsigned int minute, Cellphone* X, Cellphone* Y) {
+void System::initiateCall(unsigned int minute, Cellphone* X, Cellphone* Y) {
 	Call* newCall = new Call(minute, X->getNumber(), Y->getNumber());
 	if ((X->getStatus() == CONNECTED) &&
 		(Y->getStatus() == CONNECTED)) {
@@ -58,7 +73,6 @@ Call* System::initiateCall(unsigned int minute, Cellphone* X, Cellphone* Y) {
 		Antenna* antenna = this->findAntennaToWhichCellIsConnected(X);
 		antenna->increaseCancelledCallsDueToLackOfCapacity();
 		newCall->changeStatus(TERMINATED);
-
 	}
 
 	/*
@@ -68,8 +82,6 @@ Call* System::initiateCall(unsigned int minute, Cellphone* X, Cellphone* Y) {
 	this->checkCellphoneThatCalledTheMost(X);
 	this->checkCellphoneThatWasCalledTheMost(Y);
 	this->callsInProgress->addNewElement(newCall);
-
-	return newCall;
 }
 
 unsigned int System::terminateCall(Call* call, unsigned int endMin) {
@@ -100,6 +112,12 @@ void System::sendAllUnsentMessages() {
 }
 
 void System::connectCellphone(Cellphone* X, Antenna* antenna) {
+	/* Si el celular ya esta conectado a una antena, lo desconecta previo a
+	 * conectarlo a una nueva. */
+	if (X->getStatus() == CONNECTED) {
+		Antenna* previousAntenna = this->findAntennaToWhichCellIsConnected(X);
+		previousAntenna->disconnectCellphone(X->getNumber());
+	}
 	antenna->connectCellphone(X);
 }
 
@@ -139,16 +157,16 @@ Cellphone* System::getCellphoneThatWasBusyTheMost() {
 }
 
 void System::checkCellphoneThatSpokeTheMost(Cellphone* X) {
-	if (this->spokeTheMost == NULL) {
+	if (!this->spokeTheMost) {
 		this->spokeTheMost = X;
 	} else if (this->spokeTheMost->getMinutesOfOutgoingCalls() <
-			X->getMinutesOfOutgoingCalls()) {
+				X->getMinutesOfOutgoingCalls()) {
 		this->spokeTheMost = X;
 	}
 }
 
 void System::checkCellphoneThatCalledTheMost(Cellphone* X) {
-	if (this->spokeTheMost == NULL) {
+	if (!this->spokeTheMost) {
 		this->spokeTheMost = X;
 	} else if (this->calledTheMost->getNumberOfOutgoingCalls() <
 			X->getNumberOfOutgoingCalls()) {
@@ -157,7 +175,7 @@ void System::checkCellphoneThatCalledTheMost(Cellphone* X) {
 }
 
 void System::checkCellphoneThatWasSpokenToTheMost(Cellphone* X) {
-	if (this->spokeTheMost == NULL) {
+	if (!this->spokeTheMost) {
 		this->spokeTheMost = X;
 	} else if (this->mostSpoken->getNumberOfIncomingCalls() <
 			X->getNumberOfIncomingCalls()) {
@@ -166,7 +184,7 @@ void System::checkCellphoneThatWasSpokenToTheMost(Cellphone* X) {
 }
 
 void System::checkCellphoneThatWasCalledTheMost(Cellphone* X) {
-	if (this->spokeTheMost == NULL) {
+	if (!this->spokeTheMost) {
 		this->spokeTheMost = X;
 	} else if (this->mostCalled->getNumberOfIncomingCalls() <
 			X->getNumberOfIncomingCalls()) {
@@ -175,7 +193,7 @@ void System::checkCellphoneThatWasCalledTheMost(Cellphone* X) {
 }
 
 void System::checkCellphoneThatReceivedBusyTheMost(Cellphone* X) {
-	if (this->spokeTheMost == NULL) {
+	if (!this->spokeTheMost) {
 		this->spokeTheMost = X;
 	} else if (this->receivedBusyTheMost->getNumberOfRejectedOutgoingCalls() <
 			X->getNumberOfRejectedOutgoingCalls()) {
@@ -184,7 +202,7 @@ void System::checkCellphoneThatReceivedBusyTheMost(Cellphone* X) {
 }
 
 void System::checkCellphoneThatWasBusyTheMost(Cellphone* X) {
-	if (this->spokeTheMost == NULL) {
+	if (!this->spokeTheMost) {
 		this->spokeTheMost = X;
 	} else if (this->wasBusyTheMost->getNumberOfRejectedIncomingCalls() <
 			X->getNumberOfRejectedIncomingCalls()) {

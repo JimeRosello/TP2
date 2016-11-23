@@ -40,9 +40,9 @@ class System {
 		 * Inicia una llamada entre dos celulares.
 		 * Pre: Los celulares se encuentran en el sistema.
 		 *      startMin es un minuto valido.
-		 * Post: Devuelve un puntero a una instancia objeto Call (llamada).
+		 * Post: Hay una nueva llamada en la lista de llamadas en curso.
 		 */
-		Call* initiateCall(unsigned int startMin, Cellphone* X, Cellphone* Y);
+		void initiateCall(unsigned int startMin, Cellphone* X, Cellphone* Y);
 
 		/*
 		 * Pre: Una llamada entre X e Y se encuentra en curso (IN_PROGRESS).
