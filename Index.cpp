@@ -558,10 +558,12 @@ MODE Index::getMode() {
 }
 
 int Index::chooseOption() {
-	// Guarda el maximo numero de opcion
-	// Es decir, la cantidad de elementos del arreglo de opciones del modo
-	// sistema, si el modo es sistema, o la de la lista de opciones del
-	// modo celular, si el modo es celular.
+	/*
+	 * Guarda el maximo numero de opcion
+	 * Es decir, la cantidad de elementos del arreglo de opciones del modo
+	 * sistema, si el modo es sistema, o la de la lista de opciones del
+	 * modo celular, si el modo es celular.
+	 */
 	int maxOption =
 			this->getMode() == SYSTEM ?
 					MAX_OPTIONS_SYSTEM : MAX_OPTIONS_CELLPHONE;
@@ -578,84 +580,82 @@ int Index::chooseOption() {
 void Index::executeAction(int optionNumber) {
 	if (this->mode == SYSTEM) {
 		switch (optionNumber) {
-
-		case 1:
-			printDetailOfCalls();
-			break;
-		case 2:
-			printDetailOfMessages();
-			break;
-		case 3:
-			printCellphonesThatSpokeTheMost();
-			break;
-		case 4:
-			printCellphonesThatCalledTheMost();
-			break;
-		case 5:
-			printCellphonesThatReceivedBusyTheMost();
-			break;
-		case 6:
-			printCellphonesThatWereCalledTheMost();
-			break;
-		case 7:
-			printCellphonesThatReceivedBusyTheMost();
-			break;
-		case 8:
-			printCellphonesThatWereBusyTheMost();
-			break;
-		case 9:
-			printDetailOfOutgoingPhoneCalls();
-			break;
-		case 10:
-			printDetailOfIncomingPhoneCalls();
-			break;
-		case 11:
-			printMaxAmountOfCellphonesPerAntenna();
-			break;
-		case 12:
-			this->printDetailOfIncomingPhoneCalls();
-			break;
-		case 13:
-			printAmountOfCancelledCallsDueToLackOfCapacity();
-			break;
-		case 14:
-			printDetailOfAntennas();
-			break;
-		case 15:
-			printDetailOfCellphones();
-			break;
-		case 16:
-			processFiles();
-			break;
-		case 17:
-			this->inCourse = false;
-			break;
-		case 18:
-			this->changeMode();
+			case 1:
+				printDetailOfCalls();
+				break;
+			case 2:
+				printDetailOfMessages();
+				break;
+			case 3:
+				printCellphonesThatSpokeTheMost();
+				break;
+			case 4:
+				printCellphonesThatCalledTheMost();
+				break;
+			case 5:
+				printCellphonesThatReceivedBusyTheMost();
+				break;
+			case 6:
+				printCellphonesThatWereCalledTheMost();
+				break;
+			case 7:
+				printCellphonesThatReceivedBusyTheMost();
+				break;
+			case 8:
+				printCellphonesThatWereBusyTheMost();
+				break;
+			case 9:
+				printDetailOfOutgoingPhoneCalls();
+				break;
+			case 10:
+				printDetailOfIncomingPhoneCalls();
+				break;
+			case 11:
+				printMaxAmountOfCellphonesPerAntenna();
+				break;
+			case 12:
+				this->printDetailOfIncomingPhoneCalls();
+				break;
+			case 13:
+				printAmountOfCancelledCallsDueToLackOfCapacity();
+				break;
+			case 14:
+				printDetailOfAntennas();
+				break;
+			case 15:
+				printDetailOfCellphones();
+				break;
+			case 16:
+				processFiles();
+				break;
+			case 17:
+				this->inCourse = false;
+				break;
+			case 18:
+				this->changeMode();
 		}
 	} else {
 		switch (optionNumber) {
-
-		case 1:
-			showNewMessages();
-			break;
-		case 2:
-			showHistoryOfSentMessages();
-			break;
-		case 3:
-			showHistoryOfReceivedMessages();
-			break;
-		case 4:
-			sendMessage();
-			break;
-		case 5:
-			changeCellphone();
-			break;
-		case 6:
-			this->inCourse = false;
-			break;
-		case 7:
-			changeMode();
+			case 1:
+				showNewMessages();
+				break;
+			case 2:
+				showHistoryOfSentMessages();
+				break;
+			case 3:
+				showHistoryOfReceivedMessages();
+				break;
+			case 4:
+				sendMessage();
+				break;
+			case 5:
+				changeCellphone();
+				break;
+			case 6:
+				this->inCourse = false;
+				break;
+			case 7:
+				changeMode();
 		}
 	}
 }
