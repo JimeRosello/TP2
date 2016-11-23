@@ -59,6 +59,14 @@ class Index {
 		void changeCellphone();
 		void sendAllNewMessages();
 
+		/*
+		 * Pre: ---
+		 * Post: Devuelve un arreglo de punteros a Cellphone*
+		 * 		 en su primera (0) y segunda (1) posicion.
+		 * 		 Reserva memoria para dicho arreglo.
+		 */
+		Cellphone** enterCellphoneNumbers();
+
 	public:
 
 		/*

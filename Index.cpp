@@ -120,16 +120,36 @@ List<Message*>* findMessagesInCommon(Cellphone* X, Cellphone* Y) {
 	return messagesInCommon;
 }
 
-void Index::printDetailOfCalls() {
+Cellphone** Index::enterCellphoneNumbers() {
 	unsigned int numberX, numberY;
+	Cellphone* X, *Y;
 	std::cout << "Ingrese los celulares" << std::endl;
-	std::cout << "X: ";
-	std::cin >> numberX;
-	std::cout << "Y: ";
-	std::cin >> numberY;
-	Cellphone* X = this->cellphoneSystem->findCellphone(numberX);
-	Cellphone* Y = this->cellphoneSystem->findCellphone(numberY);
-	List<Call*>* callsInCommon = findCallsInCommon(X, Y);
+	do {
+		std::cout << "X: ";
+		std::cin >> numberX;
+		X = this->cellphoneSystem->findCellphone(numberX);
+		if (!X) {
+			std::cout << "El celular no se encuentra en el sistema" << std::endl;
+		}
+	} while (!X);
+	do {
+		std::cout << "Y: ";
+		std::cin >> numberY;
+		Y = this->cellphoneSystem->findCellphone(numberY);
+		if (!Y) {
+			std::cout << "El celular no se encuentra en el sistema" << std::endl;
+		}
+	} while (!Y);
+	Cellphone** returnValue = new Cellphone*[2];
+	returnValue[0] = X;
+	returnValue[1] = Y;
+	return returnValue;
+}
+
+void Index::printDetailOfCalls() {
+	Cellphone** cellphones = enterCellphoneNumbers();
+	List<Call*>* callsInCommon = findCallsInCommon(cellphones[0], cellphones[1]);
+	delete[] cellphones;
 	callsInCommon->initiateCursor();
 	Call* currentCall;
 	unsigned int totalMinutes = 0;
@@ -160,15 +180,9 @@ void Index::printDetailOfCalls() {
 }
 
 void Index::printDetailOfMessages() {
-	unsigned int numberX, numberY;
-	std::cout << "Ingrese los celulares" << std::endl;
-	std::cout << "X: ";
-	std::cin >> numberX;
-	std::cout << "Y: ";
-	std::cin >> numberY;
-	Cellphone* X = this->cellphoneSystem->findCellphone(numberX);
-	Cellphone* Y = this->cellphoneSystem->findCellphone(numberY);
-	List<Message*>* messagesInCommon = findMessagesInCommon(X, Y);
+	Cellphone** cellphones = enterCellphoneNumbers();
+	List<Message*>* messagesInCommon = findMessagesInCommon(cellphones[0], cellphones[1]);
+	delete[] cellphones;
 	messagesInCommon->initiateCursor();
 	Message* currentMsg;
 	while (messagesInCommon->advanceCursor()) {
@@ -279,9 +293,12 @@ void Index::printCellphonesThatWereBusyTheMost() {
 
 void Index::printDetailOfOutgoingPhoneCalls() {
 	unsigned int number;
-	std::cout << "Ingrese el celular" << std::endl;
-	std::cin >> number;
-	Cellphone* X = this->cellphoneSystem->findCellphone(number);
+	Cellphone* X;
+	do {
+		std::cout << "Ingrese el celular" << std::endl;
+		std::cin >> number;
+		X = this->cellphoneSystem->findCellphone(number);
+	} while (!X);
 	List<Call*>* outgoingPhoneCalls = X->getOutgoingCalls();
 	outgoingPhoneCalls->initiateCursor();
 	Call* currentCall;
@@ -302,9 +319,12 @@ void Index::printDetailOfOutgoingPhoneCalls() {
 
 void Index::printDetailOfIncomingPhoneCalls() {
 	unsigned int number;
-	std::cout << "Ingrese el celular" << std::endl;
-	std::cin >> number;
-	Cellphone* X = this->cellphoneSystem->findCellphone(number);
+	Cellphone* X;
+	do {
+		std::cout << "Ingrese el celular" << std::endl;
+		std::cin >> number;
+		X = this->cellphoneSystem->findCellphone(number);
+	} while (!X);
 	List<Call*>* incomingPhoneCalls = X->getIncomingCalls();
 	incomingPhoneCalls->initiateCursor();
 	Call* currentCall;
