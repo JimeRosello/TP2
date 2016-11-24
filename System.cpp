@@ -147,12 +147,17 @@ void System::connectCellphone(Cellphone* X, Antenna* antenna) {
 
 void System::disconnectCellphone(Cellphone* X) {
 	if (X->getStatus() == DISCONNECTED) {
-		throw std::string ("No se puede desconectar el celular en este momento");
+		throw std::string ("No se puede desconectar el celular");
 	}
 	Antenna* antenna = this->findAntennaToWhichCellIsConnected(X);
+	Cellphone* waitingCellphone = antenna->getWaitingListOfCellphones()->getFirst();
+	Call* waitingCall = this->findCallInProgressByCellphone(waitingCellphone->getNumber());
 	if (antenna) {
 		antenna->disconnectCellphone(X->getNumber());
 		this->addCellphone(X);
+		if (waitingCall) {
+			waitingCall->changeStatus(IN_PROGRESS);
+		}
 	}
 }
 
