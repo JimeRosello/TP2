@@ -103,7 +103,7 @@ void LoadFile(std::string fileName, System* system) {
 					<< strNumberY << " Minuto: " << minute << std::endl;
 
 			// Inicia una llamada entre los celulares encontrados
-			//system->initiateCall(minute, X, Y); // FALLA
+			system->initiateCall(minute, X, Y); // FALLA
 
 		} else if (strEqual(command, "Fin")) {
 			unsigned int numberX = strtoi(strNumberX);

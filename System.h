@@ -190,12 +190,21 @@ class System {
 		Antenna* findAntennaToWhichCellIsConnected(Cellphone* cellphone);
 
 		/*
-		 * BUsca una llamada en la lista de llamadas del sistema
-		 * Pre: ---
+		 * Busca una llamada en la lista de llamadas del sistema
+		 * Pre: Recibe un numero de celular emisor y receptor validos.
 		 * Post: Devuelve un puntero a la llamada encontrada o NULL si no la
-		 *       encontro
+		 *       encontro.
 		 */
 		Call* findCallInProgress(unsigned int initiator, unsigned int receiver);
+
+		/*
+		 * Busca una llamada en la lista de llamadas del sistema,
+		 * iniciada por X y que se encuentra en curso.
+		 * Pre: Recibe un numero de celular valido.
+		 * Post: Devuelve un puntero a la llamada encontrada o NULL si no la
+		 * 	 	 encontro.
+		 */
+		Call* findCallInProgressByCellphone(unsigned int initiator);
 
 		/*
 		 * Destructor

@@ -38,7 +38,6 @@ void System::addCellphone(Cellphone* cellphone) {
 	}
 }
 
-
 void System::initiateCall(unsigned int minute, Cellphone* X, Cellphone* Y) {
 	Call* newCall = new Call(minute, X->getNumber(), Y->getNumber());
 	if ((X->getStatus() == CONNECTED) &&
@@ -104,14 +103,37 @@ void System::sendAllUnsentMessages() {
 	}
 }
 
+Call* System::findCallInProgressByCellphone(unsigned int initiator) {
+	this->callsInProgress->initiateCursor();
+	bool found = false;
+	Call* foundCall;
+	while (!found && this->callsInProgress->advanceCursor()) {
+		foundCall = this->callsInProgress->getCursor();
+		if ((foundCall->getInitiator() == initiator) &&
+			(foundCall->getStatus() == IN_PROGRESS)) {
+			found = true;
+		}
+	}
+	return (found? foundCall:NULL);
+}
+
 void System::connectCellphone(Cellphone* X, Antenna* antenna) {
 	/* Si el celular ya esta conectado a una antena, lo desconecta previo a
 	 * conectarlo a una nueva. */
 	if (X->getStatus() == CONNECTED) {
 		Antenna* previousAntenna = this->findAntennaToWhichCellIsConnected(X);
 		previousAntenna->disconnectCellphone(X->getNumber());
+		antenna->connectCellphone(X);
+	} else if (X->getStatus() == CURRENTLY_SPEAKING) {
+		Antenna* previousAntenna = this->findAntennaToWhichCellIsConnected(X);
+		previousAntenna->disconnectCellphone(X->getNumber());
+		Call* call = this->findCallInProgressByCellphone(X->getNumber());
+		call->addInvolvedAntenna(antenna->getIdentification());
+		call->changeStatus(WAITING);
+		if (antenna->connectCellphone(X)) {
+			call->changeStatus(IN_PROGRESS);
+		}
 	}
-	antenna->connectCellphone(X);
 }
 
 

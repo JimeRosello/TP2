@@ -6,7 +6,8 @@
 enum CallStatus {
 	BUSY,
 	IN_PROGRESS,
-	TERMINATED
+	TERMINATED,
+	WAITING
 };
 
 class Call {
