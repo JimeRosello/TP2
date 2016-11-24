@@ -47,6 +47,8 @@ bool Antenna::connectCellphone(Cellphone* newCellphone) {
 		cellphoneConnected = true;
 		newCellphone->changeStatus(CONNECTED);
 		newCellphone->changeLastConnection(this->identification);
+	} else {
+		waitingCellphoneList->addNewElement(newCellphone);
 	}
 	return cellphoneConnected;
 }
@@ -66,6 +68,10 @@ Cellphone* Antenna::disconnectCellphone(unsigned int cellphoneID) {
 			cellphonePointer = this->cellphones->removeNextElement();
 		}
 	} while (!cellphoneFound && this->cellphones->advanceCursor());
+	if (!waitingCellphoneList->isEmpty()) {
+		Cellphone* newCellphone = waitingCellphoneList->removeNextElement();
+		cellphones->addNewElement(newCellphone);
+	}
 	cellphonePointer->changeStatus(DISCONNECTED);
 	return cellphonePointer;
 }
