@@ -33,6 +33,9 @@ void System::addCellphone(Cellphone* cellphone) {
 	if (!this->spokeTheMost) {
 		this->spokeTheMost = cellphone;
 	}
+	if (!this->calledTheMost) {
+		this->calledTheMost = cellphone;
+	}
 	if (!this->wasBusyTheMost) {
 		this->wasBusyTheMost = cellphone;
 	}
@@ -75,7 +78,7 @@ void System::initiateCall(unsigned int minute, Cellphone* X, Cellphone* Y) {
 	 * Se fija si tiene que cambiar el puntero al celular que mas llamo
 	 * o al que mas fue llamado.
 	 */
-//	this->checkCellphoneThatCalledTheMost(X); // ESTA LINEA FALLA
+	this->checkCellphoneThatCalledTheMost(X); // ESTA LINEA FALLA
 	this->checkCellphoneThatWasCalledTheMost(Y);
 	this->callsInProgress->addNewElement(newCall);
 }
