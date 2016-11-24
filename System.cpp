@@ -144,16 +144,6 @@ void System::connectCellphone(Cellphone* X, Antenna* antenna) {
 
 void System::disconnectCellphone(Cellphone* X) {
 	if (X->getStatus() == DISCONNECTED) {
-
-		/*
-		 * Entra en este if al intentar desconectar el celular usando el archivo
-		 * de regstros historicos
-		 *
-		 * CORREGIR
-		 *
-		 */
-
-		std::cout << "No se puede desconectar";
 		throw std::string ("No se puede desconectar el celular en este momento");
 	}
 	Antenna* antenna = this->findAntennaToWhichCellIsConnected(X);
