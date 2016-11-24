@@ -129,9 +129,8 @@ void System::connectCellphone(Cellphone* X, Antenna* antenna) {
 		previousAntenna->disconnectCellphone(X->getNumber());
 		Call* call = this->findCallInProgressByCellphone(X->getNumber());
 		call->addInvolvedAntenna(antenna->getIdentification());
-		call->changeStatus(WAITING);
-		if (antenna->connectCellphone(X)) {
-			call->changeStatus(IN_PROGRESS);
+		if (!antenna->connectCellphone(X)) {
+			call->changeStatus(WAITING);
 		}
 	}
 }
