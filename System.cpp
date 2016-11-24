@@ -39,6 +39,11 @@ void System::addCellphone(Cellphone* cellphone) {
 }
 
 void System::initiateCall(unsigned int minute, Cellphone* X, Cellphone* Y) {
+
+	/*
+	 * Lo que falla son las funciones que revisan cual es el celular que mas
+	 * hablo, mas recibio ocupado, etc. Son las lineas que estan comentadas.
+	 */
 	Call* newCall = new Call(minute, X->getNumber(), Y->getNumber());
 	if ((X->getStatus() == CONNECTED) &&
 		(Y->getStatus() == CONNECTED)) {
@@ -59,8 +64,8 @@ void System::initiateCall(unsigned int minute, Cellphone* X, Cellphone* Y) {
 		 * Se fija si tiene que cambiar el puntero al celular que mas recibio
 		 * o dio ocupado.
 		 */
-		this->checkCellphoneThatReceivedBusyTheMost(X);
-		this->checkCellphoneThatWasBusyTheMost(Y);
+//		this->checkCellphoneThatReceivedBusyTheMost(X);
+//		this->checkCellphoneThatWasBusyTheMost(Y);
 	} else if (X->getStatus() == WAITING_FOR_CONNECTION) {
 		Antenna* antenna = this->findAntennaToWhichCellIsConnected(X);
 		antenna->increaseCancelledCallsDueToLackOfCapacity();
@@ -71,9 +76,9 @@ void System::initiateCall(unsigned int minute, Cellphone* X, Cellphone* Y) {
 	 * Se fija si tiene que cambiar el puntero al celular que mas llamo
 	 * o al que mas fue llamado.
 	 */
-	this->checkCellphoneThatCalledTheMost(X);
-	this->checkCellphoneThatWasCalledTheMost(Y);
-	this->callsInProgress->addNewElement(newCall);
+//	this->checkCellphoneThatCalledTheMost(X);
+//	this->checkCellphoneThatWasCalledTheMost(Y);
+//	this->callsInProgress->addNewElement(newCall);
 }
 
 unsigned int System::terminateCall(Call* call, unsigned int endMin) {
@@ -138,7 +143,17 @@ void System::connectCellphone(Cellphone* X, Antenna* antenna) {
 
 void System::disconnectCellphone(Cellphone* X) {
 	if (X->getStatus() != CONNECTED) {
-		throw std::string ("No se puede desconectar el celular en este momento");
+
+		/*
+		 * Entra en este if al intentar desconectar el celular usando el archivo
+		 * de regstros historicos
+		 *
+		 * CORREGIR
+		 *
+		 */
+
+		//std::cout << "No se puede desconectar";
+		//throw std::string ("No se puede desconectar el celular en este momento");
 	}
 	Antenna* antenna = this->findAntennaToWhichCellIsConnected(X);
 	if (antenna) {
