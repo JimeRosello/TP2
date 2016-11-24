@@ -63,8 +63,10 @@ Cellphone* Antenna::disconnectCellphone(unsigned int cellphoneID) {
 		if (nextCellphone->getNumber() == cellphoneID) {
 			cellphoneFound = true;
 			cellphonePointer = nextCellphone;
+			cellphonePointer = this->cellphones->removeNextElement();
 		}
 	} while (!cellphoneFound && this->cellphones->advanceCursor());
+	cellphonePointer->changeStatus(DISCONNECTED);
 	return cellphonePointer;
 }
 
