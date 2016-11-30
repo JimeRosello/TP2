@@ -31,8 +31,7 @@ class Call {
 
 		/*
 		 * Pre: El minuto pasado como parametro endMin es valido (>= startMin)
-		 * Post: Cambia el minuto de fin de la llamada y el estado de los celulares
-		 *       involucrados en la llamada.
+		 * Post: Cambia el minuto de fin de la llamada y el estado de la llamada
 		 */
 		void endCall(unsigned int endMin);
 
