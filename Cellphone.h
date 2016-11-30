@@ -55,7 +55,7 @@ public:
 	/*
 	 * Pre: ---
 	 * Post: Construye un celular asignandole un numero, crea los archivos de egreso e ingreso
-	 *       e inicializa la cola de los mensajes en espera.
+	 *       e inicializa la lista de los mensajes en espera.
 	 */
 	Cellphone(unsigned int cellphoneNumber);
 
