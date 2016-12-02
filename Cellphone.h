@@ -61,7 +61,7 @@ public:
 
 	/*
 	 * Pre: ---
-	 * Post: Construye un celular vacio (cellphone number = 0), crea los archivos 
+	 * Post: Construye un celular vacio (cellphone number = 0), crea los archivos
 	 *	de egreso e ingreso e inicializa la lista de los mensajes en espera.
 	 */
 	Cellphone();

@@ -82,7 +82,7 @@ void LoadFile(std::string fileName, System* system) {
 			Antenna* antenna = new Antenna(id, capacity);
 			system->addAntenna(antenna);
 
-		} else if (strEqual(command, "Inicio")) { // ESTA PARTE ES LA QUE FALLA
+		} else if (strEqual(command, "Inicio")) {
 			strNumberX = strVector[1];
 			strNumberY = strVector[2];
 			startMin = strVector[3];
@@ -103,7 +103,7 @@ void LoadFile(std::string fileName, System* system) {
 					<< strNumberY << " Minuto: " << minute << std::endl;
 
 			// Inicia una llamada entre los celulares encontrados
-			system->initiateCall(minute, X, Y); // FALLA
+			system->initiateCall(minute, X, Y);
 
 		} else if (strEqual(command, "Fin")) {
 			unsigned int numberX = strtoi(strNumberX);

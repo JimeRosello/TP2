@@ -150,8 +150,12 @@ void System::disconnectCellphone(Cellphone* X) {
 		throw std::string ("No se puede desconectar el celular");
 	}
 	Antenna* antenna = this->findAntennaToWhichCellIsConnected(X);
-	Cellphone* waitingCellphone = antenna->getWaitingListOfCellphones()->getFirst();
-	Call* waitingCall = this->findCallInProgressByCellphone(waitingCellphone->getNumber());
+	Cellphone* waitingCellphone;
+	Call* waitingCall;
+	if (!antenna->getWaitingListOfCellphones()->isEmpty()) {
+		waitingCellphone = antenna->getWaitingListOfCellphones()->getFirst();
+		waitingCall = this->findCallInProgressByCellphone(waitingCellphone->getNumber());
+	}
 	if (antenna) {
 		antenna->disconnectCellphone(X->getNumber());
 		this->addCellphone(X);
