@@ -47,8 +47,29 @@ bool Antenna::connectCellphone(Cellphone* newCellphone) {
 		cellphoneConnected = true;
 		newCellphone->changeStatus(CONNECTED);
 		newCellphone->changeLastConnection(this->identification);
+
+		// Revisa si los punteros estan en NULL y en tal caso los actualiza.
+		if (!this->mostCalled) {
+			this->mostCalled = newCellphone;
+		}
+		if (!this->mostSpoken) {
+			this->mostSpoken = newCellphone;
+		}
+		if (!this->receivedBusyTheMost) {
+			this->receivedBusyTheMost = newCellphone;
+		}
+		if (!this->spokeTheMost) {
+			this->spokeTheMost = newCellphone;
+		}
+		if (!this->calledTheMost) {
+			this->calledTheMost = newCellphone;
+		}
+		if (!this->wasBusyTheMost) {
+			this->wasBusyTheMost = newCellphone;
+		}
 	} else {
 		waitingCellphoneList->addNewElement(newCellphone);
+
 	}
 	return cellphoneConnected;
 }

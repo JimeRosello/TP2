@@ -96,8 +96,13 @@ void LoadFile(std::string fileName, System* system) {
 			//X == NULL? (std::cout<<"No lo encontro"):(std::cout<<"Lo encontro");
 			Cellphone* Y = system->findCellphone(numberY);
 			//Y == NULL? (std::cout<<"No lo encontro"):(std::cout<<"Lo encontro");
-			if (!X || !Y) {
-				throw std::string("El celular no se encuentra en el sistema");
+			if (!X) {
+				X = new Cellphone(numberX);
+				system->addCellphone(X);
+			}
+			if (!Y) {
+				X = new Cellphone(numberY);
+				system->addCellphone(Y);
 			}
 			std::cout << "CelularX: " << strNumberX << " Celular Y: "
 					<< strNumberY << " Minuto: " << minute << std::endl;
