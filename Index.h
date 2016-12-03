@@ -122,8 +122,7 @@ class Index {
 		 * Destructor
 		 * Pre: ---
 		 * Post: El indice fue destruido.
-		 *
-		 * ~Index();
 		 */
+		~Index();
 };
 

@@ -10,8 +10,8 @@ const int MAX_OPTIONS_CELLPHONE = 7;
 Index::Index(System* cellphoneSystem) {
 	this->mode = SYSTEM;
 	this->currentCellphone = NULL;
-	this->systemMenu = NULL;
-	this->cellphoneMenu = NULL;
+	this->systemMenu = new std::string[MAX_OPTIONS_SYSTEM];
+	this->cellphoneMenu = new std::string[MAX_OPTIONS_CELLPHONE];
 	this->setMode();
 	this->setMenues();
 	this->inCourse = true;
@@ -33,7 +33,6 @@ void Index::setMode() {
 }
 
 void Index::setMenues() {
-	this->systemMenu = new std::string[MAX_OPTIONS_SYSTEM];
 	this->systemMenu[0] =
 			"Detalle de llamadas entre el Celular X y el Celular Y";
 	this->systemMenu[1] =
@@ -64,7 +63,6 @@ void Index::setMenues() {
 	this->systemMenu[16] = "Salir";
 	this->systemMenu[17] = "Cambiar modo";
 
-	this->cellphoneMenu = new std::string[MAX_OPTIONS_CELLPHONE];
 	this->cellphoneMenu[0] = "Mostrar mensajes nuevos";
 	this->cellphoneMenu[1] = "Mostrar historial de mensajes emitidos";
 	this->cellphoneMenu[2] = "Mostrar historial de mensajes recibidos";
