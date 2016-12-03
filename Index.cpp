@@ -679,3 +679,8 @@ void Index::executeAction(int optionNumber) {
 bool Index::isInCourse() {
 	return this->inCourse;
 }
+
+Index::~Index() {
+	delete[] this->systemMenu;
+	delete[] this->cellphoneMenu;
+}
