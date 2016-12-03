@@ -20,6 +20,12 @@ private:
 	unsigned int maxConcurrentConnections; // maximo de conexiones simultaneas
 	unsigned int cancelledCallsDueToLackOfCapacity;
 
+	/*
+	 * pre: ---
+	 * post: Si fuera necesario, cambia el maximo de conexiones concurrentes.
+	 */
+	void checkMaxConcurrentConnections();
+
 public:
 	/*
 	 * Pre: ---
@@ -33,6 +39,7 @@ public:
 	 * Post: Crea una Antenna vacia.
 	 */
 	Antenna();
+
 
 	/*
 	 * Pre: ---

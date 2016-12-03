@@ -67,11 +67,17 @@ bool Antenna::connectCellphone(Cellphone* newCellphone) {
 		if (!this->wasBusyTheMost) {
 			this->wasBusyTheMost = newCellphone;
 		}
+		this->checkMaxConcurrentConnections();
 	} else {
 		waitingCellphoneList->addNewElement(newCellphone);
-
 	}
 	return cellphoneConnected;
+}
+
+void Antenna::checkMaxConcurrentConnections() {
+	if (this->maxConcurrentConnections < this->cellphones->getAmountOfElements()) {
+		this->maxConcurrentConnections = this->cellphones->getAmountOfElements();
+	}
 }
 
 Cellphone* Antenna::disconnectCellphone(unsigned int cellphoneID) {
