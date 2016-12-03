@@ -275,10 +275,9 @@ void Index::printCellphonesThatWereSpokenToTheMost() {
 	listOfAntennas->initiateCursor();
 	while (listOfAntennas->advanceCursor()) {
 		Antenna* currentAntenna = listOfAntennas->getCursor();
-		Cellphone* mostSpokenTo =
-				currentAntenna->getCellphoneThatWasSpokenToTheMost();
+		Cellphone* mostSpoken =	currentAntenna->getCellphoneThatWasSpokenToTheMost();
 		unsigned int id = currentAntenna->getIdentification();
-		unsigned int number = (mostSpokenTo? mostSpokenTo->getNumber() : 0);
+		unsigned int number = (mostSpoken? mostSpoken->getNumber() : 0);
 		std::cout << "Celular al que mas se le hablo de la antena " << id
 				<< ": " << number << std::endl;
 	}
@@ -550,6 +549,12 @@ void Index::changeMode() {
 	std::cout << "Se ha cambiado el modo del programa. " << std::endl
 			<< "El modo actual es "
 			<< (this->mode == SYSTEM ? "sistema." : "celular.") << std::endl;
+	if (this->mode == CELLPHONE) {
+		this->currentCellphone = 0;
+		while (this->currentCellphone == 0) {
+			this->changeCellphone();
+		}
+	}
 }
 
 void Index::printMenu() {
