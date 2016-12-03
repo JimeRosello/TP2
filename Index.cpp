@@ -204,10 +204,10 @@ void Index::printCellphonesThatSpokeTheMost() {
 	while (listOfAntennas->advanceCursor()) {
 		Antenna* currentAntenna = listOfAntennas->getCursor();
 		spokeTheMost = currentAntenna->getCellphoneThatSpokeTheMost();
-		unsigned int id;
-		id = (spokeTheMost? currentAntenna->getIdentification() : 0);
+		unsigned int id = currentAntenna->getIdentification();
+		unsigned int number = (spokeTheMost? spokeTheMost->getNumber() : 0);
 		std::cout << "Celular que mas hablo de la antena " << id << ": "
-				<< spokeTheMost->getNumber() << std::endl;
+				<< number << std::endl;
 	}
 }
 
@@ -222,15 +222,15 @@ void Index::printCellphonesThatCalledTheMost() {
 		Antenna* currentAntenna = listOfAntennas->getCursor();
 		Cellphone* calledTheMost =
 				currentAntenna->getCellphoneThatCalledTheMost();
-		unsigned int id;
-		id = (calledTheMost? currentAntenna->getIdentification() : 0);
+		unsigned int id = currentAntenna->getIdentification();
+		unsigned int number = (calledTheMost? calledTheMost->getNumber() : 0);
 		std::cout << "Celular que mas llamo de la antena " << id << ": "
-				<< calledTheMost->getNumber() << std::endl;
+				<< number << std::endl;
 	}
 }
 
 void Index::printCellphonesThatReceivedBusyTheMost() {
-	std::cout << "Celular que mas recibio ocupado de todo el sistema: ";
+	std::cout << "Celular que mas recibio ocupado de todo el sistema: " << std::endl;
 	std::cout
 			<< this->cellphoneSystem->getCellphoneThatReceivedBusyTheMost()->getNumber();
 	List<Antenna*>* listOfAntennas = this->cellphoneSystem->getListOfAntennas();
@@ -239,10 +239,10 @@ void Index::printCellphonesThatReceivedBusyTheMost() {
 		Antenna* currentAntenna = listOfAntennas->getCursor();
 		Cellphone* receivedBusyTheMost =
 				currentAntenna->getCellphoneThatReceivedBusyTheMost();
-		unsigned int id;
-		id = (receivedBusyTheMost? currentAntenna->getIdentification() : 0);
+		unsigned int id = currentAntenna->getIdentification();
+		unsigned int number = (receivedBusyTheMost? receivedBusyTheMost->getNumber() : 0);
 		std::cout << "Celular que mas recibio ocupado de la antena " << id
-				<< ": " << receivedBusyTheMost->getNumber() << std::endl;
+				<< ": " << number << std::endl;
 
 	}
 }
@@ -257,10 +257,10 @@ void Index::printCellphonesThatWereCalledTheMost() {
 		Antenna* currentAntenna = listOfAntennas->getCursor();
 		Cellphone* mostCalled =
 				currentAntenna->getCellphoneThatWasCalledTheMost();
-		unsigned int id;
-		id = (mostCalled? currentAntenna->getIdentification() : 0);
+		unsigned int id = currentAntenna->getIdentification();
+		unsigned int number = (mostCalled? mostCalled->getNumber() : 0);
 		std::cout << "Celular al que mas se llamo de la antena " << id << ": "
-				<< mostCalled->getNumber() << std::endl;
+				<< number << std::endl;
 	}
 }
 
@@ -274,10 +274,10 @@ void Index::printCellphonesThatWereSpokenToTheMost() {
 		Antenna* currentAntenna = listOfAntennas->getCursor();
 		Cellphone* mostSpokenTo =
 				currentAntenna->getCellphoneThatWasSpokenToTheMost();
-		unsigned int id;
-		id = (mostSpokenTo? currentAntenna->getIdentification() : 0);
+		unsigned int id = currentAntenna->getIdentification();
+		unsigned int number = (mostSpokenTo? mostSpokenTo->getNumber() : 0);
 		std::cout << "Celular al que mas se le hablo de la antena " << id
-				<< ": " << mostSpokenTo->getNumber() << std::endl;
+				<< ": " << number << std::endl;
 	}
 }
 
@@ -290,10 +290,10 @@ void Index::printCellphonesThatWereBusyTheMost() {
 	while (listOfAntennas->advanceCursor()) {
 		Antenna* currentAntenna = listOfAntennas->getCursor();
 		Cellphone* busiest = currentAntenna->getCellphoneThatWasBusyTheMost();
-		unsigned int id;
-		id = (busiest? currentAntenna->getIdentification() : 0);
+		unsigned int id = currentAntenna->getIdentification();
+		unsigned int number = (busiest? busiest->getNumber() : 0);
 		std::cout << "Celular que mas dio ocupado de la antena " << id << ": "
-				<< busiest->getNumber() << std::endl;
+				<< number << std::endl;
 	}
 
 }
