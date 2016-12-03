@@ -198,7 +198,7 @@ void Index::printCellphonesThatSpokeTheMost() {
 	std::cout << "Celular que mas hablo de todo el sistema: ";
 	Cellphone* spokeTheMost =
 			this->cellphoneSystem->getCellphoneThatSpokeTheMost();
-	std::cout << spokeTheMost->getNumber();
+	std::cout << spokeTheMost->getNumber() << std::endl;
 	List<Antenna*>* listOfAntennas = this->cellphoneSystem->getListOfAntennas();
 	listOfAntennas->initiateCursor();
 	while (listOfAntennas->advanceCursor()) {
@@ -230,9 +230,10 @@ void Index::printCellphonesThatCalledTheMost() {
 }
 
 void Index::printCellphonesThatReceivedBusyTheMost() {
-	std::cout << "Celular que mas recibio ocupado de todo el sistema: " << std::endl;
+	std::cout << "Celular que mas recibio ocupado de todo el sistema: ";
 	std::cout
 			<< this->cellphoneSystem->getCellphoneThatReceivedBusyTheMost()->getNumber();
+	std::cout << std::endl;
 	List<Antenna*>* listOfAntennas = this->cellphoneSystem->getListOfAntennas();
 	listOfAntennas->initiateCursor();
 	while (listOfAntennas->advanceCursor()) {
@@ -251,6 +252,7 @@ void Index::printCellphonesThatWereCalledTheMost() {
 	std::cout << "Celular que mas fue llamado de todo el sistema: ";
 	std::cout
 			<< this->cellphoneSystem->getCellphoneThatWasCalledTheMost()->getNumber();
+	std::cout << std::endl;
 	List<Antenna*>* listOfAntennas = this->cellphoneSystem->getListOfAntennas();
 	listOfAntennas->initiateCursor();
 	while (listOfAntennas->advanceCursor()) {
@@ -268,6 +270,7 @@ void Index::printCellphonesThatWereSpokenToTheMost() {
 	std::cout << "Celular al que mas se le hablo de todo el sistema: ";
 	std::cout
 			<< this->cellphoneSystem->getCellphoneThatWasSpokenToTheMost()->getNumber();
+	std::cout << std::endl;
 	List<Antenna*>* listOfAntennas = this->cellphoneSystem->getListOfAntennas();
 	listOfAntennas->initiateCursor();
 	while (listOfAntennas->advanceCursor()) {
@@ -285,6 +288,7 @@ void Index::printCellphonesThatWereBusyTheMost() {
 	std::cout << "Celular que mas dio ocupado de todo el sistema: ";
 	std::cout
 			<< this->cellphoneSystem->getCellphoneThatWasCalledTheMost()->getNumber();
+	std::cout << std::endl;
 	List<Antenna*>* listOfAntennas = this->cellphoneSystem->getListOfAntennas();
 	listOfAntennas->initiateCursor();
 	while (listOfAntennas->advanceCursor()) {
