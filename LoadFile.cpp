@@ -34,6 +34,15 @@ int strtoi (std::string string) {
 	return integer;
 }
 
+std::string replaceString(std::string subject, const std::string& search,
+                          const std::string& replace) {
+    size_t pos = 0;
+    while((pos = subject.find(search, pos)) != std::string::npos) {
+         subject.replace(pos, search.length(), replace);
+         pos += replace.length();
+    }
+    return subject;
+}
 
 // Separan un string en subcadenas separadas por delim
 
@@ -62,7 +71,7 @@ void LoadFile(std::string fileName, System* system) {
 	
 	if (!file.fail())
 	{
-		cout << "supuestamente abrio bien el archivo " << fileName << endl;
+		cout << "Archivo '" << fileName << "' abierto correctamente." << endl;
 		// Lee una a una las lineas del archivo
 		while (getline(file, line)) {
 
@@ -75,7 +84,7 @@ void LoadFile(std::string fileName, System* system) {
 			if (strEqual(command, "Antena")) { // esta parte anda ok
 				antennaId = strVector[1];
 				antennaCapacity = strVector[2];
-				unsigned int id = strtoi(antennaId);
+				unsigned int id = strtoi(replaceString(antennaId, "A", ""));
 				unsigned int capacity = strtoi(antennaCapacity);
 
 				std::cout << "AntennaId: " << antennaId << " antennaCapacity: "
