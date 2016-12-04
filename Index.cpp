@@ -486,11 +486,15 @@ void Index::processFiles() {
 void Index::showNewMessages() {
 	List<Message*>* newMessages = this->currentCellphone->getNewMessages();
 	Message* currentMessage;
-	while (!newMessages->isEmpty()) {
-		currentMessage = newMessages->removeNextElement();
-		std::cout << "Mensaje de " << currentMessage->getSender()
-				<< " en el minuto " << currentMessage->getMinute() << ": "
-				<< std::endl << currentMessage->getBody() << std::endl;
+	if (newMessages->isEmpty()) {
+		std::cout << "No hay mensajes para mostrar" << std::endl;
+	} else {
+		while (!newMessages->isEmpty()) {
+			currentMessage = newMessages->removeNextElement();
+			std::cout << "Mensaje de " << currentMessage->getSender()
+					<< " en el minuto " << currentMessage->getMinute() << ": "
+					<< std::endl << currentMessage->getBody() << std::endl;
+		}
 	}
 }
 
@@ -507,22 +511,28 @@ void Index::showHistoryOfSentMessages() {
 }
 
 void Index::showHistoryOfReceivedMessages() {
-	List<Message*>* inbox = this->currentCellphone->getOutgoingMessages();
-	inbox->initiateCursor();
+	List<Message*>* inbox = this->currentCellphone->getIncomingMessages();
 	Message* currentMsg;
-	while (inbox->advanceCursor()) {
-		currentMsg = inbox->getCursor();
-		std::cout << "Minuto: " << currentMsg->getMinute() << std::endl
-				<< "Mensaje: " << currentMsg->getBody() << std::endl
-				<< "Remitente: " << currentMsg->getSender() << std::endl;
+	if (inbox->isEmpty()) {
+		std::cout << "No hay mensajes para mostrar" << std::endl;
+	} else {
+		inbox->initiateCursor();
+		while (inbox->advanceCursor()) {
+			currentMsg = inbox->getCursor();
+			std::cout << "Minuto: " << currentMsg->getMinute() << std::endl
+					<< "Mensaje: " << currentMsg->getBody() << std::endl
+					<< "Remitente: " << currentMsg->getSender() << std::endl;
+		}
 	}
 }
 
 void Index::sendMessage() {
 	unsigned int receiver;
 	std::string message;
-	std::cout << "Ingrese el destinatario del mensaje" << std::endl;
-	std::cin >> receiver;
+	do {
+		std::cout << "Ingrese el destinatario del mensaje" << std::endl;
+		std::cin >> receiver;
+	} while (!this->cellphoneSystem->findCellphone(receiver));
 	std::cout << std::endl << "Ingrese el mensaje" << std::endl;
 	std::cin >> message;
 	unsigned int minute = 1;
@@ -538,6 +548,9 @@ void Index::changeCellphone() {
 	if (!cellphone) {
 		std::cout << "El celular ingresado no se encuentra en el sistema"
 				<< std::endl;
+	}
+	if (cellphone->getStatus() == CONNECTED) {
+		cellphone->receiveNewMessages();
 	}
 	this->currentCellphone = cellphone;
 }

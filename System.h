@@ -51,11 +51,11 @@ class System {
 		unsigned int terminateCall(Call* call, unsigned int endMin);
 
 		/*
-		 * Pre: ---
-		 * Post: Todos los mensajes no enviados son enviados a sus correspondientes
-		 *  	 receptores.
+		 * Pre: Recibe un puntero valido a Cellphone.
+		 * Post: Todos los mensajes no enviados del celular (cellphone
+		 * 	     son enviados a sus correspondientes receptores.
 		 */
-		void sendAllUnsentMessages();
+		void sendUnsentMessages(Cellphone* cellphone);
 
 		/*
 		 * Pre: El celular X se encuentra en el sistema.
