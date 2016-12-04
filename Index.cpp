@@ -541,15 +541,19 @@ void Index::sendMessage() {
 }
 
 void Index::changeCellphone() {
-	unsigned int number;
+	unsigned int number = 0;
 	std::cout << "Ingrese el numero de celular" << std::endl;
-	std::cin >> number;
+	if(!(std::cin >> number)){
+        std::cin.clear();
+        std::cin.ignore(256, '\n'); //TODO: Mejorar...
+        cout << "Debe ingresar un numero valido." << endl;
+    }
 	Cellphone* cellphone = this->cellphoneSystem->findCellphone(number);
 	if (!cellphone) {
 		std::cout << "El celular ingresado no se encuentra en el sistema"
 				<< std::endl;
 	}
-	if (cellphone->getStatus() == CONNECTED) {
+	else if (cellphone->getStatus() == CONNECTED) {
 		cellphone->receiveNewMessages();
 	}
 	this->currentCellphone = cellphone;

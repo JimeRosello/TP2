@@ -297,6 +297,11 @@ Antenna* System::findAntennaToWhichCellIsConnected(Cellphone* cellphone) {
 	return (found? currentAntenna:NULL);
 }
 
+void System::sendAllUnsentMessages() {
+	//TODO: JOEL: Implementar esta funcionalidad...
+	cout << "Implementar esta funcionalidad..." << endl;
+}
+
 System::~System() {
 	delete this->listOfAntennas;
 	delete this->listOfCellphones;

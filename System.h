@@ -207,6 +207,13 @@ class System {
 		Call* findCallInProgressByCellphone(unsigned int initiator);
 
 		/*
+		 * Envia todos los mensajes pendientes.
+		 * Pre:
+		 * Post:
+		 */
+		void sendAllUnsentMessages();
+		
+		/*
 		 * Destructor
 		 * Pre: -
 		 * Post: El sistema fue destruido.
