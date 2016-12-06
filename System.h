@@ -1,3 +1,7 @@
+#ifndef SYSTEM_H_
+#define SYSTEM_H_
+
+
 #include "Antenna.h"
 
 
@@ -220,4 +224,6 @@ class System {
 		 */
 		~System();
 };
+
+#endif //SYSTEM_H_
 
