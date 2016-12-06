@@ -129,7 +129,9 @@ void System::connectCellphone(Cellphone* X, Antenna* antenna) {
 	if (X->getStatus() == CONNECTED) {
 		Antenna* previousAntenna = this->findAntennaToWhichCellIsConnected(X);
 		previousAntenna->disconnectCellphone(X->getNumber());
-		antenna->connectCellphone(X);
+		if (antenna->connectCellphone(X)) {
+			this->sendUnsentMessages(X);
+		}
 	} else if (X->getStatus() == CURRENTLY_SPEAKING) {
 		Antenna* previousAntenna = this->findAntennaToWhichCellIsConnected(X);
 		previousAntenna->disconnectCellphone(X->getNumber());
