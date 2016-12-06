@@ -477,7 +477,7 @@ void Index::printDetailOfCellphones() {
 }
 
 void Index::processFiles() {
-	std::string filename = "/home/jime/Desktop/Algoritmos/TP2/src/hola.txt";
+	std::string filename = "/home/jime/Desktop/Algoritmos/TP2/src/prueba1.txt";
 	LoadFile(filename, this->cellphoneSystem);
 	//LoadFile("C:\\Repositorio\\TP2\\Debug\\Celulares\\SistemaDeTelefonia\\RegistrosHistoricos.txt", i);
 	//LoadFile(".\\Celulares\\SistemaDeTelefonia\\RegistrosHistoricos.txt", i, cellphoneSystem);
@@ -537,23 +537,24 @@ void Index::sendMessage() {
 	std::cin >> message;
 	unsigned int minute = 1;
 	this->currentCellphone->sendMessage(receiver, message, minute);
-	this->cellphoneSystem->sendAllUnsentMessages();
+	this->cellphoneSystem->sendUnsentMessages(this->currentCellphone);
 }
 
 void Index::changeCellphone() {
-	unsigned int number = 0;
+	unsigned int number;
 	std::cout << "Ingrese el numero de celular" << std::endl;
-	if(!(std::cin >> number)){
+/*	if (!(std::cin >> number)){
         std::cin.clear();
         std::cin.ignore(256, '\n'); //TODO: Mejorar...
         cout << "Debe ingresar un numero valido." << endl;
-    }
+	} */
+	std::cin >> number;
 	Cellphone* cellphone = this->cellphoneSystem->findCellphone(number);
 	if (!cellphone) {
 		std::cout << "El celular ingresado no se encuentra en el sistema"
 				<< std::endl;
 	}
-	else if (cellphone->getStatus() == CONNECTED) {
+	if (cellphone->getStatus() == CONNECTED) {
 		cellphone->receiveNewMessages();
 	}
 	this->currentCellphone = cellphone;

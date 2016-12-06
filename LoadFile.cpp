@@ -1,6 +1,7 @@
 #include "LoadFile.h"
 #include <vector>
 #include <sstream>
+#include <cstring>
 
 bool strEqual_pred(unsigned char a, unsigned char b) {
 	return std::tolower(a) == std::tolower(b);
@@ -34,15 +35,6 @@ int strtoi (std::string string) {
 	return integer;
 }
 
-std::string replaceString(std::string subject, const std::string& search,
-                          const std::string& replace) {
-    size_t pos = 0;
-    while((pos = subject.find(search, pos)) != std::string::npos) {
-         subject.replace(pos, search.length(), replace);
-         pos += replace.length();
-    }
-    return subject;
-}
 
 // Separan un string en subcadenas separadas por delim
 
@@ -68,146 +60,151 @@ void LoadFile(std::string fileName, System* system) {
 	std::string line, command, values, antennaId, antennaCapacity,
 				startMin, strNumberX, strNumberY, endMin, message;
 	std::ifstream file(fileName.c_str());
-	
-	if (!file.fail())
-	{
-		cout << "Archivo '" << fileName << "' abierto correctamente." << endl;
-		// Lee una a una las lineas del archivo
-		while (getline(file, line)) {
 
-			// Obtiene un vector con una keyword en cada uno de sus campos
-			std::vector<std::string> strVector = split(line, ' ');
-			// La primera posicion corresponde al comando a ejecutar
-			// (Antena, Inicio, Conectar, etc.)
-			command = strVector[0];
+	// Lee una a una las lineas del archivo
+ 	while (getline(file, line)) {
 
-			if (strEqual(command, "Antena")) { // esta parte anda ok
-				antennaId = strVector[1];
-				antennaCapacity = strVector[2];
-				unsigned int id = strtoi(replaceString(antennaId, "A", ""));
-				unsigned int capacity = strtoi(antennaCapacity);
+ 		// Obtiene un vector con una keyword en cada uno de sus campos
+ 		std::vector<std::string> strVector = split(line, ' ');
+ 		// La primera posicion corresponde al comando a ejecutar
+ 		// (Antena, Inicio, Conectar, etc.)
+ 		command = strVector[0];
 
-				std::cout << "AntennaId: " << antennaId << " antennaCapacity: "
-						<< antennaCapacity << std::endl;
+		if (strEqual(command, "Antena")) {
+			antennaId = strVector[1];
+			antennaCapacity = strVector[2];
+			unsigned int id = strtoi(antennaId);
+			unsigned int capacity = strtoi(antennaCapacity);
 
-				// Agrega una nueva antena al sistema
-				Antenna* antenna = new Antenna(id, capacity);
-				system->addAntenna(antenna);
+			std::cout << "AntennaId: " << antennaId << " antennaCapacity: "
+					<< antennaCapacity << std::endl;
 
-			} else if (strEqual(command, "Inicio")) {
-				strNumberX = strVector[1];
-				strNumberY = strVector[2];
-				startMin = strVector[3];
-				unsigned int numberX = strtoi(strNumberX);
-				unsigned int numberY = strtoi(strNumberY);
-				unsigned int minute = strtoi(startMin);
+			// Agrega una nueva antena al sistema
+			Antenna* antenna = new Antenna(id, capacity);
+			system->addAntenna(antenna);
 
-				// Busca los celulares en el sistema.
+		} else if (strEqual(command, "Inicio")) {
+			strNumberX = strVector[1];
+			strNumberY = strVector[2];
+			startMin = strVector[3];
+			unsigned int numberX = strtoi(strNumberX);
+			unsigned int numberY = strtoi(strNumberY);
+			unsigned int minute = strtoi(startMin);
 
-				Cellphone* X = system->findCellphone(numberX);
-				//X == NULL? (std::cout<<"No lo encontro"):(std::cout<<"Lo encontro");
-				Cellphone* Y = system->findCellphone(numberY);
-				//Y == NULL? (std::cout<<"No lo encontro"):(std::cout<<"Lo encontro");
-				if (!X) {
-					X = new Cellphone(numberX);
-					system->addCellphone(X);
-				}
-				if (!Y) {
-					X = new Cellphone(numberY);
-					system->addCellphone(Y);
-				}
-				std::cout << "CelularX: " << strNumberX << " Celular Y: "
-						<< strNumberY << " Minuto: " << minute << std::endl;
+			// Busca los celulares en el sistema.
 
-				// Inicia una llamada entre los celulares encontrados
-				system->initiateCall(minute, X, Y);
-
-			} else if (strEqual(command, "Fin")) {
-				unsigned int numberX = strtoi(strNumberX);
-				unsigned int numberY = strtoi(strNumberY);
-				unsigned int minute = strtoi(endMin);
-
-				Call* call = system->findCallInProgress(numberX, numberY);
-				// Termina la llamada
-				if (call) {
-					system->terminateCall(call, minute);
-				}
-				std::cout << "Celular X: " << strNumberX << " Celular Y: "
-						<< strNumberY << " Minuto: " << minute << std::endl;
-
-			} else if (strEqual(command, "Msg")) {
-				strNumberX = strVector[1];
-				strNumberY = strVector[2];
-				startMin = strVector[3];
-				message = strVector[4];
-
-				unsigned int numberX = strtoi(strNumberX);
-				unsigned int numberY = strtoi(strNumberY);
-				unsigned int minute = strtoi(startMin);
-				Cellphone* X = system->findCellphone(numberX);
-				X->sendMessage(numberY, message, minute);
-
-			} else if (strEqual(command, "Conectar")) {
-
-				strNumberX = strVector[1];
-				antennaId = strVector[2];
-				startMin = strVector[3];
-				// Divide el id de la antena separando la "A" del identificador
-				std::vector<std::string> antennaIdV = split(antennaId, 'A');
-				unsigned int numberX = strtoi(strNumberX);
-				unsigned int id = strtoi(antennaIdV[1]);
-				unsigned int min = strtoi(startMin);
-				// Busca el celular en el sistema.
-				// Si no esta, lo agrega
-				Cellphone* X = system->findCellphone(numberX);
-
-				// Busca la antena en el sistema
-				Antenna* antenna = system->findAntenna(id);
-				if (!antenna) {
-					// Si no esta la antena en el sistema, la crea y la agrega
-					antenna = new Antenna(id, 10);
-					system->addAntenna(antenna);
-				}
-				if (!X) {
-					X = new Cellphone(numberX);
-					system->addCellphone(X);
-				}
-
-				// Conecta el celular X a la antena
-				system->connectCellphone(X, antenna);
-
-				std::cout << "Celular X: " << numberX << " Antena: "
-						<< id << " Minuto: " << min << std::endl;
-
-			} else if (strEqual(command, "Desconectar")) {
-
-				strNumberX = strVector[1];
-				antennaId = strVector[2];
-				endMin = strVector[3];
-				// Divide el id de la antena separando la "A" del identificador
-				std::vector<std::string> antennaIdV = split(antennaId, 'A');
-
-				unsigned int numberX = strtoi(strNumberX);
-				unsigned int id = strtoi(antennaIdV[1]);
-				unsigned int min = strtoi(endMin);
-				// Busca el celular en el sistema.
-				// Si no esta, lo agrega
-				Cellphone* X = system->findCellphone(numberX);
-
-				if (!X) {
-					X = new Cellphone(numberX);
-					system->addCellphone(X);
-				}
-				std::cout << "Celular X: " << numberX << " Antena: "
-						<< id << " Minuto: " << min << std::endl;
-
-				// Desonecta el celular X de la antena
-				system->disconnectCellphone(X);
-
+			Cellphone* X = system->findCellphone(numberX);
+			//X == NULL? (std::cout<<"No lo encontro"):(std::cout<<"Lo encontro");
+			Cellphone* Y = system->findCellphone(numberY);
+			//Y == NULL? (std::cout<<"No lo encontro"):(std::cout<<"Lo encontro");
+			if (!X) {
+				X = new Cellphone(numberX);
+				system->addCellphone(X);
 			}
+			if (!Y) {
+				X = new Cellphone(numberY);
+				system->addCellphone(Y);
+			}
+			std::cout << "CelularX: " << strNumberX << " Celular Y: "
+					<< strNumberY << " Minuto: " << minute << std::endl;
+
+			// Inicia una llamada entre los celulares encontrados
+			system->initiateCall(minute, X, Y);
+
+		} else if (strEqual(command, "Fin")) {
+			unsigned int numberX = strtoi(strNumberX);
+			unsigned int numberY = strtoi(strNumberY);
+			unsigned int minute = strtoi(endMin);
+
+			Call* call = system->findCallInProgress(numberX, numberY);
+			// Termina la llamada
+			if (call) {
+				system->terminateCall(call, minute);
+			}
+			std::cout << "Celular X: " << strNumberX << " Celular Y: "
+					<< strNumberY << " Minuto: " << minute << std::endl;
+
+		} else if (strEqual(command, "Msg")) {
+			strNumberX = strVector[1];
+			strNumberY = strVector[2];
+			startMin = strVector[3];
+			message = strVector[4];
+			int i = 5;
+			while (strVector[i] != "") {
+				message = message + " " + strVector[i];
+				i++;
+			}
+
+			unsigned int numberX = strtoi(strNumberX);
+			unsigned int numberY = strtoi(strNumberY);
+			unsigned int minute = strtoi(startMin);
+			Cellphone* X = system->findCellphone(numberX);
+			Cellphone* Y = system->findCellphone(numberY);
+			if (X && Y) {
+				X->sendMessage(numberY, message, minute);
+				system->sendUnsentMessages(X);
+				Y->receiveNewMessages();
+			}
+
+
+		} else if (strEqual(command, "Conectar")) {
+
+			strNumberX = strVector[1];
+			antennaId = strVector[2];
+			startMin = strVector[3];
+			// Divide el id de la antena separando la "A" del identificador
+			std::vector<std::string> antennaIdV = split(antennaId, 'A');
+			unsigned int numberX = strtoi(strNumberX);
+			unsigned int id = strtoi(antennaIdV[1]);
+			unsigned int min = strtoi(startMin);
+			// Busca el celular en el sistema.
+			// Si no esta, lo agrega
+			Cellphone* X = system->findCellphone(numberX);
+
+			// Busca la antena en el sistema
+			Antenna* antenna = system->findAntenna(id);
+			if (!antenna) {
+				// Si no esta la antena en el sistema, la crea y la agrega
+				antenna = new Antenna(id, 10);
+				system->addAntenna(antenna);
+			}
+			if (!X) {
+				X = new Cellphone(numberX);
+				system->addCellphone(X);
+			}
+
+			// Conecta el celular X a la antena
+			system->connectCellphone(X, antenna);
+
+			std::cout << "Celular X: " << numberX << " Antena: "
+					<< id << " Minuto: " << min << std::endl;
+
+		} else if (strEqual(command, "Desconectar")) {
+
+			strNumberX = strVector[1];
+			antennaId = strVector[2];
+			endMin = strVector[3];
+			// Divide el id de la antena separando la "A" del identificador
+			std::vector<std::string> antennaIdV = split(antennaId, 'A');
+
+			unsigned int numberX = strtoi(strNumberX);
+			unsigned int id = strtoi(antennaIdV[1]);
+			unsigned int min = strtoi(endMin);
+			// Busca el celular en el sistema.
+			// Si no esta, lo agrega
+			Cellphone* X = system->findCellphone(numberX);
+
+			if (!X) {
+				X = new Cellphone(numberX);
+				system->addCellphone(X);
+			}
+			std::cout << "Celular X: " << numberX << " Antena: "
+					<< id << " Minuto: " << min << std::endl;
+
+			// Desonecta el celular X de la antena
+			system->disconnectCellphone(X);
+
 		}
-	} else {
-		cout << "Ha ocurrido un error al abrir el archivo "  << fileName << endl;
 	}
 }
 
