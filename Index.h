@@ -1,3 +1,6 @@
+#ifndef INDEX_H_
+#define INDEX_H_
+
 #include <string>
 #include "LoadFile.h"
 
@@ -126,3 +129,4 @@ class Index {
 		~Index();
 };
 
+#endif //INDEX_H_
