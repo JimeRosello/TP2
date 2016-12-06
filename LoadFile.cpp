@@ -45,6 +45,7 @@ void split(const std::string &s, char delim, std::vector<std::string> &elems) {
     while (std::getline(ss, item, delim)) {
         elems.push_back(item);
     }
+    elems.push_back("nullptr");
 }
 
 // Devuelve un vector con las subcadenas
@@ -105,7 +106,7 @@ void LoadFile(std::string fileName, System* system) {
 				X = new Cellphone(numberY);
 				system->addCellphone(Y);
 			}
-			std::cout << "CelularX: " << strNumberX << " Celular Y: "
+			std::cout << "Celular X: " << strNumberX << " Celular Y: "
 					<< strNumberY << " Minuto: " << minute << std::endl;
 
 			// Inicia una llamada entre los celulares encontrados
@@ -130,7 +131,7 @@ void LoadFile(std::string fileName, System* system) {
 			startMin = strVector[3];
 			message = strVector[4];
 			int i = 5;
-			while (strVector[i] != "") {
+			while (strVector[i] != "nullptr") {
 				message = message + " " + strVector[i];
 				i++;
 			}

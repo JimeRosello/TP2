@@ -186,7 +186,9 @@ void Index::printDetailOfMessages() {
 	while (messagesInCommon->advanceCursor()) {
 		currentMsg = messagesInCommon->getCursor();
 		std::cout << "Minuto: " << currentMsg->getMinute() << std::endl
-				<< "Mensaje: " << currentMsg->getBody() << std::endl;
+				<< "Mensaje: " << currentMsg->getBody() << std::endl
+				<< "Emisor: " << currentMsg->getSender() << std::endl
+				<< "Receptor: " << currentMsg->getReceiver() << std::endl;
 
 	}
 

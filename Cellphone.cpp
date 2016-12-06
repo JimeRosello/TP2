@@ -59,23 +59,23 @@ void Cellphone::changeStatus(CellphoneStatus status) {
 }
 
 void Cellphone::receiveNewMessages() {
-	if (this->status != CONNECTED) {
-		throw std::string("No se pueden recibir mensajes nuevos");
-	}
-	while (!(this->waitingMessages->isEmpty())) {
-		Message* newMessage = this->waitingMessages->removeNextElement();
-		this->newMessages->addNewElement(newMessage);
-		this->inbox->addNewElement(newMessage);
+	if (this->status == CONNECTED) {
+		while (!(this->waitingMessages->isEmpty())) {
+			Message* newMessage = this->waitingMessages->removeNextElement();
+			this->newMessages->addNewElement(newMessage);
+			this->inbox->addNewElement(newMessage);
+		}
 	}
 }
 
 void Cellphone::sendMessage(unsigned int receiverNumber, string message,
 												unsigned int minute) {
 	Message* msg = new Message(message, receiverNumber, this->cellphoneNumber,
-												minute);
-	this->outbox->addNewElement(msg);
+											minute);
+	if (this->status == CONNECTED) {
+		this->outbox->addNewElement(msg);
+	}
 	this->unsentMessages->addNewElement(msg);
-
 }
 
 void Cellphone::addWaitingMessage(Message* message) {

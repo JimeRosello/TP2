@@ -97,12 +97,14 @@ unsigned int System::terminateCall(Call* call, unsigned int endMin) {
 }
 
 void System::sendUnsentMessages(Cellphone* cellphone) {
-	List<Message*>* unsentMessages = cellphone->getUnsentMessages();
-	while (!unsentMessages->isEmpty()) {
-		Message* message = unsentMessages->removeNextElement();
-		unsigned int receiverNumber = message->getReceiver();
-		Cellphone* receiver = this->findCellphone(receiverNumber);
-		receiver->addWaitingMessage(message);
+	if (cellphone->getStatus() == CONNECTED) {
+		List<Message*>* unsentMessages = cellphone->getUnsentMessages();
+		while (!unsentMessages->isEmpty()) {
+			Message* message = unsentMessages->removeNextElement();
+			unsigned int receiverNumber = message->getReceiver();
+			Cellphone* receiver = this->findCellphone(receiverNumber);
+			receiver->addWaitingMessage(message);
+		}
 	}
 }
 
@@ -138,6 +140,7 @@ void System::connectCellphone(Cellphone* X, Antenna* antenna) {
 		}
 	} else {
 		antenna->connectCellphone(X);
+		this->sendUnsentMessages(X);
 	}
 }
 
@@ -295,11 +298,6 @@ Antenna* System::findAntennaToWhichCellIsConnected(Cellphone* cellphone) {
 		}
 	}
 	return (found? currentAntenna:NULL);
-}
-
-void System::sendAllUnsentMessages() {
-	//TODO: JOEL: Implementar esta funcionalidad...
-	cout << "Implementar esta funcionalidad..." << endl;
 }
 
 System::~System() {
