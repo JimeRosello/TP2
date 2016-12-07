@@ -3,6 +3,7 @@
 
 #include <string>
 #include "LoadFile.h"
+#include "Console.h"
 
 enum MODE {
 	SYSTEM,
