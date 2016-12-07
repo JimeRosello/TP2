@@ -2,7 +2,7 @@
 
 void createDir(std::string directoryName) {
 #ifdef linux
-	mkdir(exitFilename.c_str(), exitFilename);
+	mkdir(directoryName.c_str(), S_IRWXU);
 #elif _WIN32
 	if (CreateDirectory(directoryName.c_str(), NULL)) {
 		//Accion a realizar si el directorio se creo exitosamente.

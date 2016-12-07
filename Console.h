@@ -15,8 +15,8 @@ int RequestNumericInput();
 /*
  * Devuelve una linea de texto ingresada por teclado.
  *
- * Pre:
- * Post:
+ * Pre: ---
+ * Post: Devuelve una cadena con la linea ingresada.
  */
 std::string RequestTextLineInput();
 

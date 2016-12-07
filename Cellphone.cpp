@@ -68,7 +68,7 @@ void Cellphone::receiveNewMessages() {
 	}
 }
 
-void Cellphone::sendMessage(unsigned int receiverNumber, string message,
+void Cellphone::sendMessage(unsigned int receiverNumber, std::string message,
 												unsigned int minute) {
 	Message* msg = new Message(message, receiverNumber, this->cellphoneNumber,
 											minute);

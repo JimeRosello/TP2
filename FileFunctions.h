@@ -6,22 +6,23 @@
 
 #include <sstream>
 #ifdef linux
-#include <direct.h>
+//#include <direct.h>
+#include <sys/stat.h>
 #elif _WIN32
 #include <windows.h>
 #endif
 
 /*
  * Crea el directorio especificado.
- * Pre: directoryName debe ser un nombre de directorio valido
+ * Pre: directoryName debe ser un nombre de directorio valido.
  * Post: crea el directorio.
  */
 void createDir(std::string directoryName);
 
 /*
  * Convierte un string a int
- * Pre: -
- * Post: -
+ * Pre: Recibe un entero.
+ * Post: Devuelve una cadena conteniendo a ese entero.
  */
 std::string intToString(int number);
 
