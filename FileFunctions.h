@@ -6,7 +6,6 @@
 
 #include <sstream>
 #ifdef linux
-//#include <direct.h>
 #include <sys/stat.h>
 #elif _WIN32
 #include <windows.h>
