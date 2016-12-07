@@ -74,6 +74,24 @@ void Cellphone::sendMessage(unsigned int receiverNumber, string message,
 											minute);
 	this->outbox->addNewElement(msg);
 	this->unsentMessages->addNewElement(msg);
+	
+	persistMessage(msg);
+}
+
+void Cellphone::persistMessage(Message* msg) {
+	std::string pathBase = "/home/jime/Desktop/Algoritmos/TP2/src/Celulares/";
+	std::string currentCellPath = intToString(msg->getSender());
+	std::string exitFilename = pathBase + currentCellPath + "/egresos.txt";
+	createDir(pathBase);
+	createDir(pathBase + currentCellPath);
+
+	std::string line = "MSG " + intToString(msg->getSender()) + " "
+			+ intToString(msg->getReceiver()) + " "
+			+ intToString(msg->getMinute()) + " " + msg->getBody();
+
+	std::ofstream file(exitFilename.c_str(), std::ofstream::out | std::ofstream::app);
+	file << line << std::endl;
+	file.close();
 }
 
 void Cellphone::addWaitingMessage(Message* message) {

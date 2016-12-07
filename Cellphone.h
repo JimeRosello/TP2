@@ -8,6 +8,7 @@
 #include "List.h"
 #include "Message.h"
 #include "Call.h"
+#include "FileFunctions.h"
 using namespace std;
 
 /*
@@ -98,6 +99,13 @@ public:
 	 */
 	void sendMessage(unsigned int receiverNumber, std::string message,
 														unsigned int minute);
+
+	/*
+	 * Guarda el mensaje indicado en los archivos correspondientes de entrada y salida
+	 * Pre: -
+	 * Post: -
+	 */
+	void persistMessage(Message* msg);
 
 	/*
 	 * Pre: ---
