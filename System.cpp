@@ -55,7 +55,6 @@ void System::initiateCall(unsigned int minute, Cellphone* X, Cellphone* Y) {
 		Y->increaseNumberOfIncomingCalls();
 
 	} else if (Y->getStatus() == CURRENTLY_SPEAKING) {
-
 		X->increaseNumberOfRejectedOutgoingCalls();
 		Y->increaseNumberOfRejectedIncomingCalls();
 
@@ -65,6 +64,9 @@ void System::initiateCall(unsigned int minute, Cellphone* X, Cellphone* Y) {
 		 */
 		this->checkCellphoneThatReceivedBusyTheMost(X);
 		this->checkCellphoneThatWasBusyTheMost(Y);
+		this->findAntennaToWhichCellIsConnected(X)->checkCellphoneThatReceivedBusyTheMost(X);
+		this->findAntennaToWhichCellIsConnected(Y)->checkCellphoneThatWasBusyTheMost(Y);
+
 	} else if (X->getStatus() == WAITING_FOR_CONNECTION) {
 		Antenna* antenna = this->findAntennaToWhichCellIsConnected(X);
 		antenna->increaseCancelledCallsDueToLackOfCapacity();
@@ -80,6 +82,8 @@ void System::initiateCall(unsigned int minute, Cellphone* X, Cellphone* Y) {
 	 */
 	this->checkCellphoneThatCalledTheMost(X);
 	this->checkCellphoneThatWasCalledTheMost(Y);
+	this->findAntennaToWhichCellIsConnected(X)->checkCellphoneThatCalledTheMost(X);
+	this->findAntennaToWhichCellIsConnected(Y)->checkCellphoneThatWasCalledTheMost(Y);
 	this->callsInProgress->addNewElement(newCall);
 }
 
@@ -93,6 +97,8 @@ unsigned int System::terminateCall(Call* call, unsigned int endMin) {
 	Y->addMinutesOfIncomingCalls(call->getCallDuration());
 	this->checkCellphoneThatSpokeTheMost(X);
 	this->checkCellphoneThatWasSpokenToTheMost(Y);
+	this->findAntennaToWhichCellIsConnected(X)->checkCellphoneThatSpokeTheMost(X);
+	this->findAntennaToWhichCellIsConnected(Y)->checkCellphoneThatSpokeTheMost(Y);
 	return call->getCallDuration();
 }
 

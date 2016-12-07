@@ -132,6 +132,57 @@ public:
 	 */
 	Cellphone* getCellphoneThatWasBusyTheMost();
 
+
+	/*
+	 * Pre: El puntero pasado como parametro es valido.
+	 * Post: Compara el valor del celular que mas hablo con el de un celular
+	 *       que recientemente efectuo una llamada para decidir si es necesario
+	 *       cambiar el atributo spokeTheMost
+	 */
+	void checkCellphoneThatSpokeTheMost(Cellphone* X);
+
+
+	/*
+	 * Pre: El puntero pasado como parametro es valido.
+	 * Post: Compara el valor del celular que mas hablo con el de un celular
+	 *       que recientemente efectuo una llamada para decidir si es necesario
+	 *       cambiar el atributo calledTheMost
+	 */
+	void checkCellphoneThatCalledTheMost(Cellphone* X);
+
+	/*
+	 * Pre: El puntero pasado como parametro es valido.
+	 * Post: Compara el valor del celular que mas hablo con el de un celular
+	 *       que recientemente efectuo una llamada para decidir si es necesario
+	 *       cambiar el atributo mostSpoken
+	 */
+	void checkCellphoneThatWasSpokenToTheMost(Cellphone* X);
+
+	/*
+	 * Pre: El puntero pasado como parametro es valido.
+	 * Post: Compara el valor del celular que mas hablo con el de un celular
+	 *       que recientemente efectuo una llamada para decidir si es necesario
+	 *       cambiar el atributo mostCalled
+	 */
+	void checkCellphoneThatWasCalledTheMost(Cellphone* X);
+
+	/*
+	 * Pre: El puntero pasado como parametro es valido.
+	 * Post: Compara el valor del celular que mas hablo con el de un celular
+	 *       que recientemente efectuo una llamada para decidir si es necesario
+	 *       cambiar el atributo receivedBusyTheMost
+	 */
+	void checkCellphoneThatReceivedBusyTheMost(Cellphone* X);
+
+	/*
+	 * Pre: El puntero pasado como parametro es valido.
+	 * Post: Compara el valor del celular que mas hablo con el de un celular
+	 *       que recientemente efectuo una llamada para decidir si es necesario
+	 *       cambiar el atributo wasBusyTheMost
+	 */
+	void checkCellphoneThatWasBusyTheMost(Cellphone* X);
+
+
 	/*
 	 * Pre: ---
 	 * Post: Devuelve el maximo historico concurrente de celulares

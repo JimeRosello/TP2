@@ -152,6 +152,50 @@ Cellphone* Antenna::getCellphoneThatWasBusyTheMost() {
 	return this->wasBusyTheMost;
 }
 
+
+void Antenna::checkCellphoneThatSpokeTheMost(Cellphone* X) {
+	if (this->spokeTheMost->getMinutesOfOutgoingCalls() <
+				X->getMinutesOfOutgoingCalls()) {
+		this->spokeTheMost = X;
+	}
+}
+
+void Antenna::checkCellphoneThatCalledTheMost(Cellphone* X) {
+	if (this->calledTheMost->getNumberOfOutgoingCalls() <
+			X->getNumberOfOutgoingCalls()) {
+		this->calledTheMost = X;
+	}
+}
+
+void Antenna::checkCellphoneThatWasSpokenToTheMost(Cellphone* X) {
+	if (this->mostSpoken->getNumberOfIncomingCalls() <
+			X->getNumberOfIncomingCalls()) {
+		this->mostSpoken = X;
+	}
+}
+
+void Antenna::checkCellphoneThatWasCalledTheMost(Cellphone* X) {
+	if (this->mostCalled->getNumberOfIncomingCalls() <
+			X->getNumberOfIncomingCalls()) {
+		this->mostCalled = X;
+	}
+}
+
+void Antenna::checkCellphoneThatReceivedBusyTheMost(Cellphone* X) {
+	if (this->receivedBusyTheMost->getNumberOfRejectedOutgoingCalls() <
+			X->getNumberOfRejectedOutgoingCalls()) {
+		this->receivedBusyTheMost = X;
+	}
+}
+
+void Antenna::checkCellphoneThatWasBusyTheMost(Cellphone* X) {
+	if (this->wasBusyTheMost->getNumberOfRejectedIncomingCalls() <
+			X->getNumberOfRejectedIncomingCalls()) {
+		this->wasBusyTheMost = X;
+	}
+}
+
+
 unsigned int Antenna::getMaxConcurrentConnections() {
 	return this->maxConcurrentConnections;
 }

@@ -142,7 +142,7 @@ void Cellphone::addMinutesOfIncomingCalls(unsigned int newValue) {
 }
 
 void Cellphone::increaseNumberOfRejectedOutgoingCalls() {
-	this->numberOfOutgoingCalls++;
+	this->numberOfRejectedOutgoingCalls++;
 }
 
 void Cellphone::increaseNumberOfRejectedIncomingCalls() {
