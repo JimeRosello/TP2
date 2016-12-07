@@ -72,9 +72,7 @@ void Cellphone::sendMessage(unsigned int receiverNumber, string message,
 												unsigned int minute) {
 	Message* msg = new Message(message, receiverNumber, this->cellphoneNumber,
 											minute);
-	if (this->status == CONNECTED) {
-		this->outbox->addNewElement(msg);
-	}
+	this->outbox->addNewElement(msg);
 	this->unsentMessages->addNewElement(msg);
 }
 
