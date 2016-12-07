@@ -4,9 +4,7 @@ int main() {
 
 
 	System* system = new System();
-	std::string filename = "/home/jime/Desktop/Algoritmos/TP2/src/hola.txt";
-	int maxLogical = 0;
-//	LoadFile(filename, maxLogical, system);
+	LoadFile(FILENAME, system);
 	Index index(system);
 	do {
 		index.printMenu();

@@ -78,7 +78,8 @@ List<Call*>* findCallsInCommon(Cellphone* X, Cellphone* Y) {
 	Call* currentCall;
 	while (xIncomingCalls->advanceCursor()) {
 		currentCall = xIncomingCalls->getCursor();
-		if (currentCall->getReceiver() == Y->getNumber()) {
+		if (currentCall->getReceiver() == Y->getNumber() ||
+		 	currentCall->getReceiver() == X->getNumber()) {
 			callsInCommon->addNewElement(currentCall);
 		}
 	}
@@ -145,6 +146,9 @@ void Index::printDetailOfCalls() {
 	Cellphone** cellphones = enterCellphoneNumbers();
 	List<Call*>* callsInCommon = findCallsInCommon(cellphones[0], cellphones[1]);
 	delete[] cellphones;
+	if (callsInCommon->isEmpty()) {
+		std::cout << "No hay llamadas para mostrar. " << std::endl;
+	}
 	callsInCommon->initiateCursor();
 	Call* currentCall;
 	unsigned int totalMinutes = 0;
@@ -179,6 +183,9 @@ void Index::printDetailOfMessages() {
 	Cellphone** cellphones = enterCellphoneNumbers();
 	List<Message*>* messagesInCommon = findMessagesInCommon(cellphones[0], cellphones[1]);
 	delete[] cellphones;
+	if (messagesInCommon->isEmpty()) {
+		std::cout << "No hay mensajes para mostrar. " << std::endl;
+	}
 	messagesInCommon->initiateCursor();
 	Message* currentMsg;
 	while (messagesInCommon->advanceCursor()) {
@@ -317,6 +324,9 @@ void Index::printDetailOfOutgoingPhoneCalls() {
 		X = this->cellphoneSystem->findCellphone(number);
 	} while (!X);
 	List<Call*>* outgoingPhoneCalls = X->getOutgoingCalls();
+	if (outgoingPhoneCalls->isEmpty()) {
+		std::cout << "No hay llamadas para mostrar. " << std::endl;
+	}
 	outgoingPhoneCalls->initiateCursor();
 	Call* currentCall;
 	while (outgoingPhoneCalls->advanceCursor()) {
@@ -343,6 +353,9 @@ void Index::printDetailOfIncomingPhoneCalls() {
 		X = this->cellphoneSystem->findCellphone(number);
 	} while (!X);
 	List<Call*>* incomingPhoneCalls = X->getIncomingCalls();
+	if (incomingPhoneCalls->isEmpty()) {
+		std::cout << "No hay llamadas para mostrar. " << std::endl;
+	}
 	incomingPhoneCalls->initiateCursor();
 	Call* currentCall;
 	while (incomingPhoneCalls->advanceCursor()) {
@@ -363,6 +376,9 @@ void Index::printDetailOfIncomingPhoneCalls() {
 void Index::printDetailOfIncomingPhoneCallsFromCellphone() {
 	Cellphone** cellphones = enterCellphoneNumbers();
 	List<Call*>* incomingPhoneCalls = cellphones[0]->getIncomingCalls();
+	if (incomingPhoneCalls->isEmpty()) {
+		std::cout << "No hay llamadas para mostrar. " << std::endl;
+	}
 	incomingPhoneCalls->initiateCursor();
 	Call* currentCall;
 	while (incomingPhoneCalls->advanceCursor()) {
