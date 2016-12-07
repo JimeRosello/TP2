@@ -80,18 +80,25 @@ void Cellphone::sendMessage(unsigned int receiverNumber, string message,
 
 void Cellphone::persistMessage(Message* msg) {
 	std::string pathBase = "/home/jime/Desktop/Algoritmos/TP2/src/Celulares/";
-	std::string currentCellPath = intToString(msg->getSender());
-	std::string exitFilename = pathBase + currentCellPath + "/egresos.txt";
+	std::string senderCellPath = intToString(msg->getSender());
+	std::string receiverCellPath = intToString(msg->getReceiver());
+	std::string exitFilename = pathBase + senderCellPath + "/egresos.txt";
+	std::string incomingFilename = pathBase + receiverCellPath + "/ingresos.txt";
 	createDir(pathBase);
-	createDir(pathBase + currentCellPath);
+	createDir(pathBase + senderCellPath);
+	createDir(pathBase + receiverCellPath);
 
 	std::string line = "MSG " + intToString(msg->getSender()) + " "
 			+ intToString(msg->getReceiver()) + " "
 			+ intToString(msg->getMinute()) + " " + msg->getBody();
 
-	std::ofstream file(exitFilename.c_str(), std::ofstream::out | std::ofstream::app);
-	file << line << std::endl;
-	file.close();
+	std::ofstream fileIn(exitFilename.c_str(), std::ofstream::out | std::ofstream::app);
+	fileIn << line << std::endl;
+	fileIn.close();
+
+	std::ofstream fileOut(incomingFilename.c_str(), std::ofstream::out | std::ofstream::app);
+	fileOut << line << std::endl;
+	fileOut.close();
 }
 
 void Cellphone::addWaitingMessage(Message* message) {
