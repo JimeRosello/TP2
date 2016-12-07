@@ -704,6 +704,8 @@ void Index::executeAction(int optionNumber) {
 				printDetailOfCellphones();
 				break;
 			case 16:
+				delete this->cellphoneSystem;
+				this->cellphoneSystem = new System();
 				processFiles();
 				break;
 			case 17:

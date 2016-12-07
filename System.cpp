@@ -18,7 +18,6 @@ void System::addAntenna(Antenna* antenna) {
 	this->listOfAntennas->addNewElement(antenna);
 }
 
-
 void System::addCellphone(Cellphone* cellphone) {
 	this->listOfCellphones->addNewElement(cellphone);
 	if (!this->mostCalled) {
