@@ -546,7 +546,7 @@ void Index::sendMessage() {
 	} while (!this->cellphoneSystem->findCellphone(receiver));
 	std::cout << std::endl << "Ingrese el mensaje" << std::endl;
 	std::cin >> message;
-	unsigned int minute = 1;
+	unsigned int minute = getMinutesSinceMidnight();
 	this->currentCellphone->sendMessage(receiver, message, minute);
 	this->cellphoneSystem->sendUnsentMessages(this->currentCellphone);
 }

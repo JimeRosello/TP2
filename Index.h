@@ -4,6 +4,7 @@
 #include <string>
 #include "LoadFile.h"
 #include "Console.h"
+#include "TimeFunctions.h"
 
 enum MODE {
 	SYSTEM,
