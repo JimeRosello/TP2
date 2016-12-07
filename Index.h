@@ -11,6 +11,11 @@ enum MODE {
 	CELLPHONE
 };
 
+const std::string FILENAME = "/home/jime/Desktop/Algoritmos/TP2/src/prueba3.txt";
+const int MAX_OPTIONS_SYSTEM = 18;
+const int MAX_OPTIONS_CELLPHONE = 7;
+
+
 class Index {
 
 	private:
@@ -50,6 +55,7 @@ class Index {
 		void printCellphonesThatWereBusyTheMost();
 		void printDetailOfOutgoingPhoneCalls();
 		void printDetailOfIncomingPhoneCalls();
+		void printDetailOfIncomingPhoneCallsFromCellphone();
 		void printMaxAmountOfCellphonesPerAntenna();
 		void printDetailOfReceivedPhoneCalls();
 		void printAmountOfCancelledCallsDueToLackOfCapacity();

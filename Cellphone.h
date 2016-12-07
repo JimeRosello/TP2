@@ -243,10 +243,22 @@ public:
 	List<Message*>* getIncomingMessages();
 
 	/*
+	 * Pre: Recibe un puntero a Call (nueva llamada saliente).
+	 * Post: Agrega una llamada a la lista de llamadas salientes.
+	 */
+	void addOutgoingCall(Call* call);
+
+	/*
 	 * Pre: ---
 	 * Post: Devuelve un puntero a una pila de llamadas salientes.
 	 */
 	List<Call*>* getOutgoingCalls();
+
+	/*
+	 * Pre: Recibe un puntero a Call (nueva llamada entrante).
+	 * Post: Agrega una llamada a la lista de llamadas entrantes.
+	 */
+	void addIncomingCall(Call* call);
 
 	/*
 	 * Pre: ---

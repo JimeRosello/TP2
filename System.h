@@ -194,6 +194,14 @@ class System {
 		Antenna* findAntennaToWhichCellIsConnected(Cellphone* cellphone);
 
 		/*
+		 * Pre: El celular se encuentra en el sistema
+		 * Post: Devuelve un puntero a la antena en la que esta esperando a
+		 * 		 conectarse el celular pasado como parametro.
+		 *       Devuelve NULL si no se encuentra conectado a ninguna antena.
+		 */
+		Antenna* findAntennaToWhichCellIsWaitingForConnection(Cellphone* cellphone);
+
+		/*
 		 * Busca una llamada en la lista de llamadas del sistema
 		 * Pre: Recibe un numero de celular emisor y receptor validos.
 		 * Post: Devuelve un puntero a la llamada encontrada o NULL si no la

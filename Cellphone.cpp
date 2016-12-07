@@ -178,10 +178,17 @@ List<Call*>* Cellphone::getOutgoingCalls() {
 	return this->outgoingCalls;
 }
 
+void Cellphone::addOutgoingCall(Call* call) {
+	this->outgoingCalls->addNewElement(call);
+}
+
 List <Call*>* Cellphone::getIncomingCalls() {
 	return this->incomingCalls;
 }
 
+void Cellphone::addIncomingCall(Call* call) {
+	this->incomingCalls->addNewElement(call);
+}
 List<Message*>* Cellphone::getWaitingMessages() {
 	return this->waitingMessages;
 }

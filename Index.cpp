@@ -4,9 +4,6 @@
 #include <iostream>
 #include <string>
 
-const int MAX_OPTIONS_SYSTEM = 18;
-const int MAX_OPTIONS_CELLPHONE = 7;
-
 Index::Index(System* cellphoneSystem) {
 	this->mode = SYSTEM;
 	this->currentCellphone = NULL;
@@ -167,8 +164,9 @@ void Index::printDetailOfCalls() {
 				<< "Antenas utilizadas: " << std::endl;
 		while (involvedAntennas->advanceCursor()) {
 			unsigned int currentAntenna = involvedAntennas->getCursor();
-			std::cout << currentAntenna << std::endl;
+			std::cout << currentAntenna << ", ";
 		}
+		std::cout << std::endl;
 	}
 	std::cout << "Cantidad total de llamadas: "
 			<< callsInCommon->getAmountOfElements() << std::endl
@@ -227,7 +225,7 @@ void Index::printCellphonesThatCalledTheMost() {
 		unsigned int id = currentAntenna->getIdentification();
 		unsigned int number = (calledTheMost? calledTheMost->getNumber() : 0);
 		if (id != 0 && number != 0) {
-			std::cout << "Celular que mas hablo de la antena " << id << ": "
+			std::cout << "Celular que mas llamo de la antena " << id << ": "
 				<< number << std::endl;
 		}
 	}
@@ -247,7 +245,7 @@ void Index::printCellphonesThatReceivedBusyTheMost() {
 		unsigned int id = currentAntenna->getIdentification();
 		unsigned int number = (receivedBusyTheMost? receivedBusyTheMost->getNumber() : 0);
 		if (id != 0 && number != 0) {
-			std::cout << "Celular que mas hablo de la antena " << id << ": "
+			std::cout << "Celular que mas recibio ocupado de la antena " << id << ": "
 				<< number << std::endl;
 		}
 	}
@@ -267,7 +265,7 @@ void Index::printCellphonesThatWereCalledTheMost() {
 		unsigned int id = currentAntenna->getIdentification();
 		unsigned int number = (mostCalled? mostCalled->getNumber() : 0);
 		if (id != 0 && number != 0) {
-			std::cout << "Celular que mas hablo de la antena " << id << ": "
+			std::cout << "Celular que mas fue llamado de la antena " << id << ": "
 				<< number << std::endl;
 		}
 	}
@@ -303,7 +301,7 @@ void Index::printCellphonesThatWereBusyTheMost() {
 		unsigned int id = currentAntenna->getIdentification();
 		unsigned int number = (busiest? busiest->getNumber() : 0);
 		if (id != 0 && number != 0) {
-			std::cout << "Celular que mas hablo de la antena " << id << ": "
+			std::cout << "Celular que mas dio ocupado de la antena " << id << ": "
 				<< number << std::endl;
 		}
 	}
@@ -358,6 +356,29 @@ void Index::printDetailOfIncomingPhoneCalls() {
 					<< currentCall->getStartMinute() << std::endl
 					<< "Minuto de fin: " << currentCall->getEndMinute()
 					<< std::endl;
+		}
+	}
+}
+
+void Index::printDetailOfIncomingPhoneCallsFromCellphone() {
+	Cellphone** cellphones = enterCellphoneNumbers();
+	List<Call*>* incomingPhoneCalls = cellphones[0]->getIncomingCalls();
+	incomingPhoneCalls->initiateCursor();
+	Call* currentCall;
+	while (incomingPhoneCalls->advanceCursor()) {
+		currentCall = incomingPhoneCalls->getCursor();
+		if (currentCall->getInitiator() == cellphones[1]->getNumber()) {
+			if (currentCall->getStatus() == BUSY) {
+				std::cout << "Llamada ocupada de " << currentCall->getInitiator()
+						  << ", minuto " << currentCall->getStartMinute()
+						<< std::endl;
+			} else {
+				std::cout << "Emisor de la llamada: " << currentCall->getInitiator()
+						<< std::endl << "Minuto de inicio: "
+						<< currentCall->getStartMinute() << std::endl
+						<< "Minuto de fin: " << currentCall->getEndMinute()
+						<< std::endl;
+			}
 		}
 	}
 }
@@ -488,10 +509,8 @@ void Index::printDetailOfCellphones() {
 }
 
 void Index::processFiles() {
-	std::string filename = "/home/jime/Desktop/Algoritmos/TP2/src/prueba1.txt";
-	LoadFile(filename, this->cellphoneSystem);
-	//LoadFile("C:\\Repositorio\\TP2\\Debug\\Celulares\\SistemaDeTelefonia\\RegistrosHistoricos.txt", i);
-	//LoadFile(".\\Celulares\\SistemaDeTelefonia\\RegistrosHistoricos.txt", i, cellphoneSystem);
+	//std::string filename = FILENAME; // /home/jime/Desktop/Algoritmos/TP2/src/prueba1.txt";
+	LoadFile(FILENAME, this->cellphoneSystem);
 }
 
 void Index::showNewMessages() {
@@ -657,7 +676,7 @@ void Index::executeAction(int optionNumber) {
 				printMaxAmountOfCellphonesPerAntenna();
 				break;
 			case 12:
-				this->printDetailOfIncomingPhoneCalls();
+				this->printDetailOfIncomingPhoneCallsFromCellphone();
 				break;
 			case 13:
 				printAmountOfCancelledCallsDueToLackOfCapacity();
