@@ -206,8 +206,10 @@ void Index::printCellphonesThatSpokeTheMost() {
 		spokeTheMost = currentAntenna->getCellphoneThatSpokeTheMost();
 		unsigned int id = currentAntenna->getIdentification();
 		unsigned int number = (spokeTheMost? spokeTheMost->getNumber() : 0);
-		std::cout << "Celular que mas hablo de la antena " << id << ": "
+		if (id != 0 && number != 0) {
+			std::cout << "Celular que mas hablo de la antena " << id << ": "
 				<< number << std::endl;
+		}
 	}
 }
 
@@ -224,8 +226,10 @@ void Index::printCellphonesThatCalledTheMost() {
 				currentAntenna->getCellphoneThatCalledTheMost();
 		unsigned int id = currentAntenna->getIdentification();
 		unsigned int number = (calledTheMost? calledTheMost->getNumber() : 0);
-		std::cout << "Celular que mas llamo de la antena " << id << ": "
+		if (id != 0 && number != 0) {
+			std::cout << "Celular que mas hablo de la antena " << id << ": "
 				<< number << std::endl;
+		}
 	}
 }
 
@@ -242,9 +246,10 @@ void Index::printCellphonesThatReceivedBusyTheMost() {
 				currentAntenna->getCellphoneThatReceivedBusyTheMost();
 		unsigned int id = currentAntenna->getIdentification();
 		unsigned int number = (receivedBusyTheMost? receivedBusyTheMost->getNumber() : 0);
-		std::cout << "Celular que mas recibio ocupado de la antena " << id
-				<< ": " << number << std::endl;
-
+		if (id != 0 && number != 0) {
+			std::cout << "Celular que mas hablo de la antena " << id << ": "
+				<< number << std::endl;
+		}
 	}
 }
 
@@ -261,8 +266,10 @@ void Index::printCellphonesThatWereCalledTheMost() {
 				currentAntenna->getCellphoneThatWasCalledTheMost();
 		unsigned int id = currentAntenna->getIdentification();
 		unsigned int number = (mostCalled? mostCalled->getNumber() : 0);
-		std::cout << "Celular al que mas se llamo de la antena " << id << ": "
+		if (id != 0 && number != 0) {
+			std::cout << "Celular que mas hablo de la antena " << id << ": "
 				<< number << std::endl;
+		}
 	}
 }
 
@@ -295,8 +302,10 @@ void Index::printCellphonesThatWereBusyTheMost() {
 		Cellphone* busiest = currentAntenna->getCellphoneThatWasBusyTheMost();
 		unsigned int id = currentAntenna->getIdentification();
 		unsigned int number = (busiest? busiest->getNumber() : 0);
-		std::cout << "Celular que mas dio ocupado de la antena " << id << ": "
+		if (id != 0 && number != 0) {
+			std::cout << "Celular que mas hablo de la antena " << id << ": "
 				<< number << std::endl;
+		}
 	}
 
 }
