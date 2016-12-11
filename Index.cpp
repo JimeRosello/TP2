@@ -78,8 +78,8 @@ List<Call*>* findCallsInCommon(Cellphone* X, Cellphone* Y) {
 	Call* currentCall;
 	while (xIncomingCalls->advanceCursor()) {
 		currentCall = xIncomingCalls->getCursor();
-		if (currentCall->getReceiver() == Y->getNumber() ||
-		 	currentCall->getReceiver() == X->getNumber()) {
+		if (currentCall->getReceiver() == Y->getNumber()
+				|| currentCall->getReceiver() == X->getNumber()) {
 			callsInCommon->addNewElement(currentCall);
 		}
 	}
@@ -125,7 +125,8 @@ Cellphone** Index::enterCellphoneNumbers() {
 		std::cin >> numberX;
 		X = this->cellphoneSystem->findCellphone(numberX);
 		if (!X) {
-			std::cout << "El celular no se encuentra en el sistema" << std::endl;
+			std::cout << "El celular no se encuentra en el sistema"
+					<< std::endl;
 		}
 	} while (!X);
 	do {
@@ -133,7 +134,8 @@ Cellphone** Index::enterCellphoneNumbers() {
 		std::cin >> numberY;
 		Y = this->cellphoneSystem->findCellphone(numberY);
 		if (!Y) {
-			std::cout << "El celular no se encuentra en el sistema" << std::endl;
+			std::cout << "El celular no se encuentra en el sistema"
+					<< std::endl;
 		}
 	} while (!Y);
 	Cellphone** returnValue = new Cellphone*[2];
@@ -144,7 +146,8 @@ Cellphone** Index::enterCellphoneNumbers() {
 
 void Index::printDetailOfCalls() {
 	Cellphone** cellphones = enterCellphoneNumbers();
-	List<Call*>* callsInCommon = findCallsInCommon(cellphones[0], cellphones[1]);
+	List<Call*>* callsInCommon = findCallsInCommon(cellphones[0],
+			cellphones[1]);
 	delete[] cellphones;
 	if (callsInCommon->isEmpty()) {
 		std::cout << "No hay llamadas para mostrar. " << std::endl;
@@ -181,7 +184,8 @@ void Index::printDetailOfCalls() {
 
 void Index::printDetailOfMessages() {
 	Cellphone** cellphones = enterCellphoneNumbers();
-	List<Message*>* messagesInCommon = findMessagesInCommon(cellphones[0], cellphones[1]);
+	List<Message*>* messagesInCommon = findMessagesInCommon(cellphones[0],
+			cellphones[1]);
 	delete[] cellphones;
 	if (messagesInCommon->isEmpty()) {
 		std::cout << "No hay mensajes para mostrar. " << std::endl;
@@ -210,10 +214,10 @@ void Index::printCellphonesThatSpokeTheMost() {
 		Antenna* currentAntenna = listOfAntennas->getCursor();
 		spokeTheMost = currentAntenna->getCellphoneThatSpokeTheMost();
 		unsigned int id = currentAntenna->getIdentification();
-		unsigned int number = (spokeTheMost? spokeTheMost->getNumber() : 0);
+		unsigned int number = (spokeTheMost ? spokeTheMost->getNumber() : 0);
 		if (id != 0 && number != 0) {
 			std::cout << "Celular que mas hablo de la antena " << id << ": "
-				<< number << std::endl;
+					<< number << std::endl;
 		}
 	}
 }
@@ -230,10 +234,10 @@ void Index::printCellphonesThatCalledTheMost() {
 		Cellphone* calledTheMost =
 				currentAntenna->getCellphoneThatCalledTheMost();
 		unsigned int id = currentAntenna->getIdentification();
-		unsigned int number = (calledTheMost? calledTheMost->getNumber() : 0);
+		unsigned int number = (calledTheMost ? calledTheMost->getNumber() : 0);
 		if (id != 0 && number != 0) {
 			std::cout << "Celular que mas llamo de la antena " << id << ": "
-				<< number << std::endl;
+					<< number << std::endl;
 		}
 	}
 }
@@ -250,10 +254,11 @@ void Index::printCellphonesThatReceivedBusyTheMost() {
 		Cellphone* receivedBusyTheMost =
 				currentAntenna->getCellphoneThatReceivedBusyTheMost();
 		unsigned int id = currentAntenna->getIdentification();
-		unsigned int number = (receivedBusyTheMost? receivedBusyTheMost->getNumber() : 0);
+		unsigned int number = (
+				receivedBusyTheMost ? receivedBusyTheMost->getNumber() : 0);
 		if (id != 0 && number != 0) {
-			std::cout << "Celular que mas recibio ocupado de la antena " << id << ": "
-				<< number << std::endl;
+			std::cout << "Celular que mas recibio ocupado de la antena " << id
+					<< ": " << number << std::endl;
 		}
 	}
 }
@@ -270,10 +275,10 @@ void Index::printCellphonesThatWereCalledTheMost() {
 		Cellphone* mostCalled =
 				currentAntenna->getCellphoneThatWasCalledTheMost();
 		unsigned int id = currentAntenna->getIdentification();
-		unsigned int number = (mostCalled? mostCalled->getNumber() : 0);
+		unsigned int number = (mostCalled ? mostCalled->getNumber() : 0);
 		if (id != 0 && number != 0) {
-			std::cout << "Celular que mas fue llamado de la antena " << id << ": "
-				<< number << std::endl;
+			std::cout << "Celular que mas fue llamado de la antena " << id
+					<< ": " << number << std::endl;
 		}
 	}
 }
@@ -287,9 +292,10 @@ void Index::printCellphonesThatWereSpokenToTheMost() {
 	listOfAntennas->initiateCursor();
 	while (listOfAntennas->advanceCursor()) {
 		Antenna* currentAntenna = listOfAntennas->getCursor();
-		Cellphone* mostSpoken =	currentAntenna->getCellphoneThatWasSpokenToTheMost();
+		Cellphone* mostSpoken =
+				currentAntenna->getCellphoneThatWasSpokenToTheMost();
 		unsigned int id = currentAntenna->getIdentification();
-		unsigned int number = (mostSpoken? mostSpoken->getNumber() : 0);
+		unsigned int number = (mostSpoken ? mostSpoken->getNumber() : 0);
 		std::cout << "Celular al que mas se le hablo de la antena " << id
 				<< ": " << number << std::endl;
 	}
@@ -306,10 +312,10 @@ void Index::printCellphonesThatWereBusyTheMost() {
 		Antenna* currentAntenna = listOfAntennas->getCursor();
 		Cellphone* busiest = currentAntenna->getCellphoneThatWasBusyTheMost();
 		unsigned int id = currentAntenna->getIdentification();
-		unsigned int number = (busiest? busiest->getNumber() : 0);
+		unsigned int number = (busiest ? busiest->getNumber() : 0);
 		if (id != 0 && number != 0) {
-			std::cout << "Celular que mas dio ocupado de la antena " << id << ": "
-				<< number << std::endl;
+			std::cout << "Celular que mas dio ocupado de la antena " << id
+					<< ": " << number << std::endl;
 		}
 	}
 
@@ -385,15 +391,15 @@ void Index::printDetailOfIncomingPhoneCallsFromCellphone() {
 		currentCall = incomingPhoneCalls->getCursor();
 		if (currentCall->getInitiator() == cellphones[1]->getNumber()) {
 			if (currentCall->getStatus() == BUSY) {
-				std::cout << "Llamada ocupada de " << currentCall->getInitiator()
-						  << ", minuto " << currentCall->getStartMinute()
-						<< std::endl;
+				std::cout << "Llamada ocupada de "
+						<< currentCall->getInitiator() << ", minuto "
+						<< currentCall->getStartMinute() << std::endl;
 			} else {
-				std::cout << "Emisor de la llamada: " << currentCall->getInitiator()
-						<< std::endl << "Minuto de inicio: "
-						<< currentCall->getStartMinute() << std::endl
-						<< "Minuto de fin: " << currentCall->getEndMinute()
-						<< std::endl;
+				std::cout << "Emisor de la llamada: "
+						<< currentCall->getInitiator() << std::endl
+						<< "Minuto de inicio: " << currentCall->getStartMinute()
+						<< std::endl << "Minuto de fin: "
+						<< currentCall->getEndMinute() << std::endl;
 			}
 		}
 	}
@@ -444,8 +450,7 @@ void QS(cancelledCallsPerAntenna* vector, unsigned int first,
 				tempAntenna = vector[left].getAntennaId();
 				vector[left].changeNumberOfCancelledCalls(
 						vector[right].getNumberOfCancelledCalls());
-				vector[left].changeAntennaId(
-						vector[right].getAntennaId());
+				vector[left].changeAntennaId(vector[right].getAntennaId());
 				vector[right].changeNumberOfCancelledCalls(tempNumber);
 				vector[right].changeAntennaId(tempAntenna);
 			}
@@ -589,11 +594,6 @@ void Index::sendMessage() {
 void Index::changeCellphone() {
 	unsigned int number;
 	std::cout << "Ingrese el numero de celular" << std::endl;
-/*	if (!(std::cin >> number)){
-        std::cin.clear();
-        std::cin.ignore(256, '\n'); //TODO: Mejorar...
-        cout << "Debe ingresar un numero valido." << endl;
-	} */
 	std::cin >> number;
 	Cellphone* cellphone = this->cellphoneSystem->findCellphone(number);
 	if (!cellphone) {
@@ -658,84 +658,84 @@ int Index::chooseOption() {
 void Index::executeAction(int optionNumber) {
 	if (this->mode == SYSTEM) {
 		switch (optionNumber) {
-			case 1:
-				printDetailOfCalls();
-				break;
-			case 2:
-				printDetailOfMessages();
-				break;
-			case 3:
-				printCellphonesThatSpokeTheMost();
-				break;
-			case 4:
-				printCellphonesThatCalledTheMost();
-				break;
-			case 5:
-				printCellphonesThatReceivedBusyTheMost();
-				break;
-			case 6:
-				printCellphonesThatWereCalledTheMost();
-				break;
-			case 7:
-				printCellphonesThatReceivedBusyTheMost();
-				break;
-			case 8:
-				printCellphonesThatWereBusyTheMost();
-				break;
-			case 9:
-				printDetailOfOutgoingPhoneCalls();
-				break;
-			case 10:
-				printDetailOfIncomingPhoneCalls();
-				break;
-			case 11:
-				printMaxAmountOfCellphonesPerAntenna();
-				break;
-			case 12:
-				this->printDetailOfIncomingPhoneCallsFromCellphone();
-				break;
-			case 13:
-				printAmountOfCancelledCallsDueToLackOfCapacity();
-				break;
-			case 14:
-				printDetailOfAntennas();
-				break;
-			case 15:
-				printDetailOfCellphones();
-				break;
-			case 16:
-				delete this->cellphoneSystem;
-				this->cellphoneSystem = new System();
-				processFiles();
-				break;
-			case 17:
-				this->inCourse = false;
-				break;
-			case 18:
-				this->changeMode();
+		case 1:
+			printDetailOfCalls();
+			break;
+		case 2:
+			printDetailOfMessages();
+			break;
+		case 3:
+			printCellphonesThatSpokeTheMost();
+			break;
+		case 4:
+			printCellphonesThatCalledTheMost();
+			break;
+		case 5:
+			printCellphonesThatReceivedBusyTheMost();
+			break;
+		case 6:
+			printCellphonesThatWereCalledTheMost();
+			break;
+		case 7:
+			printCellphonesThatReceivedBusyTheMost();
+			break;
+		case 8:
+			printCellphonesThatWereBusyTheMost();
+			break;
+		case 9:
+			printDetailOfOutgoingPhoneCalls();
+			break;
+		case 10:
+			printDetailOfIncomingPhoneCalls();
+			break;
+		case 11:
+			printMaxAmountOfCellphonesPerAntenna();
+			break;
+		case 12:
+			this->printDetailOfIncomingPhoneCallsFromCellphone();
+			break;
+		case 13:
+			printAmountOfCancelledCallsDueToLackOfCapacity();
+			break;
+		case 14:
+			printDetailOfAntennas();
+			break;
+		case 15:
+			printDetailOfCellphones();
+			break;
+		case 16:
+			delete this->cellphoneSystem;
+			this->cellphoneSystem = new System();
+			processFiles();
+			break;
+		case 17:
+			this->inCourse = false;
+			break;
+		case 18:
+			this->changeMode();
 		}
 	} else {
 		switch (optionNumber) {
-			case 1:
-				showNewMessages();
-				break;
-			case 2:
-				showHistoryOfSentMessages();
-				break;
-			case 3:
-				showHistoryOfReceivedMessages();
-				break;
-			case 4:
-				sendMessage();
-				break;
-			case 5:
-				changeCellphone();
-				break;
-			case 6:
-				this->inCourse = false;
-				break;
-			case 7:
-				changeMode();
+		case 1:
+			showNewMessages();
+			break;
+		case 2:
+			showHistoryOfSentMessages();
+			break;
+		case 3:
+			showHistoryOfReceivedMessages();
+			break;
+		case 4:
+			sendMessage();
+			break;
+		case 5:
+			changeCellphone();
+			break;
+		case 6:
+			this->inCourse = false;
+			break;
+		case 7:
+			changeMode();
 		}
 	}
 }
@@ -747,4 +747,5 @@ bool Index::isInCourse() {
 Index::~Index() {
 	delete[] this->systemMenu;
 	delete[] this->cellphoneMenu;
+	delete this->cellphoneSystem;
 }
