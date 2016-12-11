@@ -3,7 +3,6 @@
 Antenna::Antenna(unsigned int identification, unsigned int maxConnections) {
 	this->identification = identification;
 	this->maxConnections = maxConnections;
-	this->messages = new List<Message*>();
 	this->cellphones = new List<Cellphone*>();
 	this->waitingCellphoneList = new List<Cellphone*>();
 	this->spokeTheMost = NULL;
@@ -19,7 +18,6 @@ Antenna::Antenna(unsigned int identification, unsigned int maxConnections) {
 Antenna::Antenna() {
 	this->identification = 0;
 	this->maxConnections = 0;
-	this->messages = new List<Message*>();
 	this->cellphones = new List<Cellphone*>();
 	this->waitingCellphoneList = new List<Cellphone*>();
 	this->spokeTheMost = NULL;
@@ -75,8 +73,10 @@ bool Antenna::connectCellphone(Cellphone* newCellphone) {
 }
 
 void Antenna::checkMaxConcurrentConnections() {
-	if (this->maxConcurrentConnections < this->cellphones->getAmountOfElements()) {
-		this->maxConcurrentConnections = this->cellphones->getAmountOfElements();
+	if (this->maxConcurrentConnections
+			< this->cellphones->getAmountOfElements()) {
+		this->maxConcurrentConnections =
+				this->cellphones->getAmountOfElements();
 	}
 }
 
@@ -122,12 +122,6 @@ bool Antenna::checkIfFull() {
 	return (getActiveConnections() == this->maxConnections);
 }
 
-void Antenna::saveMessage(unsigned int transmitterID, unsigned int receiverID,
-		std::string message, unsigned int minute) {
-	Message* newMessage = new Message(message, receiverID, transmitterID, minute);
-	messages->addNewElement(newMessage);
-}
-
 Cellphone* Antenna::getCellphoneThatSpokeTheMost() {
 	return this->spokeTheMost;
 }
@@ -152,49 +146,47 @@ Cellphone* Antenna::getCellphoneThatWasBusyTheMost() {
 	return this->wasBusyTheMost;
 }
 
-
 void Antenna::checkCellphoneThatSpokeTheMost(Cellphone* X) {
-	if (this->spokeTheMost->getMinutesOfOutgoingCalls() <
-				X->getMinutesOfOutgoingCalls()) {
+	if (this->spokeTheMost->getMinutesOfOutgoingCalls()
+			< X->getMinutesOfOutgoingCalls()) {
 		this->spokeTheMost = X;
 	}
 }
 
 void Antenna::checkCellphoneThatCalledTheMost(Cellphone* X) {
-	if (this->calledTheMost->getNumberOfOutgoingCalls() <
-			X->getNumberOfOutgoingCalls()) {
+	if (this->calledTheMost->getNumberOfOutgoingCalls()
+			< X->getNumberOfOutgoingCalls()) {
 		this->calledTheMost = X;
 	}
 }
 
 void Antenna::checkCellphoneThatWasSpokenToTheMost(Cellphone* X) {
-	if (this->mostSpoken->getNumberOfIncomingCalls() <
-			X->getNumberOfIncomingCalls()) {
+	if (this->mostSpoken->getNumberOfIncomingCalls()
+			< X->getNumberOfIncomingCalls()) {
 		this->mostSpoken = X;
 	}
 }
 
 void Antenna::checkCellphoneThatWasCalledTheMost(Cellphone* X) {
-	if (this->mostCalled->getNumberOfIncomingCalls() <
-			X->getNumberOfIncomingCalls()) {
+	if (this->mostCalled->getNumberOfIncomingCalls()
+			< X->getNumberOfIncomingCalls()) {
 		this->mostCalled = X;
 	}
 }
 
 void Antenna::checkCellphoneThatReceivedBusyTheMost(Cellphone* X) {
-	if (this->receivedBusyTheMost->getNumberOfRejectedOutgoingCalls() <
-			X->getNumberOfRejectedOutgoingCalls()) {
+	if (this->receivedBusyTheMost->getNumberOfRejectedOutgoingCalls()
+			< X->getNumberOfRejectedOutgoingCalls()) {
 		this->receivedBusyTheMost = X;
 	}
 }
 
 void Antenna::checkCellphoneThatWasBusyTheMost(Cellphone* X) {
-	if (this->wasBusyTheMost->getNumberOfRejectedIncomingCalls() <
-			X->getNumberOfRejectedIncomingCalls()) {
+	if (this->wasBusyTheMost->getNumberOfRejectedIncomingCalls()
+			< X->getNumberOfRejectedIncomingCalls()) {
 		this->wasBusyTheMost = X;
 	}
 }
-
 
 unsigned int Antenna::getMaxConcurrentConnections() {
 	return this->maxConcurrentConnections;
@@ -218,6 +210,5 @@ unsigned int Antenna::getAmountOfCancelledCallsDueToLackOfCapacity() {
 
 Antenna::~Antenna() {
 	delete this->cellphones;
-	delete this->messages;
 	delete this->waitingCellphoneList;
 }
