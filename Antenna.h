@@ -8,7 +8,6 @@ class Antenna {
 private:
 	unsigned int maxConnections;
 	unsigned int identification;
-	List<Message*>* messages;
 	List<Cellphone*>* cellphones;
 	List<Cellphone*>* waitingCellphoneList;
 	Cellphone* spokeTheMost;               // el que hablo mas
@@ -39,7 +38,6 @@ public:
 	 * Post: Crea una Antenna vacia.
 	 */
 	Antenna();
-
 
 	/*
 	 * Pre: ---
@@ -89,13 +87,6 @@ public:
 	bool checkIfFull();
 
 	/*
-	 * Pre: El celular con identificador "transmitterID" se encuentra conectado a la Antenna.
-	 * Post: Guarda un Mensaje para posteriormente tener la opcion de mandarlo a su remitente.
-	 */
-	void saveMessage(unsigned int transmitterID, unsigned int recieverID,
-			std::string message, unsigned int minute);
-
-	/*
 	 * Pre: ---
 	 * Post: Devuelve el Celular que mas hablo de todo el sistema
 	 */
@@ -132,7 +123,6 @@ public:
 	 */
 	Cellphone* getCellphoneThatWasBusyTheMost();
 
-
 	/*
 	 * Pre: El puntero pasado como parametro es valido.
 	 * Post: Compara el valor del celular que mas hablo con el de un celular
@@ -140,7 +130,6 @@ public:
 	 *       cambiar el atributo spokeTheMost
 	 */
 	void checkCellphoneThatSpokeTheMost(Cellphone* X);
-
 
 	/*
 	 * Pre: El puntero pasado como parametro es valido.
@@ -181,7 +170,6 @@ public:
 	 *       cambiar el atributo wasBusyTheMost
 	 */
 	void checkCellphoneThatWasBusyTheMost(Cellphone* X);
-
 
 	/*
 	 * Pre: ---
