@@ -1,5 +1,6 @@
 #include "System.h"
 
+
 System::System() {
 	this->listOfAntennas = new List<Antenna*>();
 	this->listOfCellphones = new List<Cellphone*>();
@@ -12,26 +13,6 @@ System::System() {
 	this->callsInProgress = new List<Call*>();
 }
 
-void System::destroyCellphones(List<Cellphone*>* cellphoneList) {
-	cellphoneList->initiateCursor();
-	while (!cellphoneList->isEmpty()) {
-		delete cellphoneList->removeNextElement();
-	}
-}
-
-void System::destroyCalls(List<Call*>* callList) {
-	callList->initiateCursor();
-	while (!callList->isEmpty()) {
-		delete callList->removeNextElement();
-	}
-}
-
-void System::destroyAntennas(List<Antenna*>* antennaList) {
-	antennaList->initiateCursor();
-	while (!antennaList->isEmpty()) {
-		delete antennaList->removeNextElement();
-	}
-}
 
 void System::addAntenna(Antenna* antenna) {
 	this->listOfAntennas->addNewElement(antenna);
@@ -62,7 +43,8 @@ void System::addCellphone(Cellphone* cellphone) {
 void System::initiateCall(unsigned int minute, Cellphone* X, Cellphone* Y) {
 
 	Call* newCall = new Call(minute, X->getNumber(), Y->getNumber());
-	if ((X->getStatus() == CONNECTED) && (Y->getStatus() == CONNECTED)) {
+	if ((X->getStatus() == CONNECTED) &&
+		(Y->getStatus() == CONNECTED)) {
 		newCall->addInvolvedAntenna(X->getLastConnection());
 		newCall->addInvolvedAntenna(Y->getLastConnection());
 		newCall->changeStatus(IN_PROGRESS);
@@ -70,10 +52,8 @@ void System::initiateCall(unsigned int minute, Cellphone* X, Cellphone* Y) {
 		Y->changeStatus(CURRENTLY_SPEAKING);
 		X->increaseNumberOfOutgoingCalls();
 		Y->increaseNumberOfIncomingCalls();
-		this->findAntennaToWhichCellIsConnected(X)->checkCellphoneThatCalledTheMost(
-				X);
-		this->findAntennaToWhichCellIsConnected(Y)->checkCellphoneThatWasCalledTheMost(
-				Y);
+		this->findAntennaToWhichCellIsConnected(X)->checkCellphoneThatCalledTheMost(X);
+		this->findAntennaToWhichCellIsConnected(Y)->checkCellphoneThatWasCalledTheMost(Y);
 
 	} else if (Y->getStatus() == CURRENTLY_SPEAKING) {
 		X->increaseNumberOfRejectedOutgoingCalls();
@@ -85,21 +65,19 @@ void System::initiateCall(unsigned int minute, Cellphone* X, Cellphone* Y) {
 		 */
 		this->checkCellphoneThatReceivedBusyTheMost(X);
 		this->checkCellphoneThatWasBusyTheMost(Y);
-		this->findAntennaToWhichCellIsConnected(X)->checkCellphoneThatReceivedBusyTheMost(
-				X);
-		this->findAntennaToWhichCellIsConnected(Y)->checkCellphoneThatWasBusyTheMost(
-				Y);
+		this->findAntennaToWhichCellIsConnected(X)->checkCellphoneThatReceivedBusyTheMost(X);
+		this->findAntennaToWhichCellIsConnected(Y)->checkCellphoneThatWasBusyTheMost(Y);
 
 	} else if (X->getStatus() == WAITING_FOR_CONNECTION) {
-		Antenna* antenna = this->findAntennaToWhichCellIsWaitingForConnection(
-				X);
+		Antenna* antenna = this->findAntennaToWhichCellIsWaitingForConnection(X);
 		antenna->increaseCancelledCallsDueToLackOfCapacity();
 		newCall->changeStatus(TERMINATED);
-	} else {
+	}
+	else {
 		newCall->changeStatus(TERMINATED);
 	}
 
-	X->addOutgoingCall(newCall);
+	X->addIncomingCall(newCall);
 	Y->addIncomingCall(newCall);
 
 	/*
@@ -122,10 +100,8 @@ unsigned int System::terminateCall(Call* call, unsigned int endMin) {
 	Y->addMinutesOfIncomingCalls(call->getCallDuration());
 	this->checkCellphoneThatSpokeTheMost(X);
 	this->checkCellphoneThatWasSpokenToTheMost(Y);
-	this->findAntennaToWhichCellIsConnected(X)->checkCellphoneThatSpokeTheMost(
-			X);
-	this->findAntennaToWhichCellIsConnected(Y)->checkCellphoneThatSpokeTheMost(
-			Y);
+	this->findAntennaToWhichCellIsConnected(X)->checkCellphoneThatSpokeTheMost(X);
+	this->findAntennaToWhichCellIsConnected(Y)->checkCellphoneThatSpokeTheMost(Y);
 	return call->getCallDuration();
 }
 
@@ -141,18 +117,19 @@ void System::sendUnsentMessages(Cellphone* cellphone) {
 	}
 }
 
+
 Call* System::findCallInProgressByCellphone(unsigned int initiator) {
 	this->callsInProgress->initiateCursor();
 	bool found = false;
 	Call* foundCall;
 	while (!found && this->callsInProgress->advanceCursor()) {
 		foundCall = this->callsInProgress->getCursor();
-		if ((foundCall->getInitiator() == initiator)
-				&& (foundCall->getStatus() == IN_PROGRESS)) {
+		if ((foundCall->getInitiator() == initiator) &&
+			(foundCall->getStatus() == IN_PROGRESS)) {
 			found = true;
 		}
 	}
-	return (found ? foundCall : NULL);
+	return (found? foundCall:NULL);
 }
 
 void System::connectCellphone(Cellphone* X, Antenna* antenna) {
@@ -186,22 +163,23 @@ void System::connectCellphone(Cellphone* X, Antenna* antenna) {
 
 }
 
+
 void System::disconnectCellphone(Cellphone* X) {
 	if (X->getStatus() == DISCONNECTED) {
-		throw std::string("No se puede desconectar el celular");
+		throw std::string ("No se puede desconectar el celular");
 	}
 	Antenna* antenna = this->findAntennaToWhichCellIsConnected(X);
 	Cellphone* waitingCellphone;
 	Call* waitingCall = NULL;
 	if (!antenna->getWaitingListOfCellphones()->isEmpty()) {
 		waitingCellphone = antenna->getWaitingListOfCellphones()->getFirst();
-		waitingCall = this->findCallInProgressByCellphone(
-				waitingCellphone->getNumber());
+		waitingCall = this->findCallInProgressByCellphone(waitingCellphone->getNumber());
 	}
 	if (antenna) {
 		antenna->disconnectCellphone(X->getNumber());
-		if (waitingCall != NULL) {
-			waitingCall->changeStatus(IN_PROGRESS);
+		if (waitingCall) {
+			CallStatus status = IN_PROGRESS;
+			waitingCall->changeStatus(status);
 		}
 	}
 }
@@ -231,43 +209,43 @@ Cellphone* System::getCellphoneThatWasBusyTheMost() {
 }
 
 void System::checkCellphoneThatSpokeTheMost(Cellphone* X) {
-	if (this->spokeTheMost->getMinutesOfOutgoingCalls()
-			< X->getMinutesOfOutgoingCalls()) {
+	if (this->spokeTheMost->getMinutesOfOutgoingCalls() <
+				X->getMinutesOfOutgoingCalls()) {
 		this->spokeTheMost = X;
 	}
 }
 
 void System::checkCellphoneThatCalledTheMost(Cellphone* X) {
-	if (this->calledTheMost->getNumberOfOutgoingCalls()
-			< X->getNumberOfOutgoingCalls()) {
+	if (this->calledTheMost->getNumberOfOutgoingCalls() <
+			X->getNumberOfOutgoingCalls()) {
 		this->calledTheMost = X;
 	}
 }
 
 void System::checkCellphoneThatWasSpokenToTheMost(Cellphone* X) {
-	if (this->mostSpoken->getNumberOfIncomingCalls()
-			< X->getNumberOfIncomingCalls()) {
+	if (this->mostSpoken->getNumberOfIncomingCalls() <
+			X->getNumberOfIncomingCalls()) {
 		this->mostSpoken = X;
 	}
 }
 
 void System::checkCellphoneThatWasCalledTheMost(Cellphone* X) {
-	if (this->mostCalled->getNumberOfIncomingCalls()
-			< X->getNumberOfIncomingCalls()) {
+	if (this->mostCalled->getNumberOfIncomingCalls() <
+			X->getNumberOfIncomingCalls()) {
 		this->mostCalled = X;
 	}
 }
 
 void System::checkCellphoneThatReceivedBusyTheMost(Cellphone* X) {
-	if (this->receivedBusyTheMost->getNumberOfRejectedOutgoingCalls()
-			< X->getNumberOfRejectedOutgoingCalls()) {
+	if (this->receivedBusyTheMost->getNumberOfRejectedOutgoingCalls() <
+			X->getNumberOfRejectedOutgoingCalls()) {
 		this->receivedBusyTheMost = X;
 	}
 }
 
 void System::checkCellphoneThatWasBusyTheMost(Cellphone* X) {
-	if (this->wasBusyTheMost->getNumberOfRejectedIncomingCalls()
-			< X->getNumberOfRejectedIncomingCalls()) {
+	if (this->wasBusyTheMost->getNumberOfRejectedIncomingCalls() <
+			X->getNumberOfRejectedIncomingCalls()) {
 		this->wasBusyTheMost = X;
 	}
 }
@@ -290,7 +268,7 @@ Cellphone* System::findCellphone(unsigned int cellphoneNumber) {
 			found = true;
 		}
 	}
-	return (found ? foundCellphone : NULL);
+	return (found? foundCellphone:NULL);
 }
 
 Antenna* System::findAntenna(unsigned int idAntenna) {
@@ -303,22 +281,21 @@ Antenna* System::findAntenna(unsigned int idAntenna) {
 			found = true;
 		}
 	}
-	return (found ? foundAntenna : NULL);
+	return (found? foundAntenna:NULL);
 }
 
-Call* System::findCallInProgress(unsigned int initiator,
-		unsigned int receiver) {
+Call* System::findCallInProgress(unsigned int initiator, unsigned int receiver) {
 	this->callsInProgress->initiateCursor();
 	bool found = false;
 	Call* foundCall;
 	while (!found && this->callsInProgress->advanceCursor()) {
 		foundCall = this->callsInProgress->getCursor();
-		if ((foundCall->getInitiator() == initiator)
-				&& (foundCall->getReceiver() == receiver)) {
+		if ((foundCall->getInitiator() == initiator) &&
+			(foundCall->getReceiver() == receiver)) {
 			found = true;
 		}
 	}
-	return (found ? foundCall : NULL);
+	return (found? foundCall:NULL);
 
 }
 
@@ -330,8 +307,7 @@ Antenna* System::findAntennaToWhichCellIsConnected(Cellphone* cellphone) {
 	Cellphone* currentCellphone;
 	while (!found && listOfAntennas->advanceCursor()) {
 		currentAntenna = listOfAntennas->getCursor();
-		List<Cellphone*>* listOfCellphones =
-				currentAntenna->getListOfCellphones();
+		List<Cellphone*>* listOfCellphones = currentAntenna->getListOfCellphones();
 		listOfCellphones->initiateCursor();
 		while (!found && listOfCellphones->advanceCursor()) {
 			currentCellphone = listOfCellphones->getCursor();
@@ -340,11 +316,10 @@ Antenna* System::findAntennaToWhichCellIsConnected(Cellphone* cellphone) {
 			}
 		}
 	}
-	return (found ? currentAntenna : NULL);
+	return (found? currentAntenna:NULL);
 }
 
-Antenna* System::findAntennaToWhichCellIsWaitingForConnection(
-		Cellphone* cellphone) {
+Antenna* System::findAntennaToWhichCellIsWaitingForConnection(Cellphone* cellphone) {
 	List<Antenna*>* listOfAntennas = this->listOfAntennas;
 	listOfAntennas->initiateCursor();
 	bool found = false;
@@ -352,8 +327,7 @@ Antenna* System::findAntennaToWhichCellIsWaitingForConnection(
 	Cellphone* currentCellphone;
 	while (!found && listOfAntennas->advanceCursor()) {
 		currentAntenna = listOfAntennas->getCursor();
-		List<Cellphone*>* listOfCellphones =
-				currentAntenna->getWaitingListOfCellphones();
+		List<Cellphone*>* listOfCellphones = currentAntenna->getWaitingListOfCellphones();
 		listOfCellphones->initiateCursor();
 		while (!found && listOfCellphones->advanceCursor()) {
 			currentCellphone = listOfCellphones->getCursor();
@@ -362,15 +336,16 @@ Antenna* System::findAntennaToWhichCellIsWaitingForConnection(
 			}
 		}
 	}
-	return (found ? currentAntenna : NULL);
+	return (found? currentAntenna:NULL);
 
 }
 
+List<Call*>* System::getListOfCalls() {
+	return this->callsInProgress;
+}
+
 System::~System() {
-	this->destroyAntennas(listOfAntennas);
 	delete this->listOfAntennas;
-	this->destroyCellphones(listOfCellphones);
 	delete this->listOfCellphones;
-	this->destroyCalls(callsInProgress);
 	delete this->callsInProgress;
 }

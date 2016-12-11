@@ -62,6 +62,7 @@ void LoadFile(std::string fileName, System* system) {
 	if (!file.fail()) {
 		cout << "Archivo '" << fileName << "' abierto correctamente." << endl;
 
+
 		// Lee una a una las lineas del archivo
 		while (getline(file, line)) {
 
@@ -153,6 +154,7 @@ void LoadFile(std::string fileName, System* system) {
 				std::vector<std::string> antennaIdV = split(antennaId, 'A');
 				unsigned int numberX = strtoi(strNumberX);
 				unsigned int id = strtoi(antennaIdV[1]);
+				unsigned int min = strtoi(startMin);
 				// Busca el celular en el sistema.
 				// Si no esta, lo agrega
 				Cellphone* X = system->findCellphone(numberX);

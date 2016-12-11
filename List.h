@@ -137,14 +137,14 @@ template<class L> void List<L>::addNewElement(L newElement) {
 }
 
 template<class L> L List<L>::removeNextElement() {
-	Node<L>* deletedNode;
+	Node<L>* deletedNode = NULL;
 	if (this->cursor == NULL) {
 		deletedNode = this->firstNode;
 		this->firstNode = deletedNode->getNextNode();
-	} else {
-		if (this->cursor->getNextNode() == NULL) {
-			throw std::string("No hay mas elementos despues del cursor.");
-		}
+	} else if (this->cursor->getNextNode() != NULL){
+		//if (this->cursor->getNextNode() == NULL) {
+			//throw std::string("No hay mas elementos despues del cursor.");
+		//}
 		deletedNode = this->cursor->getNextNode();
 		this->cursor->changeNextNode(deletedNode->getNextNode());
 	}

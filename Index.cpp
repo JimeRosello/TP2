@@ -180,6 +180,7 @@ void Index::printDetailOfCalls() {
 			<< "Duracion total de llamadas: " << totalMinutes << std::endl
 			<< "Cantidad de llamadas ocupadas: " << amountOfBusyCalls
 			<< std::endl;
+	delete callsInCommon;
 }
 
 void Index::printDetailOfMessages() {
@@ -200,6 +201,7 @@ void Index::printDetailOfMessages() {
 				<< "Receptor: " << currentMsg->getReceiver() << std::endl;
 
 	}
+	delete messagesInCommon;
 
 }
 
@@ -403,6 +405,7 @@ void Index::printDetailOfIncomingPhoneCallsFromCellphone() {
 			}
 		}
 	}
+	delete[] cellphones;
 }
 
 void Index::printMaxAmountOfCellphonesPerAntenna() {
@@ -490,11 +493,11 @@ void Index::printAmountOfCancelledCallsDueToLackOfCapacity() {
 	}
 	QS(cancelledCallsVector, i, 0); //ordenado de forma descendente
 	i = 0;
-	while (i <= numberOfAntennas) {
+	while (i < numberOfAntennas) {
 		std::cout << "Antena: " << cancelledCallsVector[i].getAntennaId()
-				<< " ~ Numero de llamadas canceladas: "
-				<< cancelledCallsVector[i].getNumberOfCancelledCalls()
-				<< std::endl;
+				 << " ~ Numero de llamadas canceladas: "
+			<< cancelledCallsVector[i].getNumberOfCancelledCalls()
+			<< std::endl;
 		i++;
 	}
 	delete[] cancelledCallsVector;
@@ -747,5 +750,27 @@ bool Index::isInCourse() {
 Index::~Index() {
 	delete[] this->systemMenu;
 	delete[] this->cellphoneMenu;
+	List<Antenna*>* listOfAntennas = this->cellphoneSystem->getListOfAntennas();
+	while (!listOfAntennas->isEmpty()) {
+		Antenna* antenna = listOfAntennas->removeNextElement();
+		if (antenna) {
+			delete antenna;
+		}
+	}
+	List<Cellphone*>* listOfCellphones = this->cellphoneSystem->getListOfCellphones();
+	while (!listOfCellphones->isEmpty()) {
+		Cellphone* cellphone = listOfCellphones->removeNextElement();
+		if (cellphone) {
+			delete cellphone;
+		}
+	}
+	List<Call*>* listOfCalls = this->cellphoneSystem->getListOfCalls();
+	while (!listOfCalls->isEmpty()) {
+		Call* call = listOfCalls->removeNextElement();
+		if (call) {
+			delete call;
+		}
+	}
+
 	delete this->cellphoneSystem;
 }

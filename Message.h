@@ -11,6 +11,7 @@ private:
 	unsigned int sender;
 	unsigned int minute;
 
+
 public:
 
 	/*
@@ -52,4 +53,5 @@ public:
 };
 
 #endif /* MESSAGE_H_ */
+
 

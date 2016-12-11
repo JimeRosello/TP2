@@ -41,7 +41,12 @@ Cellphone::Cellphone() {
 void Cellphone::destroyMessages(List<Message*>* messageList) {
 	messageList->initiateCursor();
 	while (!messageList->isEmpty()) {
-		delete messageList->removeNextElement();
+		Message* message = messageList->getFirst(); //->removeNextElement();
+		if (message != NULL) {
+			delete message;
+			messageList->removeNextElement();
+		}
+
 	}
 }
 
@@ -204,13 +209,11 @@ List<Message*>* Cellphone::getNewMessages() {
 Cellphone::~Cellphone() {
 	this->destroyMessages(waitingMessages);
 	delete this->waitingMessages;
-	this->destroyMessages(newMessages);
-	delete this->newMessages;
 	this->destroyMessages(inbox);
 	delete this->inbox;
-	this->destroyMessages(outbox);
-	delete this->outbox;
 	this->destroyMessages(unsentMessages);
+	delete this->newMessages;
+	delete this->outbox;
 	delete this->unsentMessages;
 	delete this->incomingCalls;
 	delete this->outgoingCalls;

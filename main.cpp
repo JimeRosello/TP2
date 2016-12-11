@@ -2,7 +2,9 @@
 
 int main() {
 
+
 	System* system = new System();
+	//LoadFile(FILENAME, system);
 	Index index(system);
 	do {
 		index.printMenu();
