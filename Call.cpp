@@ -1,7 +1,8 @@
 #include "Call.h"
 #include <string>
 
-Call::Call(unsigned int startMin, unsigned int initiator, unsigned int receiver) {
+Call::Call(unsigned int startMin, unsigned int initiator,
+		unsigned int receiver) {
 	this->startMin = startMin;
 	this->endMin = startMin;
 	this->initiator = initiator;
@@ -11,7 +12,7 @@ Call::Call(unsigned int startMin, unsigned int initiator, unsigned int receiver)
 }
 
 unsigned int Call::getCallDuration() {
-	return ((this->endMin)-(this->startMin));
+	return ((this->endMin) - (this->startMin));
 }
 
 void Call::endCall(unsigned int endMin) {
