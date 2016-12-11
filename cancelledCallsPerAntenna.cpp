@@ -17,6 +17,7 @@ void cancelledCallsPerAntenna::changeAntennaId(unsigned int antennaId) {
 	this->antennaId = antennaId;
 }
 
-void cancelledCallsPerAntenna::changeNumberOfCancelledCalls(unsigned int numberOfCancelledCalls) {
+void cancelledCallsPerAntenna::changeNumberOfCancelledCalls(
+		unsigned int numberOfCancelledCalls) {
 	this->numberOfCalls = numberOfCancelledCalls;
 }
