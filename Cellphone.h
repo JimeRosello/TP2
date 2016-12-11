@@ -1,4 +1,3 @@
-
 #ifndef CELLPHONE_H_
 #define CELLPHONE_H_
 
@@ -23,10 +22,7 @@ using namespace std;
  */
 
 enum CellphoneStatus {
-	CONNECTED,
-	DISCONNECTED,
-	CURRENTLY_SPEAKING,
-	WAITING_FOR_CONNECTION
+	CONNECTED, DISCONNECTED, CURRENTLY_SPEAKING, WAITING_FOR_CONNECTION
 };
 
 class Cellphone {
@@ -51,6 +47,12 @@ private:
 	fstream entryFile;
 	fstream exitFile;
 
+	/*
+	 * Pre: ---
+	 * Post: Libera la memoria de cada mensaje dentro de la lista, destruyendo esta tambien
+	 *       durante la ejecucion.
+	 */
+	void destroyMessages(List<Message*>* messageList);
 
 public:
 	/*
@@ -98,12 +100,11 @@ public:
 	 *       lo guarda en una lista de mensajes propia.
 	 */
 	void sendMessage(unsigned int receiverNumber, std::string message,
-														unsigned int minute);
+			unsigned int minute);
 
 	/*
-	 * Guarda el mensaje indicado en los archivos correspondientes de entrada y salida
-	 * Pre: -
-	 * Post: -
+	 * Pre: ---
+	 * Post: Guarda el mensaje indicado en los archivos correspondientes de entrada y salida.
 	 */
 	void persistMessage(Message* msg);
 
