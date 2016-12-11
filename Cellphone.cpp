@@ -17,8 +17,6 @@ Cellphone::Cellphone(unsigned int cellphoneNumber) {
 	this->numberOfRejectedIncomingCalls = 0;
 	this->numberOfOutgoingCalls = 0;
 	this->numberOfIncomingCalls = 0;
-	//this->entryFile.open(entryFilename.c_str());
-	//this->exitFile.open(exitFilename.c_str());
 }
 
 Cellphone::Cellphone() {
@@ -38,14 +36,18 @@ Cellphone::Cellphone() {
 	this->numberOfRejectedIncomingCalls = 0;
 	this->numberOfOutgoingCalls = 0;
 	this->numberOfIncomingCalls = 0;
-	//this->entryFile.open(entryFilename.c_str());
-	//this->exitFile.open(exitFilename.c_str());
+}
+
+void Cellphone::destroyMessages(List<Message*>* messageList) {
+	messageList->initiateCursor();
+	while (!messageList->isEmpty()) {
+		delete messageList->removeNextElement();
+	}
 }
 
 unsigned int Cellphone::getNumber() {
 	return this->cellphoneNumber;
 }
-
 
 CellphoneStatus Cellphone::getStatus() {
 	return this->status;
@@ -69,21 +71,22 @@ void Cellphone::receiveNewMessages() {
 }
 
 void Cellphone::sendMessage(unsigned int receiverNumber, std::string message,
-												unsigned int minute) {
+		unsigned int minute) {
 	Message* msg = new Message(message, receiverNumber, this->cellphoneNumber,
-											minute);
+			minute);
 	this->outbox->addNewElement(msg);
 	this->unsentMessages->addNewElement(msg);
-	
+
 	persistMessage(msg);
 }
 
 void Cellphone::persistMessage(Message* msg) {
-	std::string pathBase = "/home/jime/Desktop/Algoritmos/TP2/src/Celulares/";
+	std::string pathBase = "./src/Celulares/";
 	std::string senderCellPath = intToString(msg->getSender());
 	std::string receiverCellPath = intToString(msg->getReceiver());
 	std::string exitFilename = pathBase + senderCellPath + "/egresos.txt";
-	std::string incomingFilename = pathBase + receiverCellPath + "/ingresos.txt";
+	std::string incomingFilename = pathBase + receiverCellPath
+			+ "/ingresos.txt";
 	createDir(pathBase);
 	createDir(pathBase + senderCellPath);
 	createDir(pathBase + receiverCellPath);
@@ -92,11 +95,13 @@ void Cellphone::persistMessage(Message* msg) {
 			+ intToString(msg->getReceiver()) + " "
 			+ intToString(msg->getMinute()) + " " + msg->getBody();
 
-	std::ofstream fileIn(exitFilename.c_str(), std::ofstream::out | std::ofstream::app);
+	std::ofstream fileIn(exitFilename.c_str(),
+			std::ofstream::out | std::ofstream::app);
 	fileIn << line << std::endl;
 	fileIn.close();
 
-	std::ofstream fileOut(incomingFilename.c_str(), std::ofstream::out | std::ofstream::app);
+	std::ofstream fileOut(incomingFilename.c_str(),
+			std::ofstream::out | std::ofstream::app);
 	fileOut << line << std::endl;
 	fileOut.close();
 }
@@ -173,7 +178,6 @@ List<Message*>* Cellphone::getIncomingMessages() {
 	return this->inbox;
 }
 
-
 List<Call*>* Cellphone::getOutgoingCalls() {
 	return this->outgoingCalls;
 }
@@ -182,7 +186,7 @@ void Cellphone::addOutgoingCall(Call* call) {
 	this->outgoingCalls->addNewElement(call);
 }
 
-List <Call*>* Cellphone::getIncomingCalls() {
+List<Call*>* Cellphone::getIncomingCalls() {
 	return this->incomingCalls;
 }
 
@@ -198,10 +202,16 @@ List<Message*>* Cellphone::getNewMessages() {
 }
 
 Cellphone::~Cellphone() {
-	delete this->inbox;
-	delete this->outbox;
+	this->destroyMessages(waitingMessages);
 	delete this->waitingMessages;
+	this->destroyMessages(newMessages);
 	delete this->newMessages;
+	this->destroyMessages(inbox);
+	delete this->inbox;
+	this->destroyMessages(outbox);
+	delete this->outbox;
+	this->destroyMessages(unsentMessages);
+	delete this->unsentMessages;
 	delete this->incomingCalls;
 	delete this->outgoingCalls;
 }
