@@ -16,4 +16,3 @@ void LoadFile(std::string fileName, System* system);
 
 #endif /* LOADFILE_H_ */
 
-
