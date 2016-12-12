@@ -533,7 +533,6 @@ void Index::printDetailOfCellphones() {
 }
 
 void Index::processFiles() {
-	//std::string filename = FILENAME; // /home/jime/Desktop/Algoritmos/TP2/src/prueba1.txt";
 	LoadFile(FILENAME, this->cellphoneSystem);
 }
 
