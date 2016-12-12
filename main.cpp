@@ -3,9 +3,7 @@
 int main() {
 
 
-	System* system = new System();
-	//LoadFile(FILENAME, system);
-	Index index(system);
+	Index index;
 	do {
 		index.printMenu();
 		int option = index.chooseOption();

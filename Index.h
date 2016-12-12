@@ -84,7 +84,7 @@ public:
 	 * Post: Crea un indice con los comportamientos del programa
 	 * 		 (Sistema o Celular)
 	 */
-	Index(System* cellphoneSystem);
+	Index();
 
 	/*
 	 * Pre: ---

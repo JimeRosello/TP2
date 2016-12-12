@@ -58,43 +58,43 @@ void LoadFile(std::string fileName, System* system) {
     std::string line, command, values, antennaId, antennaCapacity, startMin,
     strNumberX, strNumberY, endMin, message;
     std::ifstream file(fileName.c_str());
-    
+
     if (!file.fail()) {
         cout << "Archivo '" << fileName << "' abierto correctamente." << endl;
-        
+
         // Lee una a una las lineas del archivo
         while (getline(file, line)) {
-            
+
             // Obtiene un vector con una keyword en cada uno de sus campos
             std::vector<std::string> strVector = split(line, ' ');
             // La primera posicion corresponde al comando a ejecutar
             // (Antena, Inicio, Conectar, etc.)
             command = strVector[0];
-            
+
             if (strEqual(command, "Antena")) {
                 commandAntenna(antennaId, antennaCapacity, strVector, system);
-                
+
             } else if (strEqual(command, "Inicio")) {
-                
+
                 commandInicio(system, strNumberX, strNumberY, startMin, strVector);
-                
+
             } else if (strEqual(command, "Fin")) {
-                
+
                 commandFin(strNumberX, strNumberY, endMin, strVector, system);
-                
-                
+
+
             } else if (strEqual(command, "Msg")) {
-                
+
                 commandMsg(strNumberX, strNumberY, startMin, message, strVector,system);
-                
+
             } else if (strEqual(command, "Conectar")) {
-                
+
                 commandConectar(strNumberX,antennaId,startMin,strVector, system);
-                
+
             } else if (strEqual(command, "Desconectar")) {
-                
+
                 commandDesconectar(strNumberX,strVector, antennaId, system);
-                
+
             }
         }
     } else {
@@ -111,23 +111,23 @@ std::vector<std::string> antennaIdV = split(antennaId, 'A');
 unsigned int id = strtoi(antennaIdV[1]);
 antennaCapacity = vec[2];
 unsigned int capacity = strtoi(antennaCapacity);
-    
+
 //  agrega una nueva antena al sistema
 Antenna* antenna = new Antenna(id, capacity);
 system->addAntenna(antenna);
-    
+
 }
 
 void commandInicio(System* system, std::string strNumberX, std::string strNumberY,std::string startMin, std::vector<std::string> vec)
 {
-    
+
 strNumberX = vec[1];
 strNumberY = vec[2];
 startMin = vec[3];
 unsigned int numberX = strtoi(strNumberX);
 unsigned int numberY = strtoi(strNumberY);
 unsigned int minute = strtoi(startMin);
-    
+
 // Busca los celulares en el sistema.
 Cellphone* X = system->findCellphone(numberX);
 Cellphone* Y = system->findCellphone(numberY);
@@ -160,7 +160,7 @@ Call* call = system->findCallInProgress(numberX, numberY);
 if (call) {
     system->terminateCall(call, minute);
 }
-    
+
 }
 
 void commandMsg(std::string strNumberX, std::string strNumberY, std::string startMin,
@@ -202,7 +202,7 @@ void commandConectar(std::string strNumberX, std::string antennaId, std::string 
     // Busca el celular en el sistema.
     // Si no esta, lo agrega
     Cellphone* X = system->findCellphone(numberX);
-    
+
     // Busca la antena en el sistema
     Antenna* antenna = system->findAntenna(id);
     if (!antenna) {
@@ -214,7 +214,7 @@ void commandConectar(std::string strNumberX, std::string antennaId, std::string 
         X = new Cellphone(numberX);
         system->addCellphone(X);
     }
-    
+
     // Conecta el celular X a la antena
     system->connectCellphone(X, antenna);
 }

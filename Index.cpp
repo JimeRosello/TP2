@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 
-Index::Index(System* cellphoneSystem) {
+Index::Index() {
 	this->mode = SYSTEM;
 	this->currentCellphone = NULL;
 	this->systemMenu = new std::string[MAX_OPTIONS_SYSTEM];
@@ -12,7 +12,7 @@ Index::Index(System* cellphoneSystem) {
 	this->setMode();
 	this->setMenues();
 	this->inCourse = true;
-	this->cellphoneSystem = cellphoneSystem;
+	this->cellphoneSystem = new System;
 }
 
 void Index::setMode() {
