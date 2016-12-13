@@ -60,7 +60,7 @@ void LoadFile(std::string fileName, System* system) {
 	std::ifstream file(fileName.c_str());
 
 	if (!file.fail()) {
-		cout << "Archivo '" << fileName << "' abierto correctamente." << endl;
+		cout << "Archivo '" << fileName << "' abierto correctamente." << std::endl;
 
 		// Lee una a una las lineas del archivo
 		while (getline(file, line)) {

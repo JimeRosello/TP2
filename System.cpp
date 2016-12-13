@@ -77,7 +77,7 @@ void System::initiateCall(unsigned int minute, Cellphone* X, Cellphone* Y) {
 		newCall->changeStatus(TERMINATED);
 	}
 
-	X->addIncomingCall(newCall);
+	X->addOutgoingCall(newCall);
 	Y->addIncomingCall(newCall);
 
 	/*

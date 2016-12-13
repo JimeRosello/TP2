@@ -10,7 +10,7 @@ enum MODE {
 	SYSTEM, CELLPHONE
 };
 
-const std::string FILENAME = "./src/prueba3.txt";
+const std::string FILENAME = "./src/pruebacelulares.txt";
 const int MAX_OPTIONS_SYSTEM = 18;
 const int MAX_OPTIONS_CELLPHONE = 7;
 

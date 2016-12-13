@@ -41,7 +41,7 @@ Cellphone::Cellphone() {
 void Cellphone::destroyMessages(List<Message*>* messageList) {
 	messageList->initiateCursor();
 	while (!messageList->isEmpty()) {
-		Message* message = messageList->getFirst(); //->removeNextElement();
+		Message* message = messageList->getFirst();
 		if (message != NULL) {
 			delete message;
 			messageList->removeNextElement();
