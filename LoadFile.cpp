@@ -159,7 +159,7 @@ void commandFin(std::string strNumberX, std::string strNumberY,
 
 	Call* call = system->findCallInProgress(numberX, numberY);
 // Termina la llamada
-	if (call) {
+	if (call->getStatus() == IN_PROGRESS) {
 		system->terminateCall(call, minute);
 	}
 
@@ -238,7 +238,7 @@ void commandDesconectar(std::string strNumberX, std::vector<std::string> vec,
 	}
 	std::cout << std::endl;
 
-// Desonecta el celular X de la antena
+// Desconecta el celular X de la antena
 	system->disconnectCellphone(X);
 
 }
