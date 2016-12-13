@@ -78,14 +78,13 @@ List<Call*>* findCallsInCommon(Cellphone* X, Cellphone* Y) {
 	Call* currentCall;
 	while (xIncomingCalls->advanceCursor()) {
 		currentCall = xIncomingCalls->getCursor();
-		if (currentCall->getReceiver() == Y->getNumber()
-				|| currentCall->getReceiver() == X->getNumber()) {
+		if (currentCall->getInitiator() == Y->getNumber()) {
 			callsInCommon->addNewElement(currentCall);
 		}
 	}
 	while (xOutgoingCalls->advanceCursor()) {
 		currentCall = xOutgoingCalls->getCursor();
-		if (currentCall->getInitiator() == Y->getNumber()) {
+		if (currentCall->getReceiver() == Y->getNumber()) {
 			callsInCommon->addNewElement(currentCall);
 		}
 	}
