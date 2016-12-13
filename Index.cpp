@@ -679,7 +679,7 @@ void Index::executeAction(int optionNumber) {
 			printCellphonesThatWereCalledTheMost();
 			break;
 		case 7:
-			printCellphonesThatReceivedBusyTheMost();
+			printCellphonesThatWereSpokenToTheMost();
 			break;
 		case 8:
 			printCellphonesThatWereBusyTheMost();
@@ -694,7 +694,7 @@ void Index::executeAction(int optionNumber) {
 			printMaxAmountOfCellphonesPerAntenna();
 			break;
 		case 12:
-			this->printDetailOfIncomingPhoneCallsFromCellphone();
+			printDetailOfIncomingPhoneCallsFromCellphone();
 			break;
 		case 13:
 			printAmountOfCancelledCallsDueToLackOfCapacity();
