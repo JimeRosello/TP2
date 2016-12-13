@@ -369,12 +369,12 @@ void Index::printDetailOfIncomingPhoneCalls() {
 		currentCall = incomingPhoneCalls->getCursor();
 		if (currentCall->getStatus() == BUSY) {
 			std::cout << "Llamada ocupada de " << currentCall->getInitiator()
+					<< " en el minuto " << currentCall->getStartMinute()
 					<< std::endl;
 		} else {
-			std::cout << "Emisor de la llamada: " << currentCall->getInitiator()
-					<< std::endl << "Minuto de inicio: "
-					<< currentCall->getStartMinute() << std::endl
-					<< "Minuto de fin: " << currentCall->getEndMinute()
+			std::cout << "Llamada de " << currentCall->getInitiator()
+					<< " en el minuto "	<< currentCall->getStartMinute()
+					<< " hasta el minuto " << currentCall->getEndMinute()
 					<< std::endl;
 		}
 	}
@@ -393,14 +393,13 @@ void Index::printDetailOfIncomingPhoneCallsFromCellphone() {
 		if (currentCall->getInitiator() == cellphones[1]->getNumber()) {
 			if (currentCall->getStatus() == BUSY) {
 				std::cout << "Llamada ocupada de "
-						<< currentCall->getInitiator() << ", minuto "
+						<< currentCall->getInitiator() << " en el minuto "
 						<< currentCall->getStartMinute() << std::endl;
 			} else {
-				std::cout << "Emisor de la llamada: "
-						<< currentCall->getInitiator() << std::endl
-						<< "Minuto de inicio: " << currentCall->getStartMinute()
-						<< std::endl << "Minuto de fin: "
-						<< currentCall->getEndMinute() << std::endl;
+				std::cout << "Llamada de "
+						<< currentCall->getInitiator() << " en el minuto "
+						<< currentCall->getStartMinute()
+						<< " hasta el minuto " << currentCall->getEndMinute() << std::endl;
 			}
 		}
 	}
